@@ -116,3 +116,6 @@ InitTestScene*.unity*
 # --- Editores: configurações geradas em cada máquina ---
 .vscode/
 .idea/
+
+# --- Build WebGL: código do Burst gerado na raiz do projeto ---
+/[Dd]ata/

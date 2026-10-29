@@ -1,0 +1,378 @@
+{
+  "alvo": "webgl",
+  "unidade": "metro",
+  "vertical_arquivos": "Y",
+  "raiz": "ATR_Atari2600",
+  "referencial": "centro da base do console; frente Blender -Y; glTF +Z",
+  "scan_para_blender_export": [
+    [
+      -0.9153115153312683,
+      -0.40274664759635925,
+      0.0,
+      1.5104811191558838
+    ],
+    [
+      0.40274664759635925,
+      -0.9153115153312683,
+      -0.0,
+      1.240992546081543
+    ],
+    [
+      0.0,
+      -0.0,
+      1.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      0.0,
+      -0.0,
+      1.0
+    ]
+  ],
+  "lod_transicoes_altura_relativa_tela": [
+    0.25,
+    0.025
+  ],
+  "lod_transicoes_status": "valores iniciais; calibrar na etapa 6",
+  "lods": {
+    "0": {
+      "ATR_Console_LOD0": 580,
+      "ATR_Cartridge_LOD0": 56,
+      "ATR_Joystick_LOD0": 1192,
+      "ATR_PaddleA_LOD0": 890,
+      "ATR_PaddleB_LOD0": 872,
+      "ATR_SwitchBox_LOD0": 12
+    },
+    "1": {
+      "ATR_Console_LOD1": 580,
+      "ATR_Cartridge_LOD1": 56,
+      "ATR_Joystick_LOD1": 596,
+      "ATR_PaddleA_LOD1": 444,
+      "ATR_PaddleB_LOD1": 436,
+      "ATR_SwitchBox_LOD1": 12
+    }
+  },
+  "colisores": {
+    "ATR_Console": {
+      "tipo": "BoxCollider",
+      "triangulos": 12,
+      "convexo": true,
+      "centro_local_blender_m": [
+        -7.450580596923828e-09,
+        -8.642673492431641e-07,
+        0.04410000145435333
+      ],
+      "dimensoes_locais_m": [
+        0.3421446233987808,
+        0.229318305850029,
+        0.08820000290870667
+      ],
+      "max_vertice_fora_m": 0,
+      "margem_planos_m": 0
+    },
+    "ATR_Cartridge": {
+      "tipo": "BoxCollider",
+      "triangulos": 12,
+      "convexo": true,
+      "centro_local_blender_m": [
+        0.0,
+        0.0,
+        0.04960000142455101
+      ],
+      "dimensoes_locais_m": [
+        0.0763000100851059,
+        0.01835000142455101,
+        0.09920000284910202
+      ],
+      "max_vertice_fora_m": 0,
+      "margem_planos_m": 0
+    },
+    "ATR_Joystick": {
+      "tipo": "MeshCollider_convex",
+      "triangulos": 180,
+      "convexo": true,
+      "centro_local_blender_m": [
+        1.862645149230957e-09,
+        1.862645149230957e-09,
+        0.05627603828907013
+      ],
+      "dimensoes_locais_m": [
+        0.08439719304442406,
+        0.09852323308587074,
+        0.11255207657814026
+      ],
+      "max_vertice_fora_m": 0,
+      "margem_planos_m": 0.0001
+    },
+    "ATR_PaddleA": {
+      "tipo": "MeshCollider_convex",
+      "triangulos": 180,
+      "convexo": true,
+      "centro_local_blender_m": [
+        0.0,
+        0.0,
+        0.03359026461839676
+      ],
+      "dimensoes_locais_m": [
+        0.06509439647197723,
+        0.10921823978424072,
+        0.06718052923679352
+      ],
+      "max_vertice_fora_m": 0,
+      "margem_planos_m": 0.0001
+    },
+    "ATR_PaddleB": {
+      "tipo": "MeshCollider_convex",
+      "triangulos": 180,
+      "convexo": true,
+      "centro_local_blender_m": [
+        9.313225746154785e-10,
+        0.0,
+        0.033044323325157166
+      ],
+      "dimensoes_locais_m": [
+        0.06133529730141163,
+        0.10846731811761856,
+        0.06608864665031433
+      ],
+      "max_vertice_fora_m": 0,
+      "margem_planos_m": 0.0001
+    },
+    "ATR_SwitchBox": {
+      "tipo": "BoxCollider",
+      "triangulos": 12,
+      "convexo": true,
+      "centro_local_blender_m": [
+        0.0,
+        0.0,
+        0.010375000536441803
+      ],
+      "dimensoes_locais_m": [
+        0.06662000715732574,
+        0.03994999825954437,
+        0.020750001072883606
+      ],
+      "max_vertice_fora_m": 0,
+      "margem_planos_m": 0
+    }
+  },
+  "materiais": {
+    "MAT_ATR_Console": {
+      "BaseColor": "texturas/ATR_Console_BaseColor.png",
+      "Normal": "texturas/ATR_Console_Normal.png",
+      "ORM": "texturas/ATR_Console_ORM.png",
+      "MetallicSmoothness": "texturas/ATR_Console_MetallicSmoothness.png",
+      "Occlusion": "texturas/ATR_Console_Occlusion.png"
+    },
+    "MAT_ATR_Joystick": {
+      "BaseColor": "texturas/ATR_Joystick_BaseColor.png",
+      "Normal": "texturas/ATR_Joystick_Normal.png",
+      "ORM": "texturas/ATR_Joystick_ORM.png",
+      "MetallicSmoothness": "texturas/ATR_Joystick_MetallicSmoothness.png",
+      "Occlusion": "texturas/ATR_Joystick_Occlusion.png"
+    },
+    "MAT_ATR_Paddles": {
+      "BaseColor": "texturas/ATR_Paddles_BaseColor.png",
+      "Normal": "texturas/ATR_Paddles_Normal.png",
+      "ORM": "texturas/ATR_Paddles_ORM.png",
+      "MetallicSmoothness": "texturas/ATR_Paddles_MetallicSmoothness.png",
+      "Occlusion": "texturas/ATR_Paddles_Occlusion.png"
+    },
+    "MAT_ATR_SwitchBox": {
+      "BaseColor": "texturas/ATR_SwitchBox_BaseColor.png",
+      "Normal": "texturas/ATR_SwitchBox_Normal.png",
+      "ORM": "texturas/ATR_SwitchBox_ORM.png",
+      "MetallicSmoothness": "texturas/ATR_SwitchBox_MetallicSmoothness.png",
+      "Occlusion": "texturas/ATR_SwitchBox_Occlusion.png"
+    }
+  },
+  "pecas": {
+    "ATR_Console": {
+      "raiz": "ATR_Console_Root",
+      "interacao": "estatica",
+      "matriz_local_blender": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -2.9802322387695312e-08
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "ATR_Cartridge": {
+      "raiz": "ATR_Cartridge_Root",
+      "interacao": "removivel",
+      "matriz_local_blender": [
+        [
+          0.9998157024383545,
+          9.850229076846517e-08,
+          -0.019197527319192886,
+          2.09808349609375e-05
+        ],
+        [
+          -0.009540756233036518,
+          0.867765486240387,
+          -0.4968823194503784,
+          0.05396023392677307
+        ],
+        [
+          0.016658902168273926,
+          0.4969739317893982,
+          0.8676055669784546,
+          0.04912004992365837
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "ATR_Joystick": {
+      "raiz": "ATR_Joystick_Root",
+      "interacao": "pegavel",
+      "matriz_local_blender": [
+        [
+          0.9995335936546326,
+          -0.030538348481059074,
+          0.0,
+          0.2770116329193115
+        ],
+        [
+          0.030538348481059074,
+          0.9995335936546326,
+          0.0,
+          -0.012298822402954102
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "ATR_PaddleA": {
+      "raiz": "ATR_PaddleA_Root",
+      "interacao": "pegavel",
+      "matriz_local_blender": [
+        [
+          0.9848077893257141,
+          -0.173647940158844,
+          0.0,
+          -0.2375396490097046
+        ],
+        [
+          0.173647940158844,
+          0.9848077893257141,
+          0.0,
+          -0.04312983155250549
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "ATR_PaddleB": {
+      "raiz": "ATR_PaddleB_Root",
+      "interacao": "pegavel",
+      "matriz_local_blender": [
+        [
+          0.9975640773773193,
+          0.06975629180669785,
+          0.0,
+          -0.31252574920654297
+        ],
+        [
+          -0.06975629180669785,
+          0.9975640773773193,
+          0.0,
+          -0.040142446756362915
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "ATR_SwitchBox": {
+      "raiz": "ATR_SwitchBox_Root",
+      "interacao": "estatica",
+      "matriz_local_blender": [
+        [
+          -0.9816271662712097,
+          -0.19080901145935059,
+          0.0,
+          0.056342482566833496
+        ],
+        [
+          0.19080901145935059,
+          -0.9816271662712097,
+          0.0,
+          0.1926809847354889
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  },
+  "limites": [
+    "FBX não configura automaticamente URP Lit, LODGroup ou componentes Collider.",
+    "GLBs contêm um único nível; o aplicativo seleciona o nível externamente.",
+    "Caixa do console cobre o encaixe: ignorar colisão console/cartucho enquanto encaixado.",
+    "COL é um arquivo auxiliar: não exibir suas malhas. Física e prefab ficam na etapa 6."
+  ]
+}
