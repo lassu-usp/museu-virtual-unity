@@ -41,7 +41,7 @@ museu-virtual-unity    etapa 6 em diante: materiais URP, LODGroup, física, pref
 
 | Código | Objeto | Prefab | Integração no Unity |
 |---|---|---|---|
-| `ATR` | Atari | `PF_ATR_Atari2600` | não iniciada (pacote da etapa 5 em revisão) |
+| `ATR` | Atari | `PF_ATR_Atari2600` | em revisão: materiais, LODs, colisões e interação integrados |
 | `MFX` | MicroFlex4 | — | não iniciada |
 | `MOT` | Motorola | — | não iniciada |
 | `ORE` | Orelhão | — | não iniciada |
@@ -51,7 +51,7 @@ Status possíveis: `não iniciada` · `em andamento` · `em revisão` · `conclu
 
 ## Espaço do museu
 
-O espaço fica em `Assets/Museu/` e já está na cena principal, `Assets/Scenes/Museu.unity`:
+O espaço fica em `Assets/Museu/` e já está na cena principal, `Assets/Scenes/Museu.unity`. A instância da cena está orientada com Y para cima e tem colisores para a visita em primeira pessoa:
 
 - `Museu.prefab`: o espaço montado, com paredes, vitrines, quadros, luzes e textos;
 - `Modelos/`: os FBX do espaço (`MuseuQuadrado.fbx`), dos quadros (`MuseuQuadros.fbx` e `Frame_light.fbx`) e dos textos expositivos (`Textos/`);
@@ -172,16 +172,34 @@ Deste repositório:
 
 | Dinâmica | Descrição | Status |
 |---|---|---|
-| Navegação em primeira pessoa | andar, olhar em volta e correr, com teclado e mouse | planejada |
-| Peça estática | fica no lugar, só com colisor | planejada |
-| Peça pegável | o visitante pega e manipula a peça | planejada |
-| Peça removível | a peça sai de um encaixe, como o cartucho do console do Atari | planejada |
+| Navegação em primeira pessoa | andar, olhar em volta e correr, com teclado e mouse | implementada |
+| Peça estática | permanece na exposição e apresenta sua descrição | implementada no console e na caixa seletora |
+| Peça pegável | o visitante pega, gira, aproxima e devolve a peça | implementada no joystick e nos paddles |
+| Peça removível | a peça sai do encaixe e retorna à pose original | implementada no cartucho |
 
 A dinâmica de cada peça vem do `manifesto.json` e da ficha do objeto. O código fica em `Assets/Scripts/` e usa as ações de `InputSystem_Actions.inputactions` (veja [Convenções](#convenções)).
+
+Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / continuar a visita**. O visitante começa diante da exposição do Atari.
+
+| Controle | Ação |
+|---|---|
+| WASD ou setas | caminhar |
+| Mouse | olhar em volta |
+| Shift | correr |
+| E | examinar a peça sob a mira, a até 2 metros; devolver/fechar a inspeção |
+| Arrastar com o botão esquerdo | girar uma peça durante a inspeção |
+| Roda do mouse / R | aproximar ou afastar / restaurar a orientação da inspeção |
+| Esc | devolver a peça ou liberar o cursor e pausar |
+
+A inspeção interrompe a caminhada. As peças manipuláveis ficam cinemáticas e sem colisão enquanto estão nas mãos; ao devolver, recuperam exatamente a pose e os colisores da exposição. Não há arremesso ou queda livre. Paredes e móveis bloqueiam tanto a passagem quanto a seleção de objetos atrás deles. A pausa oferece retorno ao ponto inicial.
+
+`Assets/Scenes/ATR_Validacao.unity` apresenta o conjunto com luz neutra. O menu **Museu › Atari › Validar integração** confere os dois prefabs, incluindo escala, materiais, triângulos, LODs e colisores. Os outros comandos desse menu reconstroem materiais/prefabs e cenas; salve suas alterações antes de usá-los.
 
 ## Desktop e WebGL
 
 - A primeira versão é para desktop. A de navegador (WebGL) é otimizada e usa os pacotes `webgl/` dos objetos: menos triângulos, menos níveis de detalhe e texturas menores.
+- O processador de build substitui o Atari por `PF_ATR_Atari2600_WebGL` somente na cópia da cena usada no build WebGL. A cena de edição continua usando a variante desktop.
+- Atari: **6.558 / 3.602 / 1.828** triângulos visuais no desktop e **3.602 / 2.124** no WebGL, com um `LODGroup` por peça. O último nível permanece visível até altura relativa de 0,004; a inspeção força LOD0.
 - O URP tem dois níveis de qualidade: `PC` (`Settings/PC_RPAsset`), padrão do desktop, e `Mobile` (`Settings/Mobile_RPAsset`), padrão do WebGL.
 - Para gerar um build, use **File › Build Profiles**, escolha *Windows* ou *Web* e grave em `Builds/`, na raiz do repositório, que o Git ignora.
 
