@@ -19,11 +19,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: MAT_ATR_Paddles
     second: {fileID: 2100000, guid: 8d64e5a9c746b0e499cb50b50db0e7af, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MAT_ATR_SwitchBox
-    second: {fileID: 2100000, guid: ae70c1ffcc5732a41abc75dd3d6ed3cd, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

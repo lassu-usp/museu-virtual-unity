@@ -29,9 +29,10 @@ namespace MuseuVirtual.Editor
                 try
                 {
                     var parts=prefab.GetComponentsInChildren<MuseumExhibit>(true);
-                    Require(parts.Length==6,variant+": faltam peças");
+                    var expectedPieces=((JObject)manifest["pecas"]).Properties().Select(p=>p.Name+"_Root").OrderBy(n=>n).ToArray();
+                    Require(parts.Select(p=>p.name).OrderBy(n=>n).SequenceEqual(expectedPieces),variant+": peças divergentes do manifesto");
                     Require(prefab.GetComponentsInChildren<Rigidbody>().Length==4,variant+": corpos móveis incorretos");
-                    Require(prefab.GetComponentsInChildren<Collider>().Length==6,variant+": colisores incorretos");
+                    Require(prefab.GetComponentsInChildren<Collider>().Length==expectedPieces.Length,variant+": colisores incorretos");
                     int levels=variant=="desktop"?3:2;
                     int[] totals=new int[levels];
                     foreach(var item in parts)
@@ -72,7 +73,7 @@ namespace MuseuVirtual.Editor
                         Require(importer.sRGBTexture==texture.Contains("_BaseColor"),texture+": espaço de cor incorreto");
                         if(texture.Contains("_Normal")) Require(importer.textureType==TextureImporterType.NormalMap,texture+": tipo incorreto");
                     }
-                    report.Add(variant+": 6 peças, 6 LODGroups, 6 colisores, 4 corpos cinemáticos; triângulos "+string.Join(" / ",totals));
+                    report.Add(variant+": "+parts.Length+" peças, "+parts.Length+" LODGroups, "+parts.Length+" colisores, 4 corpos cinemáticos; triângulos "+string.Join(" / ",totals));
                 }
                 finally { PrefabUtility.UnloadPrefabContents(prefab); }
             }

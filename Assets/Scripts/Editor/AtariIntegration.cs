@@ -22,7 +22,7 @@ namespace MuseuVirtual.Editor
         {
             {"ATR_Console", "Atari 2600"}, {"ATR_Cartridge", "Cartucho · Enduro"},
             {"ATR_Joystick", "Joystick"}, {"ATR_PaddleA", "Paddle A"},
-            {"ATR_PaddleB", "Paddle B"}, {"ATR_SwitchBox", "Caixa seletora de TV"}
+            {"ATR_PaddleB", "Paddle B"}
         };
         static readonly Dictionary<string, string> Descriptions = new Dictionary<string, string>
         {
@@ -30,8 +30,7 @@ namespace MuseuVirtual.Editor
             {"ATR_Cartridge", "Cartucho identificado como Enduro. A peça pode ser retirada para observar o rótulo e o formato do encaixe. Ao devolver, ela retorna à posição original no console."},
             {"ATR_Joystick", "Controle direcional com manche e botão de ação. Gire a peça para observar sua forma e a indicação TOP na base."},
             {"ATR_PaddleA", "Controle com seletor giratório e botão lateral. Observe o formato da empunhadura e compare com o segundo paddle."},
-            {"ATR_PaddleB", "Segundo controle do par de paddles. As duas peças compartilham o mesmo material e podem ser examinadas separadamente."},
-            {"ATR_SwitchBox", "Caixa seletora que faz parte do conjunto. Esta representação tem forma simplificada e permanece fixa na exposição."}
+            {"ATR_PaddleB", "Segundo controle do par de paddles. As duas peças compartilham o mesmo material e podem ser examinadas separadamente."}
         };
 
         [MenuItem("Museu/Atari/1 - Importar materiais e montar prefabs")]
