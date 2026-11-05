@@ -173,7 +173,7 @@ Deste repositório:
 | Dinâmica | Descrição | Status |
 |---|---|---|
 | Navegação em primeira pessoa | andar, olhar em volta e correr, com teclado e mouse | implementada |
-| Peça estática | permanece na exposição e apresenta sua descrição | implementada no console e na caixa seletora |
+| Peça estática | permanece na exposição e apresenta sua descrição | implementada no console |
 | Peça pegável | o visitante pega, gira, aproxima e devolve a peça | implementada no joystick e nos paddles |
 | Peça removível | a peça sai do encaixe e retorna à pose original | implementada no cartucho |
 
@@ -199,7 +199,7 @@ A inspeção interrompe a caminhada. As peças manipuláveis ficam cinemáticas 
 
 - A primeira versão é para desktop. A de navegador (WebGL) é otimizada e usa os pacotes `webgl/` dos objetos: menos triângulos, menos níveis de detalhe e texturas menores.
 - O processador de build substitui o Atari por `PF_ATR_Atari2600_WebGL` somente na cópia da cena usada no build WebGL. A cena de edição continua usando a variante desktop.
-- Atari: **6.558 / 3.602 / 1.828** triângulos visuais no desktop e **3.602 / 2.124** no WebGL, com um `LODGroup` por peça. O último nível permanece visível até altura relativa de 0,004; a inspeção força LOD0.
+- Atari: **6.546 / 3.590 / 1.816** triângulos visuais no desktop e **3.590 / 2.112** no WebGL, com um `LODGroup` para cada uma das cinco peças. Pacotes atualizados da revisão `e5a2a16` do `museu-virtual-3d`, com a frente amadeirada corrigida e sem a caixa seletora. O último nível permanece visível até altura relativa de 0,004; a inspeção força LOD0.
 - O URP tem dois níveis de qualidade: `PC` (`Settings/PC_RPAsset`), padrão do desktop, e `Mobile` (`Settings/Mobile_RPAsset`), padrão do WebGL.
 - Para gerar um build, use **File › Build Profiles**, escolha *Windows* ou *Web* e grave em `Builds/`, na raiz do repositório, que o Git ignora.
 

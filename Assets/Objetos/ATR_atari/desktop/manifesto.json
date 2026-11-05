@@ -42,24 +42,21 @@
       "ATR_Cartridge_LOD0": 56,
       "ATR_Joystick_LOD0": 2384,
       "ATR_PaddleA_LOD0": 1780,
-      "ATR_PaddleB_LOD0": 1746,
-      "ATR_SwitchBox_LOD0": 12
+      "ATR_PaddleB_LOD0": 1746
     },
     "1": {
       "ATR_Console_LOD1": 580,
       "ATR_Cartridge_LOD1": 56,
       "ATR_Joystick_LOD1": 1192,
       "ATR_PaddleA_LOD1": 890,
-      "ATR_PaddleB_LOD1": 872,
-      "ATR_SwitchBox_LOD1": 12
+      "ATR_PaddleB_LOD1": 872
     },
     "2": {
       "ATR_Console_LOD2": 580,
       "ATR_Cartridge_LOD2": 56,
       "ATR_Joystick_LOD2": 476,
       "ATR_PaddleA_LOD2": 356,
-      "ATR_PaddleB_LOD2": 348,
-      "ATR_SwitchBox_LOD2": 12
+      "ATR_PaddleB_LOD2": 348
     }
   },
   "colisores": {
@@ -147,23 +144,6 @@
       ],
       "max_vertice_fora_m": 0,
       "margem_planos_m": 0.0001
-    },
-    "ATR_SwitchBox": {
-      "tipo": "BoxCollider",
-      "triangulos": 12,
-      "convexo": true,
-      "centro_local_blender_m": [
-        0.0,
-        0.0,
-        0.010375000536441803
-      ],
-      "dimensoes_locais_m": [
-        0.06662000715732574,
-        0.03994999825954437,
-        0.020750001072883606
-      ],
-      "max_vertice_fora_m": 0,
-      "margem_planos_m": 0
     }
   },
   "materiais": {
@@ -187,13 +167,6 @@
       "ORM": "texturas/ATR_Paddles_ORM.png",
       "MetallicSmoothness": "texturas/ATR_Paddles_MetallicSmoothness.png",
       "Occlusion": "texturas/ATR_Paddles_Occlusion.png"
-    },
-    "MAT_ATR_SwitchBox": {
-      "BaseColor": "texturas/ATR_SwitchBox_BaseColor.png",
-      "Normal": "texturas/ATR_SwitchBox_Normal.png",
-      "ORM": "texturas/ATR_SwitchBox_ORM.png",
-      "MetallicSmoothness": "texturas/ATR_SwitchBox_MetallicSmoothness.png",
-      "Occlusion": "texturas/ATR_SwitchBox_Occlusion.png"
     }
   },
   "pecas": {
@@ -332,36 +305,6 @@
           0.9975640773773193,
           0.0,
           -0.040142446756362915
-        ],
-        [
-          0.0,
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ]
-      ]
-    },
-    "ATR_SwitchBox": {
-      "raiz": "ATR_SwitchBox_Root",
-      "interacao": "estatica",
-      "matriz_local_blender": [
-        [
-          -0.9816271662712097,
-          -0.19080901145935059,
-          0.0,
-          0.056342482566833496
-        ],
-        [
-          0.19080901145935059,
-          -0.9816271662712097,
-          0.0,
-          0.1926809847354889
         ],
         [
           0.0,

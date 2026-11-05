@@ -84,11 +84,9 @@ namespace MuseuVirtual.Editor
                 foreach (var piece in collection.GetComponentsInChildren<MuseumExhibit>())
                 {
                     var target = piece.GetComponentInChildren<Collider>().bounds.center;
-                    // The TV switch is behind the console, so view it from the back of the table.
-                    float side = piece.name == "ATR_SwitchBox_Root" ? 1 : -1;
                     foreach (float gap in new[] { 0.62f, 1.2f })
                     {
-                        var origin = new Vector3(target.x, 0.04f, fixture.transform.position.z + side * gap);
+                        var origin = new Vector3(target.x, 0.04f, fixture.transform.position.z - gap);
                         Aim(visitor, origin, target);
                         Require(visitor.FindExhibit() == piece, path + ": seleção falhou em " + piece.name + " a " + gap);
                     }
