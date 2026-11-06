@@ -1,0 +1,115 @@
+{
+  "alvo": "desktop",
+  "unidade": "metro",
+  "vertical_arquivos": "Y",
+  "raiz": "TJG_Telejogo",
+  "referencial": "centro da base do console; frente Blender -Y; glTF +Z",
+  "scan_para_blender_export": [
+    [
+      -0.9135454893112183,
+      -0.4067365825176239,
+      0.0,
+      2.062722682952881
+    ],
+    [
+      0.4067365825176239,
+      -0.9135454893112183,
+      -0.0,
+      0.8776960372924805
+    ],
+    [
+      0.0,
+      -0.0,
+      1.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      0.0,
+      -0.0,
+      1.0
+    ]
+  ],
+  "lod_transicoes_altura_relativa_tela": [
+    0.3,
+    0.12,
+    0.025
+  ],
+  "lod_transicoes_status": "valores iniciais; calibrar na etapa 6",
+  "lods": {
+    "0": {
+      "TJG_Console_LOD0": 11816
+    },
+    "1": {
+      "TJG_Console_LOD1": 5908
+    },
+    "2": {
+      "TJG_Console_LOD2": 3626
+    }
+  },
+  "colisores": {
+    "TJG_Console": {
+      "tipo": "BoxCollider",
+      "triangulos": 12,
+      "convexo": true,
+      "centro_local_blender_m": [
+        0.0,
+        0.0,
+        0.041458651423454285
+      ],
+      "dimensoes_locais_m": [
+        0.33620002527236936,
+        0.15059999783039094,
+        0.08311730284690858
+      ],
+      "max_vertice_fora_m": 0.0,
+      "margem_planos_m": 0.0001
+    }
+  },
+  "materiais": {
+    "M_TJG_Console": {
+      "BaseColor": "texturas/TJG_Console_BaseColor.png",
+      "Normal": "texturas/TJG_Console_Normal.png",
+      "ORM": "texturas/TJG_Console_ORM.png",
+      "MetallicSmoothness": "texturas/TJG_Console_MetallicSmoothness.png",
+      "Occlusion": "texturas/TJG_Console_Occlusion.png"
+    }
+  },
+  "pecas": {
+    "TJG_Console": {
+      "raiz": "TJG_Console_Root",
+      "interacao": "pegavel",
+      "matriz_local_blender": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -5.960464477539063e-08
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  },
+  "limites": [
+    "FBX não configura automaticamente URP Lit, LODGroup ou componentes Collider.",
+    "GLBs contêm um único nível; o aplicativo seleciona o nível externamente.",
+    "COL é um arquivo auxiliar: não exibir suas malhas. Física e prefab ficam na etapa 6."
+  ]
+}
