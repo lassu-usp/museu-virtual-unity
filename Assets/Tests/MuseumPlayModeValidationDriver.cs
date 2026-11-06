@@ -14,11 +14,11 @@ namespace MuseuVirtual
         int nextFrame;
         float deadline;
 
-        public void Run(IEnumerator<int> sequence, Action<Exception> onCompleted)
+        public void Run(IEnumerator<int> sequence, Action<Exception> onCompleted, float timeoutSeconds = 120)
         {
             steps = sequence; completed = onCompleted;
             nextFrame = Time.frameCount + 3;
-            deadline = Time.realtimeSinceStartup + 120;
+            deadline = Time.realtimeSinceStartup + timeoutSeconds;
             DontDestroyOnLoad(gameObject);
         }
 
@@ -27,7 +27,7 @@ namespace MuseuVirtual
             if (steps == null) return;
             try
             {
-                if (Time.realtimeSinceStartup > deadline) throw new TimeoutException("Validação excedeu 120s");
+                if (Time.realtimeSinceStartup > deadline) throw new TimeoutException("Validação excedeu o tempo limite");
                 if (Time.frameCount < nextFrame) return;
                 if (steps.MoveNext()) { nextFrame = Time.frameCount + steps.Current; return; }
                 Complete(null);

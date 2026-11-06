@@ -30,6 +30,7 @@ namespace MuseuVirtual.Editor
             MicroflexValidation.ValidateAssets();
             AtariValidation.ValidateAssets();
             TelejogoValidation.ValidateAssets();
+            MuseumGalleryValidation.ValidateScene();
             SessionState.SetBool(SessionKey, true);
             EditorSceneManager.OpenScene("Assets/Scenes/MFX_Validacao.unity");
             EditorApplication.isPlaying = true;
@@ -46,7 +47,7 @@ namespace MuseuVirtual.Editor
             mouse = InputSystem.AddDevice<Mouse>("MFXValidationMouse");
             gamepad = InputSystem.AddDevice<Gamepad>("MFXValidationGamepad");
             report.Clear();
-            new GameObject("Validação temporária MFX/foco").AddComponent<MuseumPlayModeValidationDriver>().Run(Validate(), Finish);
+            new GameObject("Validação temporária MFX/foco").AddComponent<MuseumPlayModeValidationDriver>().Run(Validate(), Finish, 900);
         }
 
         static void Finish(Exception error)
@@ -73,28 +74,33 @@ namespace MuseuVirtual.Editor
             var visitor = Object.FindAnyObjectByType<MuseumVisitor>();
             Check(visitor != null && visitor.IsPaused, "Visitante deve iniciar pausado");
             float normal = visitor.viewCamera.fieldOfView;
+            float zoomed = normal / visitor.focusMagnification;
             Keys(Key.Z); yield return 3;
             Check(!visitor.IsFocusMode, "Z ativou foco durante a pausa");
             Keys(); yield return 2;
             visitor.Resume();
             Capture(visitor.viewCamera, "normal");
-            Keys(Key.Z); yield return 3;
-            Check(visitor.IsFocusMode && visitor.viewCamera.fieldOfView < normal,
+            yield return 3; // The capture's long frame must not fall on the zoom being measured.
+            var zoomIn = new List<Vector2>();
+            Keys(Key.Z);
+            foreach (int wait in TraceZoom(visitor.viewCamera, zoomed, zoomIn)) yield return wait;
+            Check(visitor.IsFocusMode && Mathf.Abs(visitor.viewCamera.fieldOfView - zoomed) < 0.2f,
                 "Z não aproximou a visão; walking=" + visitor.IsWalking + "; paused=" + visitor.IsPaused
                 + "; keyboard enabled=" + keyboard.enabled + "; z=" + keyboard.zKey.isPressed
                 + "; held=" + string.Join(",", keyboard.allKeys.Where(k => k.isPressed).Select(k => k.name)));
             Keys(); yield return 2;
-            double until = EditorApplication.timeSinceStartup + 0.6;
-            while (EditorApplication.timeSinceStartup < until) yield return 1;
-            Check(Mathf.Abs(visitor.viewCamera.fieldOfView - normal / visitor.focusMagnification) < 0.2f, "Zoom não atingiu o FOV esperado");
             Capture(visitor.viewCamera, "foco");
             InputSystem.QueueStateEvent(mouse, new MouseState { delta = new Vector2(5, 2) }); yield return 3;
             Check(visitor.IsFocusMode, "Olhar cancelou o foco");
             InputSystem.QueueStateEvent(mouse, new MouseState());
-            Keys(Key.Z); yield return 3;
-            Check(!visitor.IsFocusMode && Mathf.Approximately(visitor.viewCamera.fieldOfView, normal), "Segundo Z não restaurou a visão");
+            var zoomOut = new List<Vector2>();
+            Keys(Key.Z);
+            foreach (int wait in TraceZoom(visitor.viewCamera, normal, zoomOut)) yield return wait;
+            Check(!visitor.IsFocusMode, "Segundo Z não encerrou o foco");
+            foreach (int wait in WaitForNormalView(visitor, normal, "Segundo Z não restaurou a visão")) yield return wait;
             Keys(); yield return 2;
-            report.Add("Z: toggle, aproximação suave 2x, visão original restaurada e mouse livre para olhar");
+            CheckZoomSymmetry(zoomIn, zoomOut, normal, zoomed);
+            report.Add("Z: toggle, aproximação suave 2x, saída no ritmo da entrada, visão original restaurada e mouse livre para olhar");
 
             foreach (var key in new[] { Key.W, Key.A, Key.S, Key.D, Key.UpArrow, Key.LeftShift, Key.E, Key.Space, Key.C, Key.R, Key.Escape })
             {
@@ -102,11 +108,12 @@ namespace MuseuVirtual.Editor
                 Keys(Key.Z); yield return 3;
                 Check(visitor.IsFocusMode, "Não ativou foco antes de " + key);
                 Keys(key); yield return 3;
-                Check(!visitor.IsFocusMode && Mathf.Approximately(visitor.viewCamera.fieldOfView, normal), key + " não encerrou o foco");
+                Check(!visitor.IsFocusMode, key + " não encerrou o foco");
                 Keys(); yield return 2;
+                foreach (int wait in WaitForNormalView(visitor, normal, key + " não restaurou a visão")) yield return wait;
                 if (visitor.InspectedExhibit != null) visitor.EndInspection();
             }
-            report.Add("WASD, setas, Shift, E, espaço, C, R e Esc encerram o foco imediatamente");
+            report.Add("WASD, setas, Shift, E, espaço, C, R e Esc encerram o foco imediatamente, e a visão volta ao normal");
             visitor.ResetVisitor(); visitor.Resume();
             Keys(Key.Z, Key.W); yield return 3;
             Check(!visitor.IsFocusMode, "Z simultâneo a movimento ativou o foco");
@@ -134,7 +141,8 @@ namespace MuseuVirtual.Editor
             Keys(Key.Z); yield return 3;
             Keys(); yield return 2;
             visitor.SendMessage("OnApplicationFocus", false);
-            Check(visitor.IsPaused && !visitor.IsFocusMode && Mathf.Approximately(visitor.viewCamera.fieldOfView, normal), "Perda de foco da janela não restaurou visão");
+            Check(visitor.IsPaused && !visitor.IsFocusMode, "Perda de foco da janela não encerrou o foco");
+            foreach (int wait in WaitForNormalView(visitor, normal, "Perda de foco da janela não restaurou visão")) yield return wait;
             visitor.Resume(); Keys(Key.Z); yield return 3;
             Keys(); yield return 2;
             visitor.enabled = false;
@@ -152,93 +160,54 @@ namespace MuseuVirtual.Editor
 
             UnityEngine.SceneManagement.SceneManager.LoadScene("Museu");
             yield return 5;
-            visitor = Object.FindAnyObjectByType<MuseumVisitor>();
-            visitor.Resume();
-            var start = visitor.transform.position;
-            // Walk from the Atari spawn toward the new display; walls/furniture must not trap us.
-            for (int i = 0; i < 40; i++) visitor.Move(Vector2.left, false, 1f / 60f);
-            Check(visitor.transform.position.x < start.x - 1.5f, "Caminho até o MicroFlex bloqueado");
-            visitor.Pause();
-            var cabinet = GameObject.Find("MFX_Exposicao").GetComponentsInChildren<MuseumExhibit>().Single(p => !p.CanPickUp);
-            var center = cabinet.GetComponentInChildren<Collider>().bounds.center;
-            visitor.viewCamera.transform.LookAt(center);
-            Physics.SyncTransforms();
-            Check(visitor.FindExhibit() == cabinet, "Gabinete inacessível na cena principal");
-            Capture(visitor.viewCamera, "museu-mfx");
-            visitor.viewCamera.fieldOfView = 30;
-            Capture(visitor.viewCamera, "museu-mfx-foco");
-            visitor.CancelFocus();
-            var exhibitKeyboard = GameObject.Find("MFX_Exposicao").GetComponentsInChildren<MuseumExhibit>().Single(p => p.CanPickUp);
-            var keyboardHome = exhibitKeyboard.transform.parent;
-            visitor.BeginInspection(exhibitKeyboard);
-            yield return 3;
-            Check(visitor.InspectedExhibit == exhibitKeyboard && exhibitKeyboard.transform.parent == visitor.viewCamera.transform,
-                "Teclado da cena principal não permaneceu em inspeção");
-            Capture(visitor.viewCamera, "museu-teclado-inspecao");
-            var alignedRotation = exhibitKeyboard.transform.localRotation;
-            Keys(Key.Z); yield return 3;
-            Check(visitor.IsFocusMode, "Z não ativou foco durante inspeção");
-            Keys(); yield return 2;
-            InputSystem.QueueStateEvent(mouse, new MouseState { delta = new Vector2(30, 10) }.WithButton(MouseButton.Left));
-            yield return 3;
-            Check(!visitor.IsFocusMode && Quaternion.Angle(alignedRotation, exhibitKeyboard.transform.localRotation) > 1,
-                "Arrastar não girou o teclado/encerrou foco");
-            InputSystem.QueueStateEvent(mouse, new MouseState()); yield return 2;
-            Keys(Key.R); yield return 3;
-            Check(Quaternion.Angle(alignedRotation, exhibitKeyboard.transform.localRotation) < 0.01f, "R não realinhou teclado");
-            Keys(); yield return 2;
-            Keys(Key.E); yield return 3;
-            Check(visitor.InspectedExhibit == null && exhibitKeyboard.transform.parent == keyboardHome, "E não devolveu teclado");
-            Keys(); yield return 2;
-            visitor.Pause();
-            report.Add("Teclado na cena principal: Z, arrastar para girar/cancelar foco, R para realinhar e E para devolver aprovados");
+            foreach (int wait in MuseumGalleryValidation.Run(keyboard, mouse, report)) yield return wait;
+        }
 
-            // The Telejogo display sits to the right of the Atari; the console is taken with real input.
-            visitor.ResetVisitor(); visitor.Resume();
-            start = visitor.transform.position;
-            for (int i = 0; i < 40; i++) visitor.Move(Vector2.right, false, 1f / 60f);
-            Check(visitor.transform.position.x > start.x + 1.5f, "Caminho até o Telejogo bloqueado");
-            Physics.SyncTransforms();
-            var telejogo = GameObject.Find("TJG_Exposicao").GetComponentInChildren<MuseumExhibit>();
-            var telejogoCollider = telejogo.GetComponentInChildren<Collider>();
-            var telejogoHome = telejogo.transform.parent;
-            var telejogoPosition = telejogo.transform.position;
-            var telejogoRotation = telejogo.transform.rotation;
-            Capture(visitor.viewCamera, "museu-tjg", "Logs/TJG06");
-            visitor.viewCamera.fieldOfView = 30;
-            Capture(visitor.viewCamera, "museu-tjg-foco", "Logs/TJG06");
-            visitor.CancelFocus();
-            Keys(Key.E); yield return 3;
-            Check(visitor.InspectedExhibit == telejogo && telejogo.transform.parent == visitor.viewCamera.transform && !telejogoCollider.enabled,
-                "E não retirou o Telejogo");
-            Capture(visitor.viewCamera, "museu-tjg-inspecao", "Logs/TJG06");
-            Keys(); yield return 2;
-            var telejogoAligned = telejogo.transform.localRotation;
-            InputSystem.QueueStateEvent(mouse, new MouseState { delta = new Vector2(30, 10) }.WithButton(MouseButton.Left));
-            yield return 3;
-            Check(Quaternion.Angle(telejogoAligned, telejogo.transform.localRotation) > 1, "Arrastar não girou o Telejogo");
-            InputSystem.QueueStateEvent(mouse, new MouseState()); yield return 2;
-            Keys(Key.R); yield return 3;
-            Check(Quaternion.Angle(telejogoAligned, telejogo.transform.localRotation) < 0.01f, "R não realinhou o Telejogo");
-            Keys(); yield return 2;
-            float telejogoDepth = telejogo.transform.localPosition.z;
-            InputSystem.QueueStateEvent(mouse, new MouseState { scroll = new Vector2(0, -1) }); yield return 3;
-            Check(Mathf.Abs(telejogo.transform.localPosition.z - telejogoDepth - MuseumVisitor.InspectionZoomPerNotch) < 0.001f,
-                "Um clique da roda não afastou o Telejogo: " + (telejogo.transform.localPosition.z - telejogoDepth).ToString("F4"));
-            InputSystem.QueueStateEvent(mouse, new MouseState { scroll = new Vector2(0, 1) }); yield return 3;
-            Check(Mathf.Abs(telejogo.transform.localPosition.z - telejogoDepth) < 0.001f, "Um clique da roda não aproximou o Telejogo");
-            Keys(Key.E); yield return 3;
-            Check(visitor.InspectedExhibit == null && telejogo.transform.parent == telejogoHome && telejogoCollider.enabled
-                && Vector3.Distance(telejogo.transform.position, telejogoPosition) < 0.0001f
-                && Quaternion.Angle(telejogo.transform.rotation, telejogoRotation) < 0.01f, "E não devolveu o Telejogo");
-            Keys(); yield return 2;
-            visitor.Pause();
-            report.Add("Telejogo na cena principal: trajeto livre, E retira, arrastar gira, R realinha, a roda afasta e aproxima e E devolve à pose original; capturas normal/foco/inspeção geradas");
+        // One (seconds since the view started moving, field of view) sample per frame, until it settles.
+        static IEnumerable<int> TraceZoom(Camera camera, float target, List<Vector2> trace)
+        {
+            double until = EditorApplication.timeSinceStartup + 3;
+            float start = camera.fieldOfView;
+            while (Mathf.Abs(camera.fieldOfView - start) < 0.02f && EditorApplication.timeSinceStartup < until) yield return 1;
+            float origin = Time.unscaledTime - Time.unscaledDeltaTime;
+            while (EditorApplication.timeSinceStartup < until)
+            {
+                trace.Add(new Vector2(Time.unscaledTime - origin, camera.fieldOfView));
+                if (Mathf.Abs(camera.fieldOfView - target) < 0.02f) yield break;
+                yield return 1;
+            }
+        }
 
-            visitor.viewCamera.transform.position = new Vector3(14.2f, 2.1f, 1.2f);
-            visitor.viewCamera.transform.LookAt(new Vector3(14.2f, 1.3f, 3.4f));
-            Capture(visitor.viewCamera, "museu-exposicoes");
-            report.Add("Cena Museu: trajeto Atari→MicroFlex livre, gabinete selecionável e capturas normal/foco geradas");
+        static IEnumerable<int> WaitForNormalView(MuseumVisitor visitor, float normal, string failure)
+        {
+            double until = EditorApplication.timeSinceStartup + 3;
+            while (visitor.viewCamera.fieldOfView != normal && EditorApplication.timeSinceStartup < until) yield return 1;
+            Check(Mathf.Approximately(visitor.viewCamera.fieldOfView, normal), failure + ": " + visitor.viewCamera.fieldOfView + "°");
+        }
+
+        // Compares what the visitor sees: both directions must cover the same share of the change
+        // in image size, 1/tan(fov/2), in the same time. A frame is the finest step the trace can tell.
+        static void CheckZoomSymmetry(List<Vector2> zoomIn, List<Vector2> zoomOut, float normal, float zoomed)
+        {
+            float Longest(List<Vector2> trace) => trace.Select((sample, i) => sample.x - (i > 0 ? trace[i - 1].x : 0)).DefaultIfEmpty(0).Max();
+            float longestFrame = Mathf.Max(Longest(zoomIn), Longest(zoomOut));
+            foreach (float share in new[] { 0.5f, 0.9f })
+            {
+                float entering = TimeToSizeChange(zoomIn, normal, zoomed, share);
+                float leaving = TimeToSizeChange(zoomOut, zoomed, normal, share);
+                Check(Mathf.Abs(entering - leaving) <= 0.01f + 2 * longestFrame,
+                    "Zoom assimétrico em " + share + ": entrada " + entering + " s, saída " + leaving + " s");
+                report.Add("Zoom, " + Mathf.RoundToInt(share * 100) + "% da mudança de tamanho da imagem: entrada em "
+                    + Mathf.RoundToInt(entering * 1000) + " ms, saída em " + Mathf.RoundToInt(leaving * 1000) + " ms");
+            }
+        }
+
+        static float TimeToSizeChange(List<Vector2> trace, float from, float to, float share)
+        {
+            float Size(float fieldOfView) => Mathf.Log(Mathf.Tan(fieldOfView * 0.5f * Mathf.Deg2Rad));
+            foreach (var sample in trace)
+                if ((Size(sample.y) - Size(from)) / (Size(to) - Size(from)) >= share) return sample.x;
+            return float.PositiveInfinity;
         }
 
         static void ValidateCollection(MuseumVisitor visitor, string path, string captureFolder)
@@ -287,7 +256,7 @@ namespace MuseuVirtual.Editor
             finally { visitor.Pause(); Object.DestroyImmediate(collection); }
         }
 
-        static void Capture(Camera camera, string name, string folder = "Logs/MFX06")
+        internal static void Capture(Camera camera, string name, string folder = "Logs/MFX06")
         {
             var target = new RenderTexture(1600, 900, 24);
             var previous = camera.targetTexture;

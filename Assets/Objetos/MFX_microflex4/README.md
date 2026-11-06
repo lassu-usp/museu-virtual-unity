@@ -11,16 +11,16 @@ Gabinete estático com `BoxCollider`, alça fixa e ficha informativa. Teclado pe
 
 Materiais URP Lit com BaseColor sRGB; Normal, MetallicSmoothness e Occlusion lineares. Geometria em metros, Y para cima, pivôs e giro relativo do teclado preservados. Cada peça possui seu próprio LODGroup; transições desktop 0,30 / 0,12 / 0,004 e WebGL 0,25 / 0,004. Inspeção força o nível mais detalhado.
 
-`Museu.unity` contém o expositor à esquerda do Atari. `MFX_Validacao.unity` permite observar a montagem sob iluminação neutra. O processador WebGL troca automaticamente os prefabs na cópia de build, preservando posição, rotação, escala e estado ativo.
+Em `Museu.unity`, o MicroFlex-4 fica no pedestal `Exhibit_01` da sala de 1980. `MFX_Validacao.unity` permite observar a montagem sob iluminação neutra. O processador WebGL troca automaticamente o prefab na cópia de build.
 
 ## Reprodução
 
 No menu **Museu › MicroFlex**:
 
 1. **Importar pacote e montar prefabs** copia os entregáveis do repositório irmão, configura importadores e gera os dois prefabs. `MicroflexIntegration.BuildPrefabs()` também permite reconstruí-los usando somente as cópias deste repositório.
-2. **Adicionar exposição e cena de validação** configura a ação Z, adiciona a exposição caso ainda não exista e recria a cena isolada. A posição de uma exposição existente é preservada.
+2. **Adicionar exposição e cena de validação** configura a ação Z, instala as peças nos pedestais da galeria e recria a cena isolada.
 3. **Validar integração** verifica hierarquia, escala, triângulos, materiais, texturas, colisores e substituição WebGL. Relatório em `Logs/MFX06/asset-validation.txt`.
 
-Em uma instância batch dedicada, `-executeMethod MuseuVirtual.Editor.MicroflexValidation.IntegrateBatch` executa importação e validação dos assets. `-executeMethod MuseuVirtual.Editor.MuseumFocusValidation.RunBatch` testa entradas no Play Mode, inspeção/devolução dos dois MFX e regressão do Atari; grava relatório e imagens em `Logs/MFX06/` e encerra o Editor com código 0 ou 1. Não execute esses métodos de batch na sessão de edição interativa.
+Em uma instância batch dedicada, `-executeMethod MuseuVirtual.Editor.MicroflexValidation.IntegrateBatch` executa importação e validação dos assets. `-executeMethod MuseuVirtual.Editor.MuseumFocusValidation.RunBatch` testa entradas no Play Mode, inspeção/devolução dos dois MFX e regressão do Atari, e percorre a galeria; grava relatório e imagens em `Logs/MFX06/` e `Logs/Galeria/` e encerra o Editor com código 0 ou 1. Não execute esses métodos de batch na sessão de edição interativa.
 
-O zoom geral usa `Player/Focus` (Z), alterna FOV 60°/30° e mantém o olhar disponível. Movimento, outros comandos, pausa e perda de foco da janela restauram a visão original. A validação inclui entradas simultâneas, movimento mantido e movimento analógico lento.
+O zoom geral usa `Player/Focus` (Z), reduz o campo de visão pela metade e mantém o olhar disponível. Movimento, outros comandos, pausa e perda de foco da janela restauram a visão original. A validação inclui entradas simultâneas, movimento mantido e movimento analógico lento.

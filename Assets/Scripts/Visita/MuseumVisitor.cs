@@ -13,12 +13,16 @@ namespace MuseuVirtual
         public float walkSpeed = 2.6f;
         public float sprintSpeed = 4.5f;
         public float mouseSensitivity = 0.09f;
+        public float gamepadLookSpeed = 100f;
+        [Range(30f, 89f)] public float verticalLookLimit = 80f;
         public float interactionDistance = 2f;
         public float initialPitch = 12f;
         public float fallResetHeight = -3f;
         [Range(1.1f, 4f)] public float focusMagnification = 2f;
         public float focusTransitionSpeed = 14f;
         [Min(0)] public float inspectionLightIntensity = 0.025f;
+        // Held pieces come closer to the eye than anything the visitor walks up to.
+        [Min(0.01f)] public float inspectionNearClip = 0.02f;
         InputActionAsset actions;
         InputAction move, look, sprint, interact, focus;
         InputActionMap playerActions;
@@ -29,14 +33,20 @@ namespace MuseuVirtual
         Quaternion inspectionRotation;
         bool walking;
         float normalFieldOfView;
+        float normalNearClip;
         Light viewLight;
         float normalLightIntensity;
+        int interactConsumedFrame = -1;
         RaycastHit[] interactionHits = new RaycastHit[16];
         public MuseumExhibit FocusedExhibit { get; private set; }
         public MuseumExhibit InspectedExhibit { get; private set; }
         public bool IsWalking => walking && InspectedExhibit == null;
         public bool IsPaused => !walking && InspectedExhibit == null;
         public bool IsFocusMode { get; private set; }
+        public Transform ViewPivot => viewCamera.transform;
+        // False on the frame a press started or ended an inspection, so it cannot also reach a gate.
+        public bool InteractPressedThisFrame => interact != null && interact.WasPressedThisFrame()
+            && interactConsumedFrame != Time.frameCount;
 
         void Awake()
         {
@@ -46,6 +56,7 @@ namespace MuseuVirtual
             pitch = initialPitch;
             viewCamera.transform.localRotation = Quaternion.Euler(pitch, 0, 0);
             normalFieldOfView = viewCamera.fieldOfView;
+            normalNearClip = viewCamera.nearClipPlane;
             viewLight = viewCamera.GetComponent<Light>();
             if (viewLight != null) normalLightIntensity = viewLight.intensity;
             actions = Instantiate(inputActions);
@@ -61,9 +72,10 @@ namespace MuseuVirtual
         void OnDisable()
         {
             CancelFocus();
+            RestoreFieldOfView();
             if (InspectedExhibit != null) InspectedExhibit.ReturnToDisplay();
             InspectedExhibit = null;
-            RestoreViewLight();
+            RestoreInspectionView();
             if (actions != null) actions.Disable();
             SetCursor(false);
         }
@@ -106,10 +118,10 @@ namespace MuseuVirtual
             // Browsers may release pointer lock independently when Escape is pressed.
             if (!Application.isBatchMode && Cursor.lockState != CursorLockMode.Locked) { Pause(); return; }
             Vector2 delta = look.ReadValue<Vector2>();
-            float factor = look.activeControl?.device is Mouse ? mouseSensitivity : 100f * Time.deltaTime;
+            float factor = look.activeControl?.device is Mouse ? mouseSensitivity : gamepadLookSpeed * Time.deltaTime;
             factor *= viewCamera.fieldOfView / normalFieldOfView;
             transform.Rotate(Vector3.up, delta.x * factor, Space.World);
-            pitch = Mathf.Clamp(pitch - delta.y * factor, -80f, 80f);
+            pitch = Mathf.Clamp(pitch - delta.y * factor, -verticalLookLimit, verticalLookLimit);
             viewCamera.transform.localRotation = Quaternion.Euler(pitch, 0, 0);
             Vector2 input = Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f);
             Move(input, sprint.IsPressed(), Time.deltaTime);
@@ -157,9 +169,13 @@ namespace MuseuVirtual
             CancelFocus();
             if (exhibit == null || InspectedExhibit != null) return;
             InspectedExhibit = exhibit;
-            // A fill light at inspection distance can wash out pale objects and their labels.
-            if (exhibit.CanPickUp && viewLight != null)
-                viewLight.intensity = Mathf.Min(normalLightIntensity, inspectionLightIntensity);
+            interactConsumedFrame = Time.frameCount;
+            if (exhibit.CanPickUp)
+            {
+                // A fill light at inspection distance can wash out pale objects and their labels.
+                if (viewLight != null) viewLight.intensity = Mathf.Min(normalLightIntensity, inspectionLightIntensity);
+                viewCamera.nearClipPlane = Mathf.Min(normalNearClip, inspectionNearClip);
+            }
             exhibit.BeginInspection(viewCamera.transform);
             inspectionRotation = exhibit.transform.localRotation;
             inspectionDistance = 0.32f;
@@ -187,7 +203,8 @@ namespace MuseuVirtual
             CancelFocus();
             if (InspectedExhibit != null) InspectedExhibit.ReturnToDisplay();
             InspectedExhibit = null;
-            RestoreViewLight();
+            interactConsumedFrame = Time.frameCount;
+            RestoreInspectionView();
             walking = resume;
             SetCursor(resume);
         }
@@ -195,6 +212,7 @@ namespace MuseuVirtual
         public void ResetVisitor()
         {
             CancelFocus();
+            RestoreFieldOfView();
             if (InspectedExhibit != null) EndInspection(false);
             controller.enabled = false;
             transform.SetPositionAndRotation(spawnPosition, spawnRotation);
@@ -235,10 +253,27 @@ namespace MuseuVirtual
 
         void LateUpdate()
         {
-            if (!IsFocusMode) return;
-            float target = normalFieldOfView / Mathf.Max(1.1f, focusMagnification);
-            viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, target,
-                1f - Mathf.Exp(-focusTransitionSpeed * Time.unscaledDeltaTime));
+            float current = viewCamera.fieldOfView;
+            if (!IsFocusMode && current >= normalFieldOfView) return;
+            float focused = normalFieldOfView / Mathf.Max(1.1f, focusMagnification);
+            float step = 1f - Mathf.Exp(-focusTransitionSpeed * Time.unscaledDeltaTime);
+            if (IsFocusMode)
+            {
+                viewCamera.fieldOfView = Mathf.Lerp(current, focused, step);
+                return;
+            }
+            // Leaving focus runs the way in on the mirrored angle: the image shrinks by what it grew.
+            float next = MirrorFieldOfView(Mathf.Lerp(MirrorFieldOfView(current, focused), focused, step), focused);
+            viewCamera.fieldOfView = normalFieldOfView - next < 0.01f ? normalFieldOfView : next;
+        }
+
+        // Image size follows 1/tan(fov/2), so equal steps in degrees look larger at a narrow angle.
+        // This swaps the two ends of the zoom and inverts every image size between them.
+        float MirrorFieldOfView(float fieldOfView, float focused)
+        {
+            float wide = Mathf.Tan(normalFieldOfView * 0.5f * Mathf.Deg2Rad);
+            float narrow = Mathf.Tan(focused * 0.5f * Mathf.Deg2Rad);
+            return 2f * Mathf.Rad2Deg * Mathf.Atan(wide * narrow / Mathf.Tan(fieldOfView * 0.5f * Mathf.Deg2Rad));
         }
 
         public void ToggleFocus()
@@ -247,15 +282,19 @@ namespace MuseuVirtual
             IsFocusMode = true;
         }
 
-        public void CancelFocus()
+        // LateUpdate eases the view back.
+        public void CancelFocus() => IsFocusMode = false;
+
+        // For when easing does not apply: a disabled visitor gets no LateUpdate, and a reset is a cut.
+        void RestoreFieldOfView()
         {
-            IsFocusMode = false;
             if (viewCamera != null && normalFieldOfView > 0) viewCamera.fieldOfView = normalFieldOfView;
         }
 
-        void RestoreViewLight()
+        void RestoreInspectionView()
         {
             if (viewLight != null) viewLight.intensity = normalLightIntensity;
+            if (viewCamera != null && normalNearClip > 0) viewCamera.nearClipPlane = normalNearClip;
         }
     }
 }

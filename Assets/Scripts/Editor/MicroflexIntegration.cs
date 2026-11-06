@@ -76,14 +76,9 @@ namespace MuseuVirtual.Editor
             if (EditorApplication.isPlaying) throw new InvalidOperationException("Saia do Play Mode antes de montar as cenas.");
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
             ConfigureFocusAction();
-            var scene = EditorSceneManager.OpenScene("Assets/Scenes/Museu.unity");
-            var existing = GameObject.Find("MFX_Exposicao");
-            // Rebuilding is idempotent and preserves the curator's placement.
-            if (existing == null) CreateExhibition(new Vector3(13.3f, 0.3011f, 3.4f));
-            EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene);
+            MuseumCollectionPlacement.Apply();
             CreateValidationScene();
-            EditorSceneManager.OpenScene("Assets/Scenes/Museu.unity");
+            EditorSceneManager.OpenScene(MuseumCollectionPlacement.ScenePath);
             AssetDatabase.SaveAssets();
         }
 
