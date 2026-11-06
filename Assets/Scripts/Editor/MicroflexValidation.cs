@@ -88,20 +88,20 @@ namespace MuseuVirtual.Editor
                 }
                 finally { PrefabUtility.UnloadPrefabContents(prefab); }
             }
-            ValidateWebReplacement();
+            ValidateWebReplacement(AtariIntegration.DesktopPrefab, MicroflexIntegration.DesktopPrefab);
             report.Add("Substituição WebGL de ATR e MFX: variantes, poses e estado ativo preservados");
             Directory.CreateDirectory("Logs/MFX06");
             File.WriteAllLines("Logs/MFX06/asset-validation.txt", report);
             Debug.Log(string.Join("\n", report));
         }
 
-        static void ValidateWebReplacement()
+        public static void ValidateWebReplacement(params string[] desktopPrefabs)
         {
             var previous = SceneManager.GetActiveScene();
             var scene = EditorSceneManager.NewPreviewScene();
             try
             {
-                foreach (string path in new[] { AtariIntegration.DesktopPrefab, MicroflexIntegration.DesktopPrefab })
+                foreach (string path in desktopPrefabs)
                 {
                     var item = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(path), scene);
                     item.transform.SetPositionAndRotation(new Vector3(3, 2, 1), Quaternion.Euler(0, 32, 0));
@@ -110,7 +110,7 @@ namespace MuseuVirtual.Editor
                 }
                 MuseumWebGLProcessor.ReplaceCollections(scene);
                 var roots = scene.GetRootGameObjects();
-                Require(roots.Length == 2, "Substituição duplicou/removeu peças");
+                Require(roots.Length == desktopPrefabs.Length, "Substituição duplicou/removeu peças");
                 foreach (var root in roots)
                 {
                     Require(!root.activeSelf && root.transform.position == new Vector3(3, 2, 1)

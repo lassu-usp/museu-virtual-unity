@@ -45,7 +45,7 @@ museu-virtual-unity    etapa 6 em diante: materiais URP, LODGroup, física, pref
 | `MFX` | MicroFlex-4 | `PF_MFX_Microflex4` | em revisão: gabinete fixo, teclado pegável e variantes desktop/WebGL integrados |
 | `MOT` | Motorola | — | não iniciada |
 | `ORE` | Orelhão | — | não iniciada |
-| `TJG` | Telejogo | — | não iniciada |
+| `TJG` | Telejogo | `PF_TJG_Telejogo` | em revisão: console pegável e variantes desktop/WebGL integrados; pacote ainda sem revisão no `museu-virtual-3d` |
 
 Status possíveis: `não iniciada` · `em andamento` · `em revisão` · `concluída`. O andamento da modelagem (etapas 0 a 5) e os responsáveis ficam na tabela de objetos do `museu-virtual-3d`.
 
@@ -173,13 +173,13 @@ Deste repositório:
 | Dinâmica | Descrição | Status |
 |---|---|---|
 | Navegação em primeira pessoa | andar, olhar em volta e correr, com teclado e mouse | implementada |
-| Peça estática | permanece na exposição e apresenta sua descrição | implementada no console |
-| Peça pegável | o visitante pega, gira, aproxima e devolve a peça | implementada no joystick e nos paddles |
+| Peça estática | permanece na exposição e apresenta sua descrição | implementada no console do Atari e no gabinete do MicroFlex-4 |
+| Peça pegável | o visitante pega, gira, aproxima e devolve a peça | implementada no joystick, nos paddles, no teclado do MicroFlex-4 e no console do Telejogo |
 | Peça removível | a peça sai do encaixe e retorna à pose original | implementada no cartucho |
 
 A dinâmica de cada peça vem do `manifesto.json` e da ficha do objeto. O código fica em `Assets/Scripts/` e usa as ações de `InputSystem_Actions.inputactions` (veja [Convenções](#convenções)).
 
-Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / continuar a visita**. O visitante começa diante da exposição do Atari; o MicroFlex-4 está no expositor à esquerda.
+Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / continuar a visita**. O visitante começa diante da exposição do Atari; o MicroFlex-4 está no expositor à esquerda e o Telejogo, no expositor à direita.
 
 | Controle | Ação |
 |---|---|
@@ -200,12 +200,15 @@ O foco aproxima suavemente a visão, reduzindo o campo de visão de 60° para 30
 
 `Assets/Scenes/MFX_Validacao.unity` apresenta o MicroFlex-4 com luz neutra. O menu **Museu › MicroFlex** importa o pacote do repositório irmão, monta os prefabs, adiciona a exposição e valida os assets. Gabinete e alça permanecem fixos; o teclado pode ser retirado, girado, aproximado e devolvido. A [ficha de integração](Assets/Objetos/MFX_microflex4/README.md) registra a origem e a validação.
 
+`Assets/Scenes/TJG_Validacao.unity` apresenta o Telejogo com luz neutra. O menu **Museu › Telejogo** monta os prefabs a partir das cópias deste repositório, adiciona a exposição e valida os assets. O console pode ser retirado, girado, aproximado e devolvido. A [ficha de integração](Assets/Objetos/TJG_telejogo/README.md) registra a origem e a validação.
+
 ## Desktop e WebGL
 
 - A primeira versão é para desktop. A de navegador (WebGL) é otimizada e usa os pacotes `webgl/` dos objetos: menos triângulos, menos níveis de detalhe e texturas menores.
-- O processador de build substitui Atari e MicroFlex pelos respectivos prefabs `_WebGL` somente na cópia da cena usada no build WebGL. A cena de edição continua usando as variantes desktop.
+- O processador de build substitui Atari, MicroFlex e Telejogo pelos respectivos prefabs `_WebGL` somente na cópia da cena usada no build WebGL. A cena de edição continua usando as variantes desktop.
 - Atari: **6.546 / 3.590 / 1.816** triângulos visuais no desktop e **3.590 / 2.112** no WebGL, com um `LODGroup` para cada uma das cinco peças. Pacotes atualizados da revisão `e5a2a16` do `museu-virtual-3d`, com a frente amadeirada corrigida e sem a caixa seletora. O último nível permanece visível até altura relativa de 0,004; a inspeção força LOD0.
 - MicroFlex: **16.242 / 9.272 / 4.208** triângulos no desktop e **10.556 / 5.278** no WebGL, com dois `LODGroup`s, atlas 2K/1K e colisores separados. Pacote da revisão `869cf9b` do `museu-virtual-3d`. O último nível usa altura relativa de 0,004 e a inspeção força LOD0.
+- Telejogo: **11.816 / 5.908 / 3.626** triângulos no desktop e **5.908 / 4.138** no WebGL, com um `LODGroup`, atlas 2K/1K e colisor de caixa. O pacote ainda não tem revisão no `museu-virtual-3d`. O último nível usa altura relativa de 0,004 e a inspeção força LOD0.
 - O URP tem dois níveis de qualidade: `PC` (`Settings/PC_RPAsset`), padrão do desktop, e `Mobile` (`Settings/Mobile_RPAsset`), padrão do WebGL.
 - Para gerar um build, use **File › Build Profiles**, escolha *Windows* ou *Web* e grave em `Builds/`, na raiz do repositório, que o Git ignora.
 

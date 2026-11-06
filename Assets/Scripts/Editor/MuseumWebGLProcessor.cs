@@ -25,6 +25,7 @@ namespace MuseuVirtual.Editor
                 {
                     case "ATR": path = AtariIntegration.WebPrefab; break;
                     case "MFX": path = MicroflexIntegration.WebPrefab; break;
+                    case "TJG": path = TelejogoIntegration.WebPrefab; break;
                     default: continue;
                 }
                 var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);

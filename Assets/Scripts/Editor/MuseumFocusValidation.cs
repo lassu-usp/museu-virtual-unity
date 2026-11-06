@@ -29,6 +29,7 @@ namespace MuseuVirtual.Editor
         {
             MicroflexValidation.ValidateAssets();
             AtariValidation.ValidateAssets();
+            TelejogoValidation.ValidateAssets();
             SessionState.SetBool(SessionKey, true);
             EditorSceneManager.OpenScene("Assets/Scenes/MFX_Validacao.unity");
             EditorApplication.isPlaying = true;
@@ -145,7 +146,9 @@ namespace MuseuVirtual.Editor
             MuseumInteractionValidation.Validate();
             report.Add("Regressão Atari: seleção, inspeção/devolução e oclusão aprovadas nos dois prefabs");
             foreach (string path in new[] { MicroflexIntegration.DesktopPrefab, MicroflexIntegration.WebPrefab })
-                ValidateMicroflex(visitor, path);
+                ValidateCollection(visitor, path, "Logs/MFX06");
+            foreach (string path in new[] { TelejogoIntegration.DesktopPrefab, TelejogoIntegration.WebPrefab })
+                ValidateCollection(visitor, path, "Logs/TJG06");
 
             UnityEngine.SceneManagement.SceneManager.LoadScene("Museu");
             yield return 5;
@@ -189,13 +192,56 @@ namespace MuseuVirtual.Editor
             Keys(); yield return 2;
             visitor.Pause();
             report.Add("Teclado na cena principal: Z, arrastar para girar/cancelar foco, R para realinhar e E para devolver aprovados");
+
+            // The Telejogo display sits to the right of the Atari; the console is taken with real input.
+            visitor.ResetVisitor(); visitor.Resume();
+            start = visitor.transform.position;
+            for (int i = 0; i < 40; i++) visitor.Move(Vector2.right, false, 1f / 60f);
+            Check(visitor.transform.position.x > start.x + 1.5f, "Caminho até o Telejogo bloqueado");
+            Physics.SyncTransforms();
+            var telejogo = GameObject.Find("TJG_Exposicao").GetComponentInChildren<MuseumExhibit>();
+            var telejogoCollider = telejogo.GetComponentInChildren<Collider>();
+            var telejogoHome = telejogo.transform.parent;
+            var telejogoPosition = telejogo.transform.position;
+            var telejogoRotation = telejogo.transform.rotation;
+            Capture(visitor.viewCamera, "museu-tjg", "Logs/TJG06");
+            visitor.viewCamera.fieldOfView = 30;
+            Capture(visitor.viewCamera, "museu-tjg-foco", "Logs/TJG06");
+            visitor.CancelFocus();
+            Keys(Key.E); yield return 3;
+            Check(visitor.InspectedExhibit == telejogo && telejogo.transform.parent == visitor.viewCamera.transform && !telejogoCollider.enabled,
+                "E não retirou o Telejogo");
+            Capture(visitor.viewCamera, "museu-tjg-inspecao", "Logs/TJG06");
+            Keys(); yield return 2;
+            var telejogoAligned = telejogo.transform.localRotation;
+            InputSystem.QueueStateEvent(mouse, new MouseState { delta = new Vector2(30, 10) }.WithButton(MouseButton.Left));
+            yield return 3;
+            Check(Quaternion.Angle(telejogoAligned, telejogo.transform.localRotation) > 1, "Arrastar não girou o Telejogo");
+            InputSystem.QueueStateEvent(mouse, new MouseState()); yield return 2;
+            Keys(Key.R); yield return 3;
+            Check(Quaternion.Angle(telejogoAligned, telejogo.transform.localRotation) < 0.01f, "R não realinhou o Telejogo");
+            Keys(); yield return 2;
+            float telejogoDepth = telejogo.transform.localPosition.z;
+            InputSystem.QueueStateEvent(mouse, new MouseState { scroll = new Vector2(0, -1) }); yield return 3;
+            Check(Mathf.Abs(telejogo.transform.localPosition.z - telejogoDepth - MuseumVisitor.InspectionZoomPerNotch) < 0.001f,
+                "Um clique da roda não afastou o Telejogo: " + (telejogo.transform.localPosition.z - telejogoDepth).ToString("F4"));
+            InputSystem.QueueStateEvent(mouse, new MouseState { scroll = new Vector2(0, 1) }); yield return 3;
+            Check(Mathf.Abs(telejogo.transform.localPosition.z - telejogoDepth) < 0.001f, "Um clique da roda não aproximou o Telejogo");
+            Keys(Key.E); yield return 3;
+            Check(visitor.InspectedExhibit == null && telejogo.transform.parent == telejogoHome && telejogoCollider.enabled
+                && Vector3.Distance(telejogo.transform.position, telejogoPosition) < 0.0001f
+                && Quaternion.Angle(telejogo.transform.rotation, telejogoRotation) < 0.01f, "E não devolveu o Telejogo");
+            Keys(); yield return 2;
+            visitor.Pause();
+            report.Add("Telejogo na cena principal: trajeto livre, E retira, arrastar gira, R realinha, a roda afasta e aproxima e E devolve à pose original; capturas normal/foco/inspeção geradas");
+
             visitor.viewCamera.transform.position = new Vector3(14.2f, 2.1f, 1.2f);
             visitor.viewCamera.transform.LookAt(new Vector3(14.2f, 1.3f, 3.4f));
             Capture(visitor.viewCamera, "museu-exposicoes");
             report.Add("Cena Museu: trajeto Atari→MicroFlex livre, gabinete selecionável e capturas normal/foco geradas");
         }
 
-        static void ValidateMicroflex(MuseumVisitor visitor, string path)
+        static void ValidateCollection(MuseumVisitor visitor, string path, string captureFolder)
         {
             var collection = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(path));
             collection.transform.SetPositionAndRotation(new Vector3(100, 1, 100), Quaternion.Euler(0, 180, 0));
@@ -225,12 +271,12 @@ namespace MuseuVirtual.Editor
                     Check(!visitor.IsFocusMode && piece.IsInspecting, "Inspeção não encerrou foco");
                     if (piece.CanPickUp)
                     {
-                        Check(piece.transform.parent == visitor.viewCamera.transform && !collider.enabled, "Teclado não foi retirado");
+                        Check(piece.transform.parent == visitor.viewCamera.transform && !collider.enabled, piece.name + " não foi retirada");
                         piece.transform.Rotate(20, 40, 10);
                         piece.PositionInView(visitor.viewCamera.transform, 0.4f);
-                        Capture(visitor.viewCamera, Path.GetFileNameWithoutExtension(path) + "-inspecao");
+                        Capture(visitor.viewCamera, Path.GetFileNameWithoutExtension(path) + "-inspecao", captureFolder);
                     }
-                    else Check(piece.transform.parent == parent && piece.transform.localPosition == position, "Gabinete foi movido");
+                    else Check(piece.transform.parent == parent && piece.transform.localPosition == position, piece.name + " foi movida");
                     visitor.EndInspection(false);
                     Check(piece.transform.parent == parent && Vector3.Distance(piece.transform.localPosition, position) < 0.0001f
                         && Quaternion.Angle(piece.transform.localRotation, rotation) < 0.01f && collider.enabled, "Devolução não restaurou pose/colisor");
@@ -241,7 +287,7 @@ namespace MuseuVirtual.Editor
             finally { visitor.Pause(); Object.DestroyImmediate(collection); }
         }
 
-        static void Capture(Camera camera, string name)
+        static void Capture(Camera camera, string name, string folder = "Logs/MFX06")
         {
             var target = new RenderTexture(1600, 900, 24);
             var previous = camera.targetTexture;
@@ -253,7 +299,8 @@ namespace MuseuVirtual.Editor
                 camera.Render();
                 RenderTexture.active = target;
                 pixels.ReadPixels(new Rect(0, 0, 1600, 900), 0, 0); pixels.Apply();
-                File.WriteAllBytes("Logs/MFX06/" + name + ".png", pixels.EncodeToPNG());
+                Directory.CreateDirectory(folder);
+                File.WriteAllBytes(folder + "/" + name + ".png", pixels.EncodeToPNG());
             }
             finally
             {

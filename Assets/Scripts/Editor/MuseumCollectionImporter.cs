@@ -38,11 +38,12 @@ namespace MuseuVirtual.Editor
             var materials = new Dictionary<string, Material>();
             foreach (var entry in ((JObject)manifest["materiais"]).Properties())
             {
-                string path = materialDirectory + "/" + entry.Name + ".mat";
+                string assetName = MaterialAssetName(entry.Name);
+                string path = materialDirectory + "/" + assetName + ".mat";
                 var material = AssetDatabase.LoadAssetAtPath<Material>(path);
                 if (material == null)
                 {
-                    material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = entry.Name };
+                    material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = assetName };
                     AssetDatabase.CreateAsset(material, path);
                 }
                 material.SetColor("_BaseColor", Color.white);
@@ -56,7 +57,7 @@ namespace MuseuVirtual.Editor
                 material.EnableKeyword("_NORMALMAP"); material.EnableKeyword("_METALLICSPECGLOSSMAP");
                 material.EnableKeyword("_OCCLUSIONMAP");
                 EditorUtility.SetDirty(material);
-                materials.Add(entry.Name, material);
+                materials.Add(assetName, material);
             }
             foreach (string path in Directory.GetFiles(directory,"*.fbx"))
             {
@@ -68,8 +69,8 @@ namespace MuseuVirtual.Editor
                 importer.importAnimation = false;
                 importer.isReadable = path.Contains("_COL");
                 importer.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
-                foreach (var material in materials)
-                    importer.AddRemap(new AssetImporter.SourceAssetIdentifier(typeof(Material),material.Key), material.Value);
+                foreach (var entry in ((JObject)manifest["materiais"]).Properties())
+                    importer.AddRemap(new AssetImporter.SourceAssetIdentifier(typeof(Material),entry.Name), materials[MaterialAssetName(entry.Name)]);
                 importer.SaveAndReimport();
             }
             int count = variant == "desktop" ? 3 : 2;
@@ -130,6 +131,9 @@ namespace MuseuVirtual.Editor
         }
 
         static Texture2D Texture(string directory,JToken entry,string name) => AssetDatabase.LoadAssetAtPath<Texture2D>(directory+"/"+(string)entry[name]);
+
+        // Some packages name materials M_<CODE>_<Part>; project assets always use MAT_<CODE>_<Part>.
+        static string MaterialAssetName(string packageName) => packageName.StartsWith("M_") ? "MAT_" + packageName.Substring(2) : packageName;
 
     }
 }
