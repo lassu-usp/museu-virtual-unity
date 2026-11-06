@@ -221,13 +221,19 @@ namespace MuseuVirtual.Editor
             Keys(Key.R); yield return 3;
             Check(Quaternion.Angle(telejogoAligned, telejogo.transform.localRotation) < 0.01f, "R não realinhou o Telejogo");
             Keys(); yield return 2;
+            float telejogoDepth = telejogo.transform.localPosition.z;
+            InputSystem.QueueStateEvent(mouse, new MouseState { scroll = new Vector2(0, -1) }); yield return 3;
+            Check(Mathf.Abs(telejogo.transform.localPosition.z - telejogoDepth - MuseumVisitor.InspectionZoomPerNotch) < 0.001f,
+                "Um clique da roda não afastou o Telejogo: " + (telejogo.transform.localPosition.z - telejogoDepth).ToString("F4"));
+            InputSystem.QueueStateEvent(mouse, new MouseState { scroll = new Vector2(0, 1) }); yield return 3;
+            Check(Mathf.Abs(telejogo.transform.localPosition.z - telejogoDepth) < 0.001f, "Um clique da roda não aproximou o Telejogo");
             Keys(Key.E); yield return 3;
             Check(visitor.InspectedExhibit == null && telejogo.transform.parent == telejogoHome && telejogoCollider.enabled
                 && Vector3.Distance(telejogo.transform.position, telejogoPosition) < 0.0001f
                 && Quaternion.Angle(telejogo.transform.rotation, telejogoRotation) < 0.01f, "E não devolveu o Telejogo");
             Keys(); yield return 2;
             visitor.Pause();
-            report.Add("Telejogo na cena principal: trajeto livre, E retira, arrastar gira, R realinha e E devolve à pose original; capturas normal/foco/inspeção geradas");
+            report.Add("Telejogo na cena principal: trajeto livre, E retira, arrastar gira, R realinha, a roda afasta e aproxima e E devolve à pose original; capturas normal/foco/inspeção geradas");
 
             visitor.viewCamera.transform.position = new Vector3(14.2f, 2.1f, 1.2f);
             visitor.viewCamera.transform.LookAt(new Vector3(14.2f, 1.3f, 3.4f));

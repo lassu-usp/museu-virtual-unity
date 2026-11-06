@@ -6,6 +6,8 @@ namespace MuseuVirtual
     [RequireComponent(typeof(CharacterController))]
     public sealed class MuseumVisitor : MonoBehaviour
     {
+        // The Input System reports one wheel notch as one unit on every platform.
+        public const float InspectionZoomPerNotch = 0.06f;
         public InputActionAsset inputActions;
         public Camera viewCamera;
         public float walkSpeed = 2.6f;
@@ -175,7 +177,7 @@ namespace MuseuVirtual
                 exhibit.transform.Rotate(viewCamera.transform.up, -delta.x * 0.3f, Space.World);
                 exhibit.transform.Rotate(viewCamera.transform.right, delta.y * 0.3f, Space.World);
             }
-            inspectionDistance = Mathf.Clamp(inspectionDistance - Mouse.current.scroll.ReadValue().y * 0.0005f, 0.2f, 0.7f);
+            inspectionDistance = Mathf.Clamp(inspectionDistance - Mouse.current.scroll.ReadValue().y * InspectionZoomPerNotch, 0.2f, 0.7f);
             if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame) exhibit.transform.localRotation = inspectionRotation;
             exhibit.PositionInView(viewCamera.transform, inspectionDistance);
         }
