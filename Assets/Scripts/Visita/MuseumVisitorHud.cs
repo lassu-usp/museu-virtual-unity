@@ -38,7 +38,7 @@ namespace MuseuVirtual
                 Panel(new Rect(490,215,620,475));
                 GUI.Label(new Rect(528,246,540,40), "Explore o museu", heading);
                 GUI.Label(new Rect(528,310,540,80), "Explore as salas e aproxime-se das peças para conhecer o acervo.", body);
-                GUI.Label(new Rect(528,407,540,115), "W A S D   mover     ·     Mouse   olhar\nShift   correr     ·     E   interagir\nEsc   liberar o cursor e pausar", body);
+                GUI.Label(new Rect(528,407,540,135), "W A S D   mover     ·     Mouse   olhar\nShift   correr     ·     E   interagir\nZ   ativar / desativar foco\nEsc   liberar o cursor e pausar", body);
                 if (GUI.Button(new Rect(528,557,540,55), "Entrar / continuar a visita", button)) visitor.Resume();
                 if (GUI.Button(new Rect(528,625,540,38), "Voltar ao ponto inicial", caption)) visitor.ResetVisitor();
             }
@@ -60,8 +60,13 @@ namespace MuseuVirtual
                     Panel(new Rect(500,680,600,82));
                     GUI.Label(new Rect(520,691,560,58), visitor.FocusedExhibit.displayName + "\n" + (visitor.FocusedExhibit.CanPickUp ? "Pegar e examinar" : "Conhecer a peça"), centered);
                 }
-                Panel(new Rect(340,815,920,55));
-                GUI.Label(new Rect(357,826,886,34), "WASD  mover     ·     Mouse  olhar     ·     Shift  correr     ·     E  interagir     ·     Esc  pausar", centered);
+                Panel(new Rect(220,815,1160,55));
+                GUI.Label(new Rect(237,826,1126,34), "WASD  mover     ·     Mouse  olhar     ·     Shift  correr     ·     E  interagir     ·     Z  foco     ·     Esc  pausar", centered);
+            }
+            if (visitor.IsFocusMode)
+            {
+                Panel(new Rect(500,120,600,70));
+                GUI.Label(new Rect(518,130,564,52), "FOCO  ·  Z para sair\nMover ou realizar outra ação encerra o foco", centered);
             }
             GUI.matrix = Matrix4x4.identity;
         }
