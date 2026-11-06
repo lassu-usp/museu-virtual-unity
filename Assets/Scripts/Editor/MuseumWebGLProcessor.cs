@@ -12,13 +12,26 @@ namespace MuseuVirtual.Editor
         public void OnProcessScene(Scene scene, BuildReport report)
         {
             if (report == null || report.summary.platform != BuildTarget.WebGL) return;
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(AtariIntegration.WebPrefab);
-            if (prefab == null) throw new BuildFailedException("Prefab WebGL do Atari não encontrado.");
+            ReplaceCollections(scene);
+        }
+
+        public static void ReplaceCollections(Scene scene)
+        {
             foreach (var root in scene.GetRootGameObjects())
             foreach (var item in root.GetComponentsInChildren<MuseumCollectionItem>(true))
             {
-                if (item.objectCode != "ATR") continue;
+                string path;
+                switch (item.objectCode)
+                {
+                    case "ATR": path = AtariIntegration.WebPrefab; break;
+                    case "MFX": path = MicroflexIntegration.WebPrefab; break;
+                    default: continue;
+                }
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (prefab == null) throw new BuildFailedException("Prefab WebGL não encontrado: " + path);
                 var replacement = Object.Instantiate(prefab, item.transform.parent);
+                if (replacement.transform.parent == null && replacement.scene != scene)
+                    SceneManager.MoveGameObjectToScene(replacement, scene);
                 replacement.name = item.name;
                 replacement.transform.localPosition = item.transform.localPosition;
                 replacement.transform.localRotation = item.transform.localRotation;

@@ -1,0 +1,178 @@
+{
+  "alvo": "webgl",
+  "unidade": "metro",
+  "vertical_arquivos": "Y",
+  "raiz": "MFX_Microflex4",
+  "referencial": "centro da base do gabinete; frente Blender -Y; glTF +Z",
+  "scan_para_blender_export": [
+    [
+      -0.925540566444397,
+      -0.3786484897136688,
+      0.0,
+      1.2382136583328247
+    ],
+    [
+      0.3786484897136688,
+      -0.925540566444397,
+      -0.0,
+      -0.4723972678184509
+    ],
+    [
+      0.0,
+      -0.0,
+      1.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      0.0,
+      -0.0,
+      1.0
+    ]
+  ],
+  "lod_transicoes_altura_relativa_tela": [
+    0.25,
+    0.025
+  ],
+  "lod_transicoes_status": "valores iniciais; calibrar na etapa 6",
+  "lods": {
+    "0": {
+      "MFX_Case_LOD0": 4992,
+      "MFX_Keyboard_LOD0": 5564
+    },
+    "1": {
+      "MFX_Case_LOD1": 2496,
+      "MFX_Keyboard_LOD1": 2782
+    }
+  },
+  "razoes_por_peca": {
+    "MFX_Case": [
+      0.65,
+      0.325
+    ],
+    "MFX_Keyboard": [
+      0.65,
+      0.325
+    ]
+  },
+  "colisores": {
+    "MFX_Case": {
+      "tipo": "BoxCollider",
+      "triangulos": 12,
+      "convexo": true,
+      "centro_local_blender_m": [
+        0.0,
+        -3.725290298461914e-09,
+        0.13199999928474426
+      ],
+      "dimensoes_locais_m": [
+        0.39333170652389526,
+        0.19749236851930618,
+        0.2639999985694885
+      ],
+      "max_vertice_fora_m": 0,
+      "margem_planos_m": 0
+    },
+    "MFX_Keyboard": {
+      "tipo": "MeshCollider_convex",
+      "triangulos": 180,
+      "convexo": true,
+      "centro_local_blender_m": [
+        0.0,
+        0.0,
+        0.026897398754954338
+      ],
+      "dimensoes_locais_m": [
+        0.3880000412464142,
+        0.20200003683567047,
+        0.053794797509908676
+      ],
+      "max_vertice_fora_m": 0,
+      "margem_planos_m": 0.0001
+    }
+  },
+  "materiais": {
+    "MAT_MFX_Case": {
+      "BaseColor": "texturas/MFX_Case_BaseColor.png",
+      "Normal": "texturas/MFX_Case_Normal.png",
+      "ORM": "texturas/MFX_Case_ORM.png",
+      "MetallicSmoothness": "texturas/MFX_Case_MetallicSmoothness.png",
+      "Occlusion": "texturas/MFX_Case_Occlusion.png"
+    },
+    "MAT_MFX_Keyboard": {
+      "BaseColor": "texturas/MFX_Keyboard_BaseColor.png",
+      "Normal": "texturas/MFX_Keyboard_Normal.png",
+      "ORM": "texturas/MFX_Keyboard_ORM.png",
+      "MetallicSmoothness": "texturas/MFX_Keyboard_MetallicSmoothness.png",
+      "Occlusion": "texturas/MFX_Keyboard_Occlusion.png"
+    }
+  },
+  "pecas": {
+    "MFX_Case": {
+      "raiz": "MFX_Case_Root",
+      "interacao": "estatica",
+      "matriz_local_blender": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -4.284083843231201e-08
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          7.450580596923828e-09
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "MFX_Keyboard": {
+      "raiz": "MFX_Keyboard_Root",
+      "interacao": "pegavel",
+      "matriz_local_blender": [
+        [
+          0.9993908405303955,
+          -0.03489956259727478,
+          0.0,
+          0.003995791077613831
+        ],
+        [
+          0.03489956259727478,
+          0.9993908405303955,
+          0.0,
+          -0.21228280663490295
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  },
+  "limites": [
+    "FBX não configura automaticamente URP Lit, LODGroup ou componentes Collider.",
+    "GLBs contêm um único nível; o aplicativo seleciona o nível externamente.",
+    "Caixa do gabinete cobre os rebaixos e o vão da alça; teclado usa envoltória convexa.",
+    "COL é um arquivo auxiliar: não exibir suas malhas. Física e prefab ficam na etapa 6."
+  ]
+}

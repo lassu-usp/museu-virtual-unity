@@ -42,7 +42,7 @@ museu-virtual-unity    etapa 6 em diante: materiais URP, LODGroup, física, pref
 | Código | Objeto | Prefab | Integração no Unity |
 |---|---|---|---|
 | `ATR` | Atari | `PF_ATR_Atari2600` | em revisão: materiais, LODs, colisões e interação integrados |
-| `MFX` | MicroFlex4 | — | não iniciada |
+| `MFX` | MicroFlex-4 | `PF_MFX_Microflex4` | em revisão: gabinete fixo, teclado pegável e variantes desktop/WebGL integrados |
 | `MOT` | Motorola | — | não iniciada |
 | `ORE` | Orelhão | — | não iniciada |
 | `TJG` | Telejogo | — | não iniciada |
@@ -105,7 +105,7 @@ Deste repositório:
 
 - **Nomes no espaço do museu:** materiais `MAT_Museu_<Nome>` e texturas `Museu_<Nome>_<Mapa>.png`, sem acentos nem espaços.
 - **Arquivos `.meta`:** cada asset tem um `.meta` com o GUID que as cenas e os prefabs usam para encontrá-lo. Commite o `.meta` junto com o asset e mova ou renomeie assets **dentro do Unity**, não pelo Explorer. O projeto usa `Visible Meta Files` e serialização `Force Text`; mantenha essas opções.
-- **Entrada:** o projeto está configurado para o Input System (*Active Input Handling: Input System Package (New)*). As ações do visitante ficam em `Assets/InputSystem_Actions.inputactions`, cujo mapa `Player` já traz `Move`, `Look`, `Sprint` e `Interact`.
+- **Entrada:** o projeto está configurado para o Input System (*Active Input Handling: Input System Package (New)*). As ações do visitante ficam em `Assets/InputSystem_Actions.inputactions`, cujo mapa `Player` traz `Move`, `Look`, `Sprint`, `Interact` e `Focus`.
 - **Fontes do TextMesh Pro:** fontes dinâmicas, como a `Roboto-Bold SDF`, se regravam sozinhas quando o editor desenha caracteres novos. Se o `.asset` de uma fonte aparecer modificado sem você ter mexido nele, descarte a mudança antes do commit.
 - **Codificação:** salve C#, JSON e Markdown em UTF-8, para os acentos não se corromperem entre editores.
 
@@ -179,13 +179,14 @@ Deste repositório:
 
 A dinâmica de cada peça vem do `manifesto.json` e da ficha do objeto. O código fica em `Assets/Scripts/` e usa as ações de `InputSystem_Actions.inputactions` (veja [Convenções](#convenções)).
 
-Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / continuar a visita**. O visitante começa diante da exposição do Atari.
+Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / continuar a visita**. O visitante começa diante da exposição do Atari; o MicroFlex-4 está no expositor à esquerda.
 
 | Controle | Ação |
 |---|---|
 | WASD ou setas | caminhar |
 | Mouse | olhar em volta |
 | Shift | correr |
+| Z | alternar o modo foco (zoom de 2×); olhar continua disponível |
 | E | examinar a peça sob a mira, a até 2 metros; devolver/fechar a inspeção |
 | Arrastar com o botão esquerdo | girar uma peça durante a inspeção |
 | Roda do mouse / R | aproximar ou afastar / restaurar a orientação da inspeção |
@@ -193,13 +194,18 @@ Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / cont
 
 A inspeção interrompe a caminhada. As peças manipuláveis ficam cinemáticas e sem colisão enquanto estão nas mãos; ao devolver, recuperam exatamente a pose e os colisores da exposição. Não há arremesso ou queda livre. Paredes e móveis bloqueiam tanto a passagem quanto a seleção de objetos atrás deles. A pausa oferece retorno ao ponto inicial.
 
+O foco aproxima suavemente a visão, reduzindo o campo de visão de 60° para 30°, com sensibilidade do olhar proporcional. Z restaura a visão normal. Andar, correr, interagir, girar uma peça, usar a roda, executar outro comando, pausar ou perder o foco da janela também encerram o modo imediatamente. Movimento mantido ou simultâneo ao Z tem prioridade. A ação está disponível durante a visita e a inspeção, e fica desativada na pausa.
+
 `Assets/Scenes/ATR_Validacao.unity` apresenta o conjunto com luz neutra. O menu **Museu › Atari › Validar integração** confere os dois prefabs, incluindo escala, materiais, triângulos, LODs e colisores. Os outros comandos desse menu reconstroem materiais/prefabs e cenas; salve suas alterações antes de usá-los.
+
+`Assets/Scenes/MFX_Validacao.unity` apresenta o MicroFlex-4 com luz neutra. O menu **Museu › MicroFlex** importa o pacote do repositório irmão, monta os prefabs, adiciona a exposição e valida os assets. Gabinete e alça permanecem fixos; o teclado pode ser retirado, girado, aproximado e devolvido. A [ficha de integração](Assets/Objetos/MFX_microflex4/README.md) registra a origem e a validação.
 
 ## Desktop e WebGL
 
 - A primeira versão é para desktop. A de navegador (WebGL) é otimizada e usa os pacotes `webgl/` dos objetos: menos triângulos, menos níveis de detalhe e texturas menores.
-- O processador de build substitui o Atari por `PF_ATR_Atari2600_WebGL` somente na cópia da cena usada no build WebGL. A cena de edição continua usando a variante desktop.
+- O processador de build substitui Atari e MicroFlex pelos respectivos prefabs `_WebGL` somente na cópia da cena usada no build WebGL. A cena de edição continua usando as variantes desktop.
 - Atari: **6.546 / 3.590 / 1.816** triângulos visuais no desktop e **3.590 / 2.112** no WebGL, com um `LODGroup` para cada uma das cinco peças. Pacotes atualizados da revisão `e5a2a16` do `museu-virtual-3d`, com a frente amadeirada corrigida e sem a caixa seletora. O último nível permanece visível até altura relativa de 0,004; a inspeção força LOD0.
+- MicroFlex: **16.242 / 9.272 / 4.208** triângulos no desktop e **10.556 / 5.278** no WebGL, com dois `LODGroup`s, atlas 2K/1K e colisores separados. Pacote da revisão `869cf9b` do `museu-virtual-3d`. O último nível usa altura relativa de 0,004 e a inspeção força LOD0.
 - O URP tem dois níveis de qualidade: `PC` (`Settings/PC_RPAsset`), padrão do desktop, e `Mobile` (`Settings/Mobile_RPAsset`), padrão do WebGL.
 - Para gerar um build, use **File › Build Profiles**, escolha *Windows* ou *Web* e grave em `Builds/`, na raiz do repositório, que o Git ignora.
 
