@@ -116,6 +116,7 @@ namespace Lassu.Museum
             if (initialRoom != null) SetDesiredRoom(initialRoom);
 
             BeginTransition(false);
+            BuildControlsHint();
             StartControlsHint();
         }
 
@@ -282,6 +283,91 @@ namespace Lassu.Museum
             bannerRoutine = null;
         }
 
+        private void BuildControlsHint()
+        {
+            if (controlsHint == null) return;
+            var previousText = controlsHint.GetComponentInChildren<Text>();
+            if (previousText == null) return;
+            var font = previousText.font;
+            previousText.gameObject.SetActive(false);
+            controlsHint.interactable = false;
+            controlsHint.blocksRaycasts = false;
+
+            var background = controlsHint.GetComponent<Image>();
+            if (background != null)
+            {
+                background.color = new Color(0.035f, 0.065f, 0.085f, 0.88f);
+                background.raycastTarget = false;
+            }
+            var layout = controlsHint.gameObject.AddComponent<HorizontalLayoutGroup>();
+            layout.padding = new RectOffset(18, 18, 12, 12);
+            layout.spacing = 22;
+            layout.childAlignment = TextAnchor.MiddleLeft;
+            layout.childControlWidth = layout.childControlHeight = true;
+            layout.childForceExpandWidth = layout.childForceExpandHeight = false;
+            var fitter = controlsHint.gameObject.AddComponent<ContentSizeFitter>();
+            fitter.horizontalFit = fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            AddControlHint(font, new[] { "W", "A", "S", "D" }, "mover");
+            AddControlHint(font, new[] { "Mouse" }, "olhar");
+            AddControlHint(font, new[] { "Shift" }, "correr");
+            AddControlHint(font, new[] { "E" }, "interagir");
+            AddControlHint(font, new[] { "Z" }, "foco");
+            AddControlHint(font, new[] { "Esc" }, "pausar");
+        }
+
+        private void AddControlHint(Font font, string[] keys, string label)
+        {
+            var group = new GameObject(label, typeof(RectTransform), typeof(HorizontalLayoutGroup));
+            group.transform.SetParent(controlsHint.transform, false);
+            var layout = group.GetComponent<HorizontalLayoutGroup>();
+            layout.spacing = 5;
+            layout.childAlignment = TextAnchor.MiddleLeft;
+            layout.childControlWidth = layout.childControlHeight = true;
+            layout.childForceExpandWidth = layout.childForceExpandHeight = false;
+            foreach (var key in keys)
+            {
+                var cap = new GameObject("Key_" + key, typeof(RectTransform), typeof(Image), typeof(LayoutElement));
+                cap.transform.SetParent(group.transform, false);
+                var face = cap.GetComponent<Image>();
+                face.color = new Color(0.11f, 0.17f, 0.2f);
+                face.raycastTarget = false;
+                var outline = cap.AddComponent<Outline>();
+                outline.effectColor = new Color(0.44f, 0.57f, 0.59f, 0.85f);
+                outline.effectDistance = new Vector2(1, -2);
+                var size = cap.GetComponent<LayoutElement>();
+                size.preferredWidth = key.Length == 1 ? 27 : key == "Mouse" ? 60 : key == "Shift" ? 46 : 36;
+                size.preferredHeight = 28;
+                var text = HintText(cap.transform, font, key, FontStyle.Bold);
+                var rect = text.rectTransform;
+                rect.anchorMin = Vector2.zero;
+                rect.anchorMax = Vector2.one;
+                rect.offsetMin = rect.offsetMax = Vector2.zero;
+            }
+            var description = HintText(group.transform, font, label, FontStyle.Normal);
+            description.color = new Color(0.8f, 0.85f, 0.86f);
+            var descriptionSize = description.gameObject.AddComponent<LayoutElement>();
+            descriptionSize.preferredWidth = description.preferredWidth + 8;
+            descriptionSize.preferredHeight = 28;
+        }
+
+        private static Text HintText(Transform parent, Font font, string content, FontStyle style)
+        {
+            var textObject = new GameObject("Label", typeof(RectTransform), typeof(Text));
+            textObject.transform.SetParent(parent, false);
+            var text = textObject.GetComponent<Text>();
+            text.font = font;
+            text.text = content;
+            text.fontSize = 14;
+            text.fontStyle = style;
+            text.alignment = TextAnchor.MiddleCenter;
+            text.color = new Color(0.9f, 0.96f, 0.95f);
+            text.raycastTarget = false;
+            text.supportRichText = false;
+            text.horizontalOverflow = HorizontalWrapMode.Overflow;
+            return text;
+        }
+
         private void StartControlsHint()
         {
             if (controlsHint == null || controlsRoutine != null) return;
@@ -303,11 +389,11 @@ namespace Lassu.Museum
             while (elapsed < fadeDuration)
             {
                 elapsed += Time.unscaledDeltaTime;
-                controlsHint.alpha = Mathf.Lerp(startAlpha, 0.45f, elapsed / fadeDuration);
+                controlsHint.alpha = Mathf.Lerp(startAlpha, 0.8f, elapsed / fadeDuration);
                 yield return null;
             }
 
-            controlsHint.alpha = 0.45f;
+            controlsHint.alpha = 0.8f;
             controlsRoutine = null;
         }
     }

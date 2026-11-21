@@ -197,7 +197,7 @@ Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / cont
 | Esc | devolver a peça ou liberar o cursor e pausar |
 | Clique fora dos botões, na pausa | retomar a visita e recapturar o cursor |
 
-A inspeção interrompe a caminhada. As peças manipuláveis ficam cinemáticas e sem colisão enquanto estão nas mãos; ao devolver, recuperam exatamente a pose e os colisores da exposição. Não há arremesso ou queda livre. Paredes, móveis e portões fechados bloqueiam tanto a passagem quanto a seleção de objetos atrás deles. A pausa oferece retorno ao ponto inicial.
+A inspeção interrompe a caminhada. As peças manipuláveis ficam cinemáticas e sem colisão enquanto estão nas mãos; ao devolver, recuperam exatamente a pose e os colisores da exposição. Não há arremesso ou queda livre. Paredes, móveis e portões fechados bloqueiam tanto a passagem quanto a seleção de objetos atrás deles. A pausa oferece botões para continuar e voltar ao ponto inicial; no desktop, também permite sair do museu e encerrar o aplicativo. Os controles ficam no HUD inferior, com as teclas contornadas.
 
 Um portão aberto permanece aberto enquanto o visitante está a até 5 metros da passagem. Ao sair dessa região, em qualquer direção, o fechamento começa após 0,65 segundo, mesmo sem travessia. Voltar à região durante o fechamento reabre o portão; aproximar-se de um portão já fechado continua exigindo E.
 
