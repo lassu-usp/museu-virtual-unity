@@ -35,16 +35,9 @@ namespace MuseuVirtual.Editor
         {
             if (EditorApplication.isPlaying) throw new InvalidOperationException("Saia do Play Mode antes de montar as cenas.");
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
-            var scene = EditorSceneManager.OpenScene("Assets/Scenes/Museu.unity");
-            // Rebuilding is idempotent and preserves the curator's placement.
-            if (GameObject.Find("TJG_Exposicao") == null)
-            {
-                CreateExhibition(new Vector3(16.7f, 0.3011f, 3.4f));
-                EditorSceneManager.MarkSceneDirty(scene);
-                EditorSceneManager.SaveScene(scene);
-            }
+            MuseumCollectionPlacement.Apply();
             CreateValidationScene();
-            EditorSceneManager.OpenScene("Assets/Scenes/Museu.unity");
+            EditorSceneManager.OpenScene(MuseumCollectionPlacement.ScenePath);
             AssetDatabase.SaveAssets();
         }
 

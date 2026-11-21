@@ -1,0 +1,203 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77736afa00159274a806cc3c97fda35c, type: 3}
+  m_Name: MuseumTourCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::Lassu.Museum.MuseumTourCatalog
+  rooms:
+  - decade: 1940
+    title: "M\xE1quinas que ocupavam salas"
+    curatorialText: "A computa\xE7\xE3o eletr\xF4nica deixa o laborat\xF3rio te\xF3rico
+      e passa a processar grandes volumes de informa\xE7\xE3o em m\xE1quinas de escala
+      arquitet\xF4nica."
+    accentColor: {r: 0.9019608, g: 0.6509804, b: 0.3019608, a: 1}
+    exhibits:
+    - title: "Computador eletr\xF4nico"
+      description: "Ponto preparado para receber o modelo definitivo de computador
+        eletr\xF4nico. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+    - title: "Mem\xF3ria e armazenamento"
+      description: "Ponto preparado para receber o modelo definitivo de mem\xF3ria
+        e armazenamento. O prefab pode ser associado diretamente no componente da
+        exposi\xE7\xE3o."
+      displayStyle: 2
+      modelPrefab: {fileID: 0}
+    - title: "Painel de opera\xE7\xE3o"
+      description: "Ponto preparado para receber o modelo definitivo de painel de
+        opera\xE7\xE3o. O prefab pode ser associado diretamente no componente da
+        exposi\xE7\xE3o."
+      displayStyle: 1
+      modelPrefab: {fileID: 0}
+    - title: "Documento t\xE9cnico"
+      description: "Ponto preparado para receber o modelo definitivo de documento
+        t\xE9cnico. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+  - decade: 1950
+    title: A era dos transistores
+    curatorialText: "Componentes menores, mais confi\xE1veis e menos quentes abrem
+      caminho para computadores comerciais e novas formas de registrar dados."
+    accentColor: {r: 0.83137256, g: 0.41568628, b: 0.37254903, a: 1}
+    exhibits:
+    - title: Transistor
+      description: "Ponto preparado para receber o modelo definitivo de transistor.
+        O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+    - title: Computador comercial
+      description: "Ponto preparado para receber o modelo definitivo de computador
+        comercial. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 2
+      modelPrefab: {fileID: 0}
+    - title: "Fita magn\xE9tica"
+      description: "Ponto preparado para receber o modelo definitivo de fita magn\xE9tica.
+        O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 1
+      modelPrefab: {fileID: 0}
+    - title: Terminal de dados
+      description: "Ponto preparado para receber o modelo definitivo de terminal
+        de dados. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+  - decade: 1960
+    title: Tecnologia em rede
+    curatorialText: Circuitos integrados ampliam a capacidade de processamento enquanto
+      terminais e redes experimentais aproximam pessoas de sistemas compartilhados.
+    accentColor: {r: 0.78431374, g: 0.7058824, b: 0.2901961, a: 1}
+    exhibits:
+    - title: Circuito integrado
+      description: "Ponto preparado para receber o modelo definitivo de circuito
+        integrado. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+    - title: Mainframe
+      description: "Ponto preparado para receber o modelo definitivo de mainframe.
+        O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 2
+      modelPrefab: {fileID: 0}
+    - title: "Comunica\xE7\xE3o em rede"
+      description: "Ponto preparado para receber o modelo definitivo de comunica\xE7\xE3o
+        em rede. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 1
+      modelPrefab: {fileID: 0}
+    - title: Interface experimental
+      description: "Ponto preparado para receber o modelo definitivo de interface
+        experimental. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+  - decade: 1970
+    title: O microprocessador
+    curatorialText: "O processamento cabe em um \xFAnico chip. Kits, calculadoras
+      e terminais anunciam a passagem da computa\xE7\xE3o institucional para a escala
+      pessoal."
+    accentColor: {r: 0.2509804, g: 0.72156864, b: 0.54509807, a: 1}
+    exhibits:
+    - title: Telejogo
+      description: "Console de videogame Philco-Ford, de fabrica\xE7\xE3o brasileira,
+        com os jogos futebol, t\xEAnis e pared\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 5793158144664963308, guid: 5ab4735713161d345ba61773d36d698d, type: 3}
+    - title: Kit de microcomputador
+      description: "Ponto preparado para receber o modelo definitivo de kit de microcomputador.
+        O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 2
+      modelPrefab: {fileID: 0}
+    - title: "Calculadora eletr\xF4nica"
+      description: "Ponto preparado para receber o modelo definitivo de calculadora
+        eletr\xF4nica. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 1
+      modelPrefab: {fileID: 0}
+    - title: Atari 2600
+      description: "Console de videogame com cartuchos intercambi\xE1veis, exposto
+        com joystick, paddles e o cartucho Enduro."
+      displayStyle: 0
+      modelPrefab: {fileID: 4185685263255720608, guid: 7257480475189fc489c237ebc046b8e0, type: 3}
+  - decade: 1980
+    title: "Computa\xE7\xE3o pessoal"
+    curatorialText: "Computadores chegam a casas, escolas e escrit\xF3rios. Interfaces
+      gr\xE1ficas, perif\xE9ricos e m\xEDdias remov\xEDveis tornam a tecnologia cotidiana."
+    accentColor: {r: 0.15686275, g: 0.6862745, b: 0.75686276, a: 1}
+    exhibits:
+    - title: MicroFlex-4
+      description: "Microcomputador transport\xE1vel com tela integrada, al\xE7a
+        fixa e teclado destac\xE1vel."
+      displayStyle: 0
+      modelPrefab: {fileID: 4767337178825038201, guid: 61b6c221af945cc419299109c3c56920, type: 3}
+    - title: "Console dom\xE9stico"
+      description: "Ponto preparado para receber o modelo definitivo de console dom\xE9stico.
+        O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 2
+      modelPrefab: {fileID: 0}
+    - title: "Mouse e interface gr\xE1fica"
+      description: "Ponto preparado para receber o modelo definitivo de mouse e interface
+        gr\xE1fica. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 1
+      modelPrefab: {fileID: 0}
+    - title: "M\xEDdia remov\xEDvel"
+      description: "Ponto preparado para receber o modelo definitivo de m\xEDdia
+        remov\xEDvel. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+  - decade: 1990
+    title: "A internet p\xFAblica"
+    curatorialText: "A web conecta documentos, pessoas e institui\xE7\xF5es. Multim\xEDdia,
+      telefonia m\xF3vel e navega\xE7\xE3o em rede redesenham a comunica\xE7\xE3o
+      global."
+    accentColor: {r: 0.4, g: 0.45882353, b: 0.7882353, a: 1}
+    exhibits:
+    - title: Servidor web
+      description: "Ponto preparado para receber o modelo definitivo de servidor
+        web. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+    - title: "Computador multim\xEDdia"
+      description: "Ponto preparado para receber o modelo definitivo de computador
+        multim\xEDdia. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 2
+      modelPrefab: {fileID: 0}
+    - title: Telefone celular
+      description: "Ponto preparado para receber o modelo definitivo de telefone
+        celular. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 1
+      modelPrefab: {fileID: 0}
+    - title: Navegador e rede
+      description: "Ponto preparado para receber o modelo definitivo de navegador
+        e rede. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+  - decade: 2000
+    title: "Tecnologia ub\xEDqua"
+    curatorialText: "Computa\xE7\xE3o, comunica\xE7\xE3o e m\xEDdia convergem em
+      dispositivos m\xF3veis e servi\xE7os conectados que passam a acompanhar o visitante
+      em todo lugar."
+    accentColor: {r: 0.7019608, g: 0.35686275, b: 0.65882355, a: 1}
+    exhibits:
+    - title: Smartphone
+      description: "Ponto preparado para receber o modelo definitivo de smartphone.
+        O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}
+    - title: "Computa\xE7\xE3o m\xF3vel"
+      description: "Ponto preparado para receber o modelo definitivo de computa\xE7\xE3o
+        m\xF3vel. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 2
+      modelPrefab: {fileID: 0}
+    - title: Software em rede
+      description: "Ponto preparado para receber o modelo definitivo de software
+        em rede. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 1
+      modelPrefab: {fileID: 0}
+    - title: Dispositivo conectado
+      description: "Ponto preparado para receber o modelo definitivo de dispositivo
+        conectado. O prefab pode ser associado diretamente no componente da exposi\xE7\xE3o."
+      displayStyle: 0
+      modelPrefab: {fileID: 0}

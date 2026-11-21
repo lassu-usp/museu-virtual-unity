@@ -57,36 +57,11 @@ namespace MuseuVirtual.Editor
         public static void BuildScenes()
         {
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
-            var scene=EditorSceneManager.OpenScene("Assets/Scenes/Museu.unity");
-            var museum=GameObject.Find("Museu");
-            museum.transform.rotation=Quaternion.Euler(-90,0,0);
-            PrefabUtility.RecordPrefabInstancePropertyModifications(museum.transform);
-            foreach(var mf in museum.GetComponentsInChildren<MeshFilter>())
-            {
-                if(mf.sharedMesh==null || mf.name.StartsWith("Texto") || mf.name.StartsWith("Text") || mf.name.StartsWith("Sphere")) continue;
-                if(mf.GetComponent<Collider>()!=null) continue;
-                var collider=mf.gameObject.AddComponent<MeshCollider>(); collider.sharedMesh=mf.sharedMesh;
-            }
-            foreach(var collider in museum.GetComponentsInChildren<BoxCollider>())
-                if(collider.name=="50s" || collider.name=="60s") collider.isTrigger=true;
-            RemoveNamed("Visitante"); RemoveNamed("ATR_Exposicao");
-            var camera=GameObject.Find("Main Camera"); if(camera!=null) Object.DestroyImmediate(camera);
-            var exhibition=CreateExhibition(new Vector3(15f,0.3011f,3.4f));
-            CreateVisitor(new Vector3(15f,0.34f,2f),0,24f);
-            RenderSettings.ambientMode=AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor=new Color(0.48f,0.53f,0.6f);
-            RenderSettings.ambientEquatorColor=new Color(0.32f,0.36f,0.4f);
-            RenderSettings.ambientGroundColor=new Color(0.22f,0.24f,0.27f);
-            var sun=GameObject.Find("Directional Light").GetComponent<Light>();
-            sun.intensity=1.2f; sun.transform.rotation=Quaternion.Euler(55,-25,0); sun.shadows=LightShadows.Soft;
-            EditorSceneManager.MarkSceneDirty(scene); EditorSceneManager.SaveScene(scene);
-            EditorBuildSettings.scenes=new[]{new EditorBuildSettingsScene(scene.path,true)};
+            MuseumCollectionPlacement.Apply();
             CreateValidationScene();
-            EditorSceneManager.OpenScene("Assets/Scenes/Museu.unity");
+            EditorSceneManager.OpenScene(MuseumCollectionPlacement.ScenePath);
             AssetDatabase.SaveAssets();
         }
-
-        static void RemoveNamed(string name) { var go=GameObject.Find(name); if(go!=null) Object.DestroyImmediate(go); }
 
         public static GameObject CreateExhibition(Vector3 position)
         {

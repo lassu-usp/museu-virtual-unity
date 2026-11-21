@@ -51,38 +51,40 @@ Status possíveis: `não iniciada` · `em andamento` · `em revisão` · `conclu
 
 ## Espaço do museu
 
-O espaço fica em `Assets/Museu/` e já está na cena principal, `Assets/Scenes/Museu.unity`. A instância da cena está orientada com Y para cima e tem colisores para a visita em primeira pessoa:
+O espaço é a **Galeria das Órbitas**: um hall de entrada e sete salas cronológicas, de 1940 a 2000, ligadas por portões cinéticos, em um percurso de cerca de 157 m. Ele fica em `Assets/Museu/` e já está na cena principal, `Assets/Scenes/Museu.unity`:
 
-- `Museu.prefab`: o espaço montado, com paredes, vitrines, quadros, luzes e textos;
-- `Modelos/`: os FBX do espaço (`MuseuQuadrado.fbx`), dos quadros (`MuseuQuadros.fbx` e `Frame_light.fbx`) e dos textos expositivos (`Textos/`);
-- `Materiais/`, `Texturas/` e `Fontes/`: materiais URP Lit, texturas e as fontes das legendas (TextMesh Pro).
+- `Art/`: malhas geradas no editor, texturas de acabamento, reflexos pré-calculados e numerais dos portões;
+- `Data/MuseumTourCatalog.asset`: ordem das décadas, textos curatoriais e pontos de exposição;
+- `Materials/`: materiais URP Lit do espaço, por função e por década;
+- `Prefabs/`: hall, módulo de sala, expositores (pedestal, vitrine e painel) e o visitante;
+- `Scripts/`: portões, salas, HUD e as ferramentas do menu **Museum LASSU**.
 
-Os quadros estão sem imagem: as pinturas de exemplo saíram do repositório, mas as legendas ainda trazem os dados delas. As obras expostas ainda serão definidas, só com imagens que tenham direito de uso.
+Dos 28 pontos de exposição, 3 recebem peças do acervo; os outros 25 continuam como placeholders. Portões, oclusão, acabamentos e a regeneração da cena estão documentados em [`Assets/Museu/README.md`](Assets/Museu/README.md).
 
 ## Estrutura
 
 ```text
 .
 ├── Assets/
-│   ├── Museu/                        espaço do museu
-│   │   ├── Modelos/                  FBX do espaço, dos quadros e dos textos
-│   │   ├── Materiais/                materiais URP Lit (MAT_Museu_<Nome>)
-│   │   ├── Texturas/                 texturas dos materiais
-│   │   ├── Fontes/                   fontes das legendas (TextMesh Pro)
-│   │   └── Museu.prefab
+│   ├── Museu/                        espaço do museu (Galeria das Órbitas)
+│   │   ├── Art/                      malhas geradas, texturas, reflexos e tipografia
+│   │   ├── Data/                     catálogo do percurso
+│   │   ├── Materials/                materiais URP Lit do espaço
+│   │   ├── Prefabs/                  hall, salas, expositores e visitante
+│   │   └── Scripts/                  portões, salas, HUD e ferramentas do espaço
 │   ├── Objetos/                      objetos do acervo (criada com o primeiro objeto)
 │   │   └── <codigo>_<nome>/          ex.: ATR_atari/, o mesmo nome da pasta no museu-virtual-3d
 │   │       ├── desktop/              cópia de 05_export/desktop/: FBX, texturas/ e manifesto.json
 │   │       ├── webgl/                cópia de 05_export/webgl/
 │   │       ├── Materiais/            materiais URP Lit (MAT_<CODIGO>_<Componente>)
 │   │       └── PF_<CODIGO>_<Nome>.prefab
-│   ├── Scenes/                       cenas; Museu.unity é a principal
+│   ├── Scenes/                       cenas; Museu.unity é a principal e Museu/ guarda o bake de oclusão
 │   ├── Scripts/                      código C# de navegação e interação (criada com o primeiro script)
 │   ├── Settings/                     assets do URP: PC_* (desktop) e Mobile_* (WebGL)
-│   ├── TextMesh Pro/                 recursos essenciais do TextMesh Pro
 │   └── InputSystem_Actions.inputactions   ações de entrada (Input System)
 ├── Packages/                         pacotes do projeto (manifest.json e packages-lock.json)
 ├── ProjectSettings/                  configurações do projeto
+├── Tools/                            gerador offline dos numerais dos portões
 ├── .gitattributes                    regras do Git LFS e do merge de cenas e prefabs
 └── .gitignore                        Library/, Temp/, Logs/, UserSettings/, builds e arquivos gerados
 ```
@@ -103,10 +105,9 @@ Herdadas do `museu-virtual-3d`, valem para tudo o que vem de lá:
 
 Deste repositório:
 
-- **Nomes no espaço do museu:** materiais `MAT_Museu_<Nome>` e texturas `Museu_<Nome>_<Mapa>.png`, sem acentos nem espaços.
+- **Nomes no espaço do museu:** os materiais seguem a função e a década (`Orbit_Bronze`, `Era_1970_Wall`, `Gate_Walnut`). As ferramentas do menu **Museum LASSU** os encontram pelo nome; não os renomeie.
 - **Arquivos `.meta`:** cada asset tem um `.meta` com o GUID que as cenas e os prefabs usam para encontrá-lo. Commite o `.meta` junto com o asset e mova ou renomeie assets **dentro do Unity**, não pelo Explorer. O projeto usa `Visible Meta Files` e serialização `Force Text`; mantenha essas opções.
 - **Entrada:** o projeto está configurado para o Input System (*Active Input Handling: Input System Package (New)*). As ações do visitante ficam em `Assets/InputSystem_Actions.inputactions`, cujo mapa `Player` traz `Move`, `Look`, `Sprint`, `Interact` e `Focus`.
-- **Fontes do TextMesh Pro:** fontes dinâmicas, como a `Roboto-Bold SDF`, se regravam sozinhas quando o editor desenha caracteres novos. Se o `.asset` de uma fonte aparecer modificado sem você ter mexido nele, descarte a mudança antes do commit.
 - **Codificação:** salve C#, JSON e Markdown em UTF-8, para os acentos não se corromperem entre editores.
 
 ## Como começar
@@ -164,7 +165,8 @@ Deste repositório:
    - **Colisores:** siga `colisores.<peça>.tipo` do manifesto: `BoxCollider` do tamanho da caixa `_COL` ou `MeshCollider` com `Convex` ligado, usando a malha `_COL`. As malhas `_COL` não aparecem na cena: remova ou desative os renderers delas.
    - **Física:** peças `estatica` têm só o colisor; `pegavel` e `removivel` ganham um `Rigidbody`, começando cinemático. Confira o guia do pacote: no Atari, por exemplo, a caixa do console cobre o encaixe do cartucho, e a colisão entre os dois precisa ser ignorada enquanto ele estiver encaixado.
 6. **Valide** numa cena de teste: escala, pivôs, normal maps, trocas de LOD, colisores (com *Gizmos*) e triângulos (janela *Stats*). Problemas de geometria ou textura voltam para o `museu-virtual-3d` (veja *Fonte única*, acima).
-7. **Registre:** atualize a [tabela de objetos](#objetos-do-acervo) e a etapa 6 na ficha do objeto, no `museu-virtual-3d`. No commit, cite a origem. Ex.: `ATR: importa o pacote desktop da etapa 5 (museu-virtual-3d 07811b8)`.
+7. **Instale na galeria:** em `MuseumCollectionPlacement`, indique a peça, a década e o ponto de exposição, e rode **Museu › Acervo › Instalar peças nos pedestais**. O comando associa o prefab ao `Model Prefab` do expositor, atualiza o catálogo, vira a peça para o visitante, desce a placa de legenda e acrescenta a luz da exposição. Use um pedestal: a caixa de vidro da vitrine bloqueia a seleção da peça, e o painel de parede não comporta objetos.
+8. **Registre:** atualize a [tabela de objetos](#objetos-do-acervo) e a etapa 6 na ficha do objeto, no `museu-virtual-3d`. No commit, cite a origem. Ex.: `ATR: importa o pacote desktop da etapa 5 (museu-virtual-3d 07811b8)`.
 
 **Para atualizar um objeto já integrado,** sobrescreva os arquivos no lugar, **sem apagar os `.meta`**. Assim os GUIDs, as configurações de importação e as referências dos prefabs continuam valendo; apagar e recriar a pasta quebra o prefab.
 
@@ -172,14 +174,16 @@ Deste repositório:
 
 | Dinâmica | Descrição | Status |
 |---|---|---|
-| Navegação em primeira pessoa | andar, olhar em volta e correr, com teclado e mouse | implementada |
+| Navegação em primeira pessoa | andar, olhar em volta e correr, com teclado, mouse ou gamepad | implementada |
+| Portão cinético | as ripas se abrem com E, nos dois sentidos, e se fecham quando o visitante se afasta, mesmo sem atravessar | implementada nos sete arcos da galeria |
+| Faixa da sala | ao entrar em uma sala, número, título e texto curatorial são escritos progressivamente no HUD | implementada nas sete salas |
 | Peça estática | permanece na exposição e apresenta sua descrição | implementada no console do Atari e no gabinete do MicroFlex-4 |
 | Peça pegável | o visitante pega, gira, aproxima e devolve a peça | implementada no joystick, nos paddles, no teclado do MicroFlex-4 e no console do Telejogo |
 | Peça removível | a peça sai do encaixe e retorna à pose original | implementada no cartucho |
 
 A dinâmica de cada peça vem do `manifesto.json` e da ficha do objeto. O código fica em `Assets/Scripts/` e usa as ações de `InputSystem_Actions.inputactions` (veja [Convenções](#convenções)).
 
-Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / continuar a visita**. O visitante começa diante da exposição do Atari; o MicroFlex-4 está no expositor à esquerda e o Telejogo, no expositor à direita.
+Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / continuar a visita**. O visitante começa no hall e segue o fio de bronze pelas salas. Na sala de 1970, o Telejogo está no pedestal à esquerda e o Atari, no pedestal à direita; o MicroFlex-4 está no pedestal à esquerda da sala de 1980. Até a primeira peça, são quatro portões.
 
 | Controle | Ação |
 |---|---|
@@ -187,25 +191,33 @@ Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / cont
 | Mouse | olhar em volta |
 | Shift | correr |
 | Z | alternar o modo foco (zoom de 2×); olhar continua disponível |
-| E | examinar a peça sob a mira, a até 2 metros; devolver/fechar a inspeção |
+| E | examinar a peça sob a mira, a até 2 metros; devolver/fechar a inspeção; sem peça sob a mira, abrir o portão à frente, a até 3,2 metros |
 | Arrastar com o botão esquerdo | girar uma peça durante a inspeção |
 | Roda do mouse / R | aproximar ou afastar / restaurar a orientação da inspeção |
 | Esc | devolver a peça ou liberar o cursor e pausar |
+| Clique fora dos botões, na pausa | retomar a visita e recapturar o cursor |
 
-A inspeção interrompe a caminhada. As peças manipuláveis ficam cinemáticas e sem colisão enquanto estão nas mãos; ao devolver, recuperam exatamente a pose e os colisores da exposição. Não há arremesso ou queda livre. Paredes e móveis bloqueiam tanto a passagem quanto a seleção de objetos atrás deles. A pausa oferece retorno ao ponto inicial.
+A inspeção interrompe a caminhada. As peças manipuláveis ficam cinemáticas e sem colisão enquanto estão nas mãos; ao devolver, recuperam exatamente a pose e os colisores da exposição. Não há arremesso ou queda livre. Paredes, móveis e portões fechados bloqueiam tanto a passagem quanto a seleção de objetos atrás deles. A pausa oferece botões para continuar e voltar ao ponto inicial; no desktop, também permite sair do museu e encerrar o aplicativo. Os controles ficam no HUD inferior, com as teclas contornadas.
 
-O foco aproxima suavemente a visão, reduzindo o campo de visão de 60° para 30°, com sensibilidade do olhar proporcional. Z restaura a visão normal. Andar, correr, interagir, girar uma peça, usar a roda, executar outro comando, pausar ou perder o foco da janela também encerram o modo imediatamente. Movimento mantido ou simultâneo ao Z tem prioridade. A ação está disponível durante a visita e a inspeção, e fica desativada na pausa.
+Um portão aberto permanece aberto enquanto o visitante está a até 5 metros da passagem. Ao sair dessa região, em qualquer direção, o fechamento começa após 0,65 segundo, mesmo sem travessia. Voltar à região durante o fechamento reabre o portão; aproximar-se de um portão já fechado continua exigindo E.
+
+Um toque em E nunca aciona peça e portão ao mesmo tempo: a peça sob a mira tem prioridade, e devolvê-la não abre um portão próximo. Com o cursor liberado ou durante uma inspeção, os portões ficam suspensos.
+
+O foco aproxima suavemente a visão, reduzindo o campo de visão de 68° para 34°, com sensibilidade do olhar proporcional. Z devolve a visão normal no mesmo ritmo, com o tamanho da imagem fazendo o caminho inverso da entrada. Andar, correr, interagir, girar uma peça, usar a roda, executar outro comando, pausar ou perder o foco da janela também encerram o modo imediatamente, com a mesma saída suave. Movimento mantido ou simultâneo ao Z tem prioridade. A ação está disponível durante a visita e a inspeção, e fica desativada na pausa.
 
 `Assets/Scenes/ATR_Validacao.unity` apresenta o conjunto com luz neutra. O menu **Museu › Atari › Validar integração** confere os dois prefabs, incluindo escala, materiais, triângulos, LODs e colisores. Os outros comandos desse menu reconstroem materiais/prefabs e cenas; salve suas alterações antes de usá-los.
 
-`Assets/Scenes/MFX_Validacao.unity` apresenta o MicroFlex-4 com luz neutra. O menu **Museu › MicroFlex** importa o pacote do repositório irmão, monta os prefabs, adiciona a exposição e valida os assets. Gabinete e alça permanecem fixos; o teclado pode ser retirado, girado, aproximado e devolvido. A [ficha de integração](Assets/Objetos/MFX_microflex4/README.md) registra a origem e a validação.
+`Assets/Scenes/MFX_Validacao.unity` apresenta o MicroFlex-4 com luz neutra. O menu **Museu › MicroFlex** importa o pacote do repositório irmão, monta os prefabs, instala a peça na galeria e valida os assets. Gabinete e alça permanecem fixos; o teclado pode ser retirado, girado, aproximado e devolvido. A [ficha de integração](Assets/Objetos/MFX_microflex4/README.md) registra a origem e a validação.
 
-`Assets/Scenes/TJG_Validacao.unity` apresenta o Telejogo com luz neutra. O menu **Museu › Telejogo** monta os prefabs a partir das cópias deste repositório, adiciona a exposição e valida os assets. O console pode ser retirado, girado, aproximado e devolvido. A [ficha de integração](Assets/Objetos/TJG_telejogo/README.md) registra a origem e a validação.
+`Assets/Scenes/TJG_Validacao.unity` apresenta o Telejogo com luz neutra. O menu **Museu › Telejogo** monta os prefabs a partir das cópias deste repositório, instala a peça na galeria e valida os assets. O console pode ser retirado, girado, aproximado e devolvido. A [ficha de integração](Assets/Objetos/TJG_telejogo/README.md) registra a origem e a validação.
+
+O menu **Museu › Acervo › Validar galeria (cena)** reúne as validações do espaço (percurso, portões, décadas e oclusão) e confere o acervo instalado. Em uma instância batch dedicada, `-executeMethod MuseuVirtual.Editor.MuseumFocusValidation.RunBatch` também percorre a galeria no Play Mode com entradas simuladas: atravessa os sete portões, inspeciona cada peça e testa foco, pausa e o compartilhamento da tecla E. O relatório e as capturas ficam em `Logs/Galeria/`.
 
 ## Desktop e WebGL
 
 - A primeira versão é para desktop. A de navegador (WebGL) é otimizada e usa os pacotes `webgl/` dos objetos: menos triângulos, menos níveis de detalhe e texturas menores.
-- O processador de build substitui Atari, MicroFlex e Telejogo pelos respectivos prefabs `_WebGL` somente na cópia da cena usada no build WebGL. A cena de edição continua usando as variantes desktop.
+- O processador de build troca o `Model Prefab` dos expositores de Atari, MicroFlex e Telejogo pelos respectivos prefabs `_WebGL` somente na cópia da cena usada no build WebGL. A cena de edição continua usando as variantes desktop.
+- A oclusão entre as salas usa o Occlusion Culling nativo do Unity, com o bake salvo em `Assets/Scenes/Museu/`. O GPU Resident Drawer fica desligado em `PC_RPAsset`, como na medição de referência do espaço.
 - Atari: **6.546 / 3.590 / 1.816** triângulos visuais no desktop e **3.590 / 2.112** no WebGL, com um `LODGroup` para cada uma das cinco peças. Pacotes atualizados da revisão `e5a2a16` do `museu-virtual-3d`, com a frente amadeirada corrigida e sem a caixa seletora. O último nível permanece visível até altura relativa de 0,004; a inspeção força LOD0.
 - MicroFlex: **16.242 / 9.272 / 4.208** triângulos no desktop e **10.556 / 5.278** no WebGL, com dois `LODGroup`s, atlas 2K/1K e colisores separados. Pacote da revisão `869cf9b` do `museu-virtual-3d`. O último nível usa altura relativa de 0,004 e a inspeção força LOD0.
 - Telejogo: **11.816 / 5.908 / 3.626** triângulos no desktop e **5.908 / 4.138** no WebGL, com um `LODGroup`, atlas 2K/1K e colisor de caixa. O pacote ainda não tem revisão no `museu-virtual-3d`. O último nível usa altura relativa de 0,004 e a inspeção força LOD0.
