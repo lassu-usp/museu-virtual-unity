@@ -80,15 +80,18 @@ O gerador recompõe a cena a partir do catálogo, reinstala as peças do acervo 
 
 ## Peças do acervo
 
-As peças integradas ficam em pedestais, instaladas por **Museu › Acervo › Instalar peças nos pedestais** a partir da tabela de `MuseumCollectionPlacement`:
+As peças integradas ficam em pedestais ou, quando não cabem neles, no piso. **Museu › Acervo › Instalar peças na galeria** instala todas a partir das tabelas de `MuseumCollectionPlacement`:
 
 | Peça | Sala | Ponto |
 |---|---|---|
 | Telejogo | 1970 | `Exhibit_01`, à esquerda |
 | Atari 2600 | 1970 | `Exhibit_04`, à direita |
 | MicroFlex-4 | 1980 | `Exhibit_01`, à esquerda |
+| Patinho Feio | 1970 | no piso, entre `Exhibit_01` e `Exhibit_03`, à esquerda |
 
 Nesses pedestais, a âncora gira 180° para a frente da peça encarar o visitante, a placa de legenda desce para a face frontal e uma luz de exposição ilumina o conjunto. No Scene View, fora do Play Mode, o pedestal ainda mostra o placeholder: a peça é instanciada ao executar. O processador de build troca as peças pelas variantes `_WebGL` no build para navegador.
+
+A peça de piso fica num grupo próprio dentro da sala (`PTF_Exposicao`, com a peça e a luz), no meio do caminho entre os dois expositores e com o mesmo giro das peças dos pedestais. Ao contrário delas, já está na cena e aparece fora do Play Mode. O ponto escolhido fica fora das três faixas de caminhada e dos acessos aos expositores que a validação percorre.
 
 ## Substituir um placeholder
 

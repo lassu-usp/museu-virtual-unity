@@ -48,10 +48,32 @@ namespace MuseuVirtual.Editor
             var codes = displays.Where(d => !d.IsPlaceholder).Select(d => d.ModelPrefab.GetComponent<MuseumCollectionItem>().objectCode).OrderBy(c => c);
             Check(displays.Length == 28 && codes.SequenceEqual(new[] { "ATR", "MFX", "TJG" }), "Esperados 28 pontos, 3 com peças do acervo");
 
+            // Floor pieces: the desktop prefab, halfway between their two displays.
+            var rooms = roots.SelectMany(r => r.GetComponentsInChildren<MuseumRoom>(true)).ToArray();
+            var floorGroups = new List<Transform>();
+            foreach (var floor in MuseumCollectionPlacement.FloorPlacements)
+            {
+                var room = rooms.Single(r => r.Decade == floor.Decade);
+                var group = room.transform.Find(floor.Group);
+                Check(group != null, floor.Code + " ausente no piso da sala de " + floor.Decade);
+                var item = group.GetComponentInChildren<MuseumCollectionItem>(true);
+                Check(item != null && item.objectCode == floor.Code
+                    && PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(item.gameObject) == floor.Prefab, floor.Code + ": prefab do piso incorreto");
+                var middle = Vector3.Lerp(room.Exhibits[floor.FromSlot].transform.position, room.Exhibits[floor.ToSlot].transform.position, 0.5f);
+                Check(Vector3.Distance(item.transform.position, middle) < 0.01f, floor.Code + ": fora do ponto entre os expositores");
+                floorGroups.Add(group);
+            }
+
             // Same scene, without saving: the WebGL build must only reference the _WebGL variants.
             MuseumWebGLProcessor.ReplaceCollections(scene);
             foreach (var display in displays.Where(d => !d.IsPlaceholder))
                 Check(display.ModelPrefab.name.EndsWith("_WebGL"), display.name + ": variante desktop no WebGL");
+            foreach (var group in floorGroups)
+            {
+                var item = group.GetComponentInChildren<MuseumCollectionItem>(true);
+                Check(item != null && item.GetComponentsInChildren<LODGroup>(true).All(l => l.GetLODs().Length == 2), group.name + ": variante desktop no WebGL");
+                Check(group.GetComponentInChildren<Light>(true) != null, group.name + ": luz da exposição perdida na troca WebGL");
+            }
             EditorSceneManager.OpenScene(MuseumCollectionPlacement.ScenePath);
         }
 
@@ -109,7 +131,9 @@ namespace MuseuVirtual.Editor
                 var withOcclusion = MuseumOcclusionValidation.MeasureRender(camera, true);
                 var withoutOcclusion = MuseumOcclusionValidation.MeasureRender(camera, false);
                 Check(withOcclusion.submittedRenderers < withoutOcclusion.submittedRenderers, "A oclusão não reduziu os renderers");
-                Check(!withOcclusion.submittedPaths.Any(path => path.Contains("Model_PF_")), "Peças atrás de portões fechados foram desenhadas");
+                Check(!withOcclusion.submittedPaths.Any(path => path.Contains("Model_PF_")
+                    || MuseumCollectionPlacement.FloorPlacements.Any(floor => path.Contains("/" + floor.Group + "/"))),
+                    "Peças atrás de portões fechados foram desenhadas");
                 report.Add("Início: " + withoutOcclusion.submittedRenderers + " renderers sem oclusão e " + withOcclusion.submittedRenderers
                     + " com oclusão; peças atrás dos portões fechados não são desenhadas");
 
@@ -173,7 +197,16 @@ namespace MuseuVirtual.Editor
                     Check(display.transform.Find("Luz da exposição").GetComponent<Light>().enabled, placement.Code + ": luz da exposição ausente");
                 }
                 Check(displays.Count(d => d.IsPlaceholder && d.ModelAnchor.Find("PlaceholderModel").gameObject.activeSelf) == 25, "Esperados 25 placeholders ativos");
-                report.Add("Acervo: 3 peças instanciadas nos pedestais e 25 pontos mantidos como placeholder");
+                foreach (var floor in MuseumCollectionPlacement.FloorPlacements)
+                {
+                    var group = rooms.Single(room => room.Decade == floor.Decade).transform.Find(floor.Group);
+                    var item = group != null ? group.GetComponentInChildren<MuseumCollectionItem>() : null;
+                    Check(item != null && item.objectCode == floor.Code, floor.Code + " ausente no piso");
+                    Check(item.GetComponentsInChildren<Renderer>(true).All(r => r.allowOcclusionWhenDynamic), floor.Code + ": oclusão dinâmica desligada");
+                    Check(group.GetComponentInChildren<Light>().enabled, floor.Code + ": luz da exposição ausente");
+                }
+                report.Add("Acervo: 3 peças instanciadas nos pedestais, " + MuseumCollectionPlacement.FloorPlacements.Length
+                    + " no piso e 25 pontos mantidos como placeholder");
             }
 
             IEnumerable<int> CheckWalkingSpeed()

@@ -30,6 +30,7 @@ namespace MuseuVirtual.Editor
             MicroflexValidation.ValidateAssets();
             AtariValidation.ValidateAssets();
             TelejogoValidation.ValidateAssets();
+            PatinhoFeioValidation.ValidateAssets();
             MuseumGalleryValidation.ValidateScene();
             SessionState.SetBool(SessionKey, true);
             EditorSceneManager.OpenScene("Assets/Scenes/MFX_Validacao.unity");

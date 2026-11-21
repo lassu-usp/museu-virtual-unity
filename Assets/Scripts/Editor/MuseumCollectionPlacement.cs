@@ -5,11 +5,13 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace MuseuVirtual.Editor
 {
-    // Installs the collection on gallery pedestals through each display's Model Prefab.
-    // Safe to run again: it only sets references and poses, and reuses the existing lamp.
+    // Installs the collection on gallery pedestals through each display's Model Prefab, and the pieces
+    // too large for a pedestal on the floor. Safe to run again: it only sets references and poses,
+    // reuses the pedestal lamps and rebuilds the floor groups.
     public static class MuseumCollectionPlacement
     {
         public const string ScenePath = "Assets/Scenes/Museu.unity";
@@ -49,7 +51,24 @@ namespace MuseuVirtual.Editor
             }
         };
 
-        [MenuItem("Museu/Acervo/Instalar peças nos pedestais")]
+        public sealed class FloorPlacement
+        {
+            public string Code, Group, Prefab;
+            public int Decade, FromSlot, ToSlot;
+        }
+
+        // A floor piece stands halfway between two displays of the same wall, turned to the walkway like
+        // the pedestal pieces: off the walking lanes and off the paths from the walkway to the displays.
+        public static readonly FloorPlacement[] FloorPlacements =
+        {
+            new FloorPlacement
+            {
+                Code = "PTF", Group = "PTF_Exposicao", Decade = 1970, FromSlot = 0, ToSlot = 2,
+                Prefab = PatinhoFeioIntegration.DesktopPrefab
+            }
+        };
+
+        [MenuItem("Museu/Acervo/Instalar peças na galeria")]
         public static void ApplyFromMenu()
         {
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
@@ -65,6 +84,8 @@ namespace MuseuVirtual.Editor
             var rooms = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<MuseumRoom>(true)).ToArray();
             foreach (var placement in Placements)
                 Install(placement, rooms.Single(room => room.Decade == placement.Decade).Exhibits[placement.Slot]);
+            foreach (var placement in FloorPlacements)
+                InstallOnFloor(placement, rooms.Single(room => room.Decade == placement.Decade));
             EditorSceneManager.MarkSceneDirty(scene);
             if (!EditorSceneManager.SaveScene(scene)) throw new InvalidOperationException("Não foi possível salvar a cena.");
             AssetDatabase.SaveAssets();
@@ -126,6 +147,35 @@ namespace MuseuVirtual.Editor
             PrefabUtility.RecordPrefabInstancePropertyModifications(panel);
             PrefabUtility.RecordPrefabInstancePropertyModifications(label);
             PrefabUtility.RecordPrefabInstancePropertyModifications(label.GetComponent<TextMesh>());
+        }
+
+        // The lamp stays beside the piece, in the same group, so the WebGL swap of the piece keeps it.
+        static void InstallOnFloor(FloorPlacement placement, MuseumRoom room)
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(placement.Prefab);
+            if (prefab == null) throw new InvalidOperationException("Prefab ausente: " + placement.Prefab);
+            var from = room.Exhibits[placement.FromSlot].transform;
+            var to = room.Exhibits[placement.ToSlot].transform;
+            var previous = room.transform.Find(placement.Group);
+            if (previous != null) Object.DestroyImmediate(previous.gameObject);
+
+            var group = new GameObject(placement.Group).transform;
+            group.SetParent(room.transform, false);
+            // The displays' +Z points at the wall and the piece's front is its +Z: turn it to the walkway.
+            group.SetPositionAndRotation(Vector3.Lerp(from.position, to.position, 0.5f), from.rotation * Quaternion.Euler(0, 180, 0));
+            var piece = (GameObject)PrefabUtility.InstantiatePrefab(prefab, group);
+            piece.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+            var lamp = new GameObject(LampName).transform;
+            lamp.SetParent(group, false);
+            lamp.localPosition = new Vector3(0.7f, 3.2f, 1.9f);
+            lamp.LookAt(group.position + Vector3.up * 1.1f);
+            var light = lamp.gameObject.AddComponent<Light>();
+            light.type = LightType.Spot;
+            light.range = 7;
+            light.spotAngle = 62;
+            light.intensity = 8;
+            light.shadows = LightShadows.Soft;
         }
     }
 }

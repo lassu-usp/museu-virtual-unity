@@ -1,0 +1,4416 @@
+{
+  "alvo": "webgl",
+  "unidade": "metro",
+  "vertical_arquivos": "Y",
+  "raiz": "PTF_PatinhoFeio",
+  "referencial": "centro da base do suporte, no piso; frente Blender -Y; glTF +Z",
+  "arquivos": {
+    "niveis": [
+      "PTF_PatinhoFeio_LOD0",
+      "PTF_PatinhoFeio_LOD1"
+    ],
+    "controles": "PTF_PatinhoFeio_Controles",
+    "colisao": "PTF_PatinhoFeio_COL",
+    "cena_blender": "PTF_patinhofeio_LODs.blend"
+  },
+  "lods": {
+    "0": {
+      "variante": "L1",
+      "malhas": {
+        "PTF_Stand_LOD0": 322,
+        "PTF_Computer_LOD0": 9536
+      },
+      "controles": true,
+      "triangulos_com_controles": 12156
+    },
+    "1": {
+      "variante": "L2",
+      "malhas": {
+        "PTF_Stand_LOD1": 232,
+        "PTF_Computer_LOD1": 4932
+      },
+      "controles": false,
+      "triangulos_com_controles": 5164
+    }
+  },
+  "lod_transicoes_altura_relativa_tela": [
+    0.25,
+    0.025
+  ],
+  "lod_transicoes_status": "valores iniciais; calibrar na etapa 6",
+  "variantes": {
+    "PTF_Stand_L1": {
+      "removidos": [],
+      "chapas_lisas": [],
+      "dizimados": 9,
+      "conservados_na_dizimacao": {
+        "Base_tras": 0.5,
+        "Travessa_frente": 0.5,
+        "Saia_frente": 0.5,
+        "Saia_tras": 0.5,
+        "Saia_lado_-u": 0.5,
+        "Saia_lado_+u": 0.5,
+        "Trilho_meio": 0.5,
+        "Barra_interna_-u": 0.5,
+        "Barra_interna_+u": 0.5
+      },
+      "triangulos": 322
+    },
+    "PTF_Computer_L1": {
+      "removidos": [
+        "Bastidor_frente_0_arruela",
+        "Bastidor_frente_0_cabeca",
+        "Bastidor_frente_1_arruela",
+        "Bastidor_frente_1_cabeca",
+        "Bastidor_frente_2_arruela",
+        "Bastidor_frente_2_cabeca",
+        "Bastidor_frente_3_arruela",
+        "Bastidor_frente_3_cabeca",
+        "Fonte1_borne0",
+        "Fonte1_borne1",
+        "Fonte1_borne2",
+        "Fonte1_capacitor0_borda0",
+        "Fonte1_capacitor0_borda1",
+        "Fonte1_capacitor0_terminal0",
+        "Fonte1_capacitor0_terminal1",
+        "Fonte1_componente0",
+        "Fonte1_componente1",
+        "Fonte1_componente2",
+        "Fonte1_pino_auxiliar",
+        "Fonte1_presilha_aba0",
+        "Fonte1_presilha_aba1",
+        "Fonte1_presilha_base",
+        "Fonte1_terminal_0",
+        "Fonte1_terminal_1",
+        "Fonte2_borne0",
+        "Fonte2_borne1",
+        "Fonte2_borne2",
+        "Fonte2_capacitor0_borda0",
+        "Fonte2_capacitor0_borda1",
+        "Fonte2_capacitor0_terminal0",
+        "Fonte2_capacitor0_terminal1",
+        "Fonte2_componente0",
+        "Fonte2_componente1",
+        "Fonte2_componente2",
+        "Fonte2_pino_auxiliar",
+        "Fonte2_presilha_aba0",
+        "Fonte2_presilha_aba1",
+        "Fonte2_presilha_base",
+        "Fonte2_terminal_0",
+        "Fonte2_terminal_1",
+        "Fonte3_borne0",
+        "Fonte3_borne1",
+        "Fonte3_borne2",
+        "Fonte3_capacitor0_borda0",
+        "Fonte3_capacitor0_borda1",
+        "Fonte3_capacitor0_terminal0",
+        "Fonte3_capacitor0_terminal1",
+        "Fonte3_capacitor1_borda0",
+        "Fonte3_capacitor1_borda1",
+        "Fonte3_capacitor1_terminal0",
+        "Fonte3_capacitor1_terminal1",
+        "Fonte3_componente0",
+        "Fonte3_componente1",
+        "Fonte3_componente2",
+        "Fonte3_presilha_aba0",
+        "Fonte3_presilha_aba1",
+        "Fonte3_presilha_base",
+        "Fonte3_terminal_0",
+        "Fonte3_terminal_1",
+        "Gaiola_lateral_lingueta0",
+        "Gaiola_lateral_lingueta1",
+        "Gaiola_lateral_lingueta2",
+        "Gaiola_lateral_lingueta3",
+        "Gaiola_lateral_lingueta4",
+        "Gaiola_lateral_lingueta5",
+        "Gaiola_lateral_lingueta6",
+        "Gaiola_lateral_lingueta7",
+        "Gaveta0_chapa_esquerda_parafuso00_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso01_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso02_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso03_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso04_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso05_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso06_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso07_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso08_cabeca",
+        "Gaveta0_fixacao_dir0_arruela",
+        "Gaveta0_fixacao_dir0_cabeca",
+        "Gaveta0_fixacao_dir1_arruela",
+        "Gaveta0_fixacao_dir1_cabeca",
+        "Gaveta0_fixacao_esq0_arruela",
+        "Gaveta0_fixacao_esq0_cabeca",
+        "Gaveta0_fixacao_esq1_arruela",
+        "Gaveta0_fixacao_esq1_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso00_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso01_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso02_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso03_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso04_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso05_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso06_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso07_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso08_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso09_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso10_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso11_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso12_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso13_cabeca",
+        "Gaveta1_fixacao_dir0_arruela",
+        "Gaveta1_fixacao_dir0_cabeca",
+        "Gaveta1_fixacao_dir1_arruela",
+        "Gaveta1_fixacao_dir1_cabeca",
+        "Gaveta1_fixacao_esq0_arruela",
+        "Gaveta1_fixacao_esq0_cabeca",
+        "Gaveta1_fixacao_esq1_arruela",
+        "Gaveta1_fixacao_esq1_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso00_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso01_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso02_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso03_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso04_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso05_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso06_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso07_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso08_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso09_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso10_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso11_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso12_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso13_cabeca",
+        "Gaveta2_fixacao_dir0_arruela",
+        "Gaveta2_fixacao_dir0_cabeca",
+        "Gaveta2_fixacao_dir1_arruela",
+        "Gaveta2_fixacao_dir1_cabeca",
+        "Gaveta2_fixacao_esq0_arruela",
+        "Gaveta2_fixacao_esq0_cabeca",
+        "Gaveta2_fixacao_esq1_arruela",
+        "Gaveta2_fixacao_esq1_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso00_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso01_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso02_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso03_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso04_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso05_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso06_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso07_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso08_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso09_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso10_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso11_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso12_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso13_cabeca",
+        "Gaveta3_fixacao_dir0_arruela",
+        "Gaveta3_fixacao_dir0_cabeca",
+        "Gaveta3_fixacao_dir1_arruela",
+        "Gaveta3_fixacao_dir1_cabeca",
+        "Gaveta3_fixacao_esq0_arruela",
+        "Gaveta3_fixacao_esq0_cabeca",
+        "Gaveta3_fixacao_esq1_arruela",
+        "Gaveta3_fixacao_esq1_cabeca",
+        "Painel_fixacao_0_arruela",
+        "Painel_fixacao_0_cabeca",
+        "Painel_fixacao_1_arruela",
+        "Painel_fixacao_1_cabeca",
+        "Painel_fixacao_2_arruela",
+        "Painel_fixacao_2_cabeca",
+        "Painel_fixacao_3_arruela",
+        "Painel_fixacao_3_cabeca",
+        "Presilha_lateral_parafuso",
+        "Protecao_fechadura_miolo",
+        "Protecao_fechadura_ranhura"
+      ],
+      "chapas_lisas": [
+        "Teto_fita_perfurada0",
+        "Teto_fita_perfurada1",
+        "Teto_fita_perfurada2",
+        "Teto_fita_perfurada3",
+        "Teto_fita_perfurada4",
+        "Teto_fita_perfurada_dir0",
+        "Teto_fita_perfurada_dir1",
+        "Teto_fita_perfurada_dir2",
+        "Teto_fita_perfurada_dir3"
+      ],
+      "dizimados": 139,
+      "conservados_na_dizimacao": {
+        "Fonte1_capacitor0_caneca": 0.4,
+        "Fonte1_capacitor0_fio1": 0.3,
+        "Fonte2_capacitor0_caneca": 0.4,
+        "Fonte2_capacitor0_fio1": 0.3,
+        "Fonte3_capacitor0_fio0": 0.3,
+        "Fonte1_chicote_ambar": 0.3,
+        "Fonte1_ramal_preto": 0.3,
+        "Fonte2_chicote_verde": 0.3,
+        "Fonte2_ramal_vinho": 0.3,
+        "Fonte3_ramal_preto": 0.3,
+        "Fonte3_ramal_vinho": 0.3,
+        "Partida_chicote_preto": 0.3
+      },
+      "triangulos": 9536
+    },
+    "PTF_Stand_L2": {
+      "removidos": [],
+      "chapas_lisas": [],
+      "dizimados": 9,
+      "conservados_na_dizimacao": {
+        "Base_tras": 0.3,
+        "Travessa_frente": 0.3,
+        "Saia_frente": 0.3,
+        "Saia_tras": 0.3,
+        "Saia_lado_-u": 0.3,
+        "Saia_lado_+u": 0.3,
+        "Trilho_meio": 0.3,
+        "Barra_interna_-u": 0.3,
+        "Barra_interna_+u": 0.3
+      },
+      "triangulos": 232
+    },
+    "PTF_Computer_L2": {
+      "removidos": [
+        "Backplane0_conexao0",
+        "Backplane0_conexao1",
+        "Backplane0_conexao2",
+        "Backplane0_conexao3",
+        "Backplane1_conexao0",
+        "Backplane1_conexao1",
+        "Backplane1_conexao2",
+        "Backplane1_conexao3",
+        "Backplane2_conexao0",
+        "Backplane2_conexao1",
+        "Backplane2_conexao2",
+        "Backplane2_conexao3",
+        "Bastidor_frente_0_arruela",
+        "Bastidor_frente_0_cabeca",
+        "Bastidor_frente_1_arruela",
+        "Bastidor_frente_1_cabeca",
+        "Bastidor_frente_2_arruela",
+        "Bastidor_frente_2_cabeca",
+        "Bastidor_frente_3_arruela",
+        "Bastidor_frente_3_cabeca",
+        "Comando_00_colar",
+        "Comando_01_colar",
+        "Comando_02_colar",
+        "Comando_03_colar",
+        "Comando_04_colar",
+        "Comando_05_colar",
+        "Comando_06_colar",
+        "Comando_instrucao_unica_colar",
+        "Comando_quadrado_aro",
+        "Controle_ciclo_00_colar",
+        "Controle_ciclo_00_corpo",
+        "Controle_ciclo_01_colar",
+        "Controle_ciclo_01_corpo",
+        "Controle_etapa_00_colar",
+        "Controle_etapa_00_corpo",
+        "Controle_etapa_01_colar",
+        "Controle_etapa_01_corpo",
+        "Controle_etapa_02_colar",
+        "Controle_etapa_02_corpo",
+        "Controle_etapa_03_colar",
+        "Controle_etapa_03_corpo",
+        "Controle_etapa_04_colar",
+        "Controle_etapa_04_corpo",
+        "Controle_etapa_05_colar",
+        "Controle_etapa_05_corpo",
+        "Controle_etapa_06_colar",
+        "Controle_etapa_06_corpo",
+        "Controle_inferior_colar",
+        "Entrada_00_aro",
+        "Entrada_01_aro",
+        "Entrada_02_aro",
+        "Entrada_03_aro",
+        "Entrada_04_aro",
+        "Entrada_05_aro",
+        "Entrada_06_aro",
+        "Entrada_07_aro",
+        "Entrada_08_aro",
+        "Entrada_09_aro",
+        "Entrada_10_aro",
+        "Entrada_11_aro",
+        "Fonte1_borne0",
+        "Fonte1_borne1",
+        "Fonte1_borne2",
+        "Fonte1_capacitor0_borda0",
+        "Fonte1_capacitor0_borda1",
+        "Fonte1_capacitor0_fio0",
+        "Fonte1_capacitor0_fio1",
+        "Fonte1_capacitor0_terminal0",
+        "Fonte1_capacitor0_terminal1",
+        "Fonte1_chicote_ambar",
+        "Fonte1_chicote_lateral",
+        "Fonte1_componente0",
+        "Fonte1_componente1",
+        "Fonte1_componente2",
+        "Fonte1_ligacao_transformador",
+        "Fonte1_pino_auxiliar",
+        "Fonte1_presilha_aba0",
+        "Fonte1_presilha_aba1",
+        "Fonte1_presilha_base",
+        "Fonte1_ramal_preto",
+        "Fonte1_ramal_vinho",
+        "Fonte1_terminal_0",
+        "Fonte1_terminal_1",
+        "Fonte2_borne0",
+        "Fonte2_borne1",
+        "Fonte2_borne2",
+        "Fonte2_capacitor0_borda0",
+        "Fonte2_capacitor0_borda1",
+        "Fonte2_capacitor0_fio0",
+        "Fonte2_capacitor0_fio1",
+        "Fonte2_capacitor0_terminal0",
+        "Fonte2_capacitor0_terminal1",
+        "Fonte2_chicote_lateral",
+        "Fonte2_chicote_verde",
+        "Fonte2_componente0",
+        "Fonte2_componente1",
+        "Fonte2_componente2",
+        "Fonte2_ligacao_transformador",
+        "Fonte2_pino_auxiliar",
+        "Fonte2_presilha_aba0",
+        "Fonte2_presilha_aba1",
+        "Fonte2_presilha_base",
+        "Fonte2_ramal_preto",
+        "Fonte2_ramal_vinho",
+        "Fonte2_terminal_0",
+        "Fonte2_terminal_1",
+        "Fonte3_borne0",
+        "Fonte3_borne1",
+        "Fonte3_borne2",
+        "Fonte3_capacitor0_borda0",
+        "Fonte3_capacitor0_borda1",
+        "Fonte3_capacitor0_fio0",
+        "Fonte3_capacitor0_fio1",
+        "Fonte3_capacitor0_terminal0",
+        "Fonte3_capacitor0_terminal1",
+        "Fonte3_capacitor1_borda0",
+        "Fonte3_capacitor1_borda1",
+        "Fonte3_capacitor1_fio0",
+        "Fonte3_capacitor1_fio1",
+        "Fonte3_capacitor1_terminal0",
+        "Fonte3_capacitor1_terminal1",
+        "Fonte3_chicote_lateral",
+        "Fonte3_chicote_verde",
+        "Fonte3_componente0",
+        "Fonte3_componente1",
+        "Fonte3_componente2",
+        "Fonte3_ligacao_transformador",
+        "Fonte3_presilha_aba0",
+        "Fonte3_presilha_aba1",
+        "Fonte3_presilha_base",
+        "Fonte3_ramal_preto",
+        "Fonte3_ramal_vinho",
+        "Fonte3_terminal_0",
+        "Fonte3_terminal_1",
+        "Gaiola_lateral_lingueta0",
+        "Gaiola_lateral_lingueta1",
+        "Gaiola_lateral_lingueta2",
+        "Gaiola_lateral_lingueta3",
+        "Gaiola_lateral_lingueta4",
+        "Gaiola_lateral_lingueta5",
+        "Gaiola_lateral_lingueta6",
+        "Gaiola_lateral_lingueta7",
+        "Gaveta0_chapa_esquerda_parafuso00_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso01_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso02_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso03_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso04_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso05_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso06_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso07_cabeca",
+        "Gaveta0_chapa_esquerda_parafuso08_cabeca",
+        "Gaveta0_fixacao_dir0_arruela",
+        "Gaveta0_fixacao_dir0_cabeca",
+        "Gaveta0_fixacao_dir1_arruela",
+        "Gaveta0_fixacao_dir1_cabeca",
+        "Gaveta0_fixacao_esq0_arruela",
+        "Gaveta0_fixacao_esq0_cabeca",
+        "Gaveta0_fixacao_esq1_arruela",
+        "Gaveta0_fixacao_esq1_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso00_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso01_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso02_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso03_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso04_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso05_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso06_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso07_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso08_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso09_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso10_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso11_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso12_cabeca",
+        "Gaveta1_chapa_esquerda_parafuso13_cabeca",
+        "Gaveta1_fixacao_dir0_arruela",
+        "Gaveta1_fixacao_dir0_cabeca",
+        "Gaveta1_fixacao_dir1_arruela",
+        "Gaveta1_fixacao_dir1_cabeca",
+        "Gaveta1_fixacao_esq0_arruela",
+        "Gaveta1_fixacao_esq0_cabeca",
+        "Gaveta1_fixacao_esq1_arruela",
+        "Gaveta1_fixacao_esq1_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso00_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso01_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso02_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso03_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso04_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso05_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso06_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso07_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso08_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso09_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso10_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso11_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso12_cabeca",
+        "Gaveta2_chapa_esquerda_parafuso13_cabeca",
+        "Gaveta2_fixacao_dir0_arruela",
+        "Gaveta2_fixacao_dir0_cabeca",
+        "Gaveta2_fixacao_dir1_arruela",
+        "Gaveta2_fixacao_dir1_cabeca",
+        "Gaveta2_fixacao_esq0_arruela",
+        "Gaveta2_fixacao_esq0_cabeca",
+        "Gaveta2_fixacao_esq1_arruela",
+        "Gaveta2_fixacao_esq1_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso00_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso01_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso02_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso03_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso04_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso05_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso06_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso07_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso08_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso09_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso10_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso11_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso12_cabeca",
+        "Gaveta3_chapa_esquerda_parafuso13_cabeca",
+        "Gaveta3_fixacao_dir0_arruela",
+        "Gaveta3_fixacao_dir0_cabeca",
+        "Gaveta3_fixacao_dir1_arruela",
+        "Gaveta3_fixacao_dir1_cabeca",
+        "Gaveta3_fixacao_esq0_arruela",
+        "Gaveta3_fixacao_esq0_cabeca",
+        "Gaveta3_fixacao_esq1_arruela",
+        "Gaveta3_fixacao_esq1_cabeca",
+        "Painel_fixacao_0_arruela",
+        "Painel_fixacao_0_cabeca",
+        "Painel_fixacao_1_arruela",
+        "Painel_fixacao_1_cabeca",
+        "Painel_fixacao_2_arruela",
+        "Painel_fixacao_2_cabeca",
+        "Painel_fixacao_3_arruela",
+        "Painel_fixacao_3_cabeca",
+        "Partida_0_aro",
+        "Partida_0_bucha",
+        "Partida_1_aro",
+        "Partida_1_bucha",
+        "Partida_chicote_preto",
+        "Presilha_lateral_parafuso",
+        "Protecao_fechadura_miolo",
+        "Protecao_fechadura_ranhura",
+        "Seletor_00_colar",
+        "Seletor_01_colar"
+      ],
+      "chapas_lisas": [
+        "Teto_fita_perfurada0",
+        "Teto_fita_perfurada1",
+        "Teto_fita_perfurada2",
+        "Teto_fita_perfurada3",
+        "Teto_fita_perfurada4",
+        "Teto_fita_perfurada_dir0",
+        "Teto_fita_perfurada_dir1",
+        "Teto_fita_perfurada_dir2",
+        "Teto_fita_perfurada_dir3"
+      ],
+      "dizimados": 68,
+      "conservados_na_dizimacao": {
+        "Fonte2_capacitor0_tampa": 0.3
+      },
+      "triangulos": 4932
+    }
+  },
+  "controles": {
+    "arquivo": "PTF_PatinhoFeio_Controles",
+    "pai": "PTF_Computer_Root",
+    "niveis": [
+      0
+    ],
+    "versao": "simplificados",
+    "triangulos": 2298,
+    "malhas_simplificadas": {
+      "PTF_LED_rubi": [
+        30,
+        10
+      ],
+      "PTF_LED_opalino": [
+        46,
+        30
+      ],
+      "PTF_Alavanca": [
+        76,
+        44
+      ],
+      "PTF_Seletor_lobulado": [
+        248,
+        128
+      ],
+      "PTF_Botao_modo": [
+        68,
+        44
+      ]
+    },
+    "eixos_gltf": {
+      "botoes": "+Y local no Blender = -Z local no glTF",
+      "alavancas": "X local no Blender = X local no glTF, mesmo sentido",
+      "seletores": "+Y local no Blender = -Z local no glTF"
+    },
+    "objetos": {
+      "PTF_Botao_Armazenamento": {
+        "malha": "PTF_Botao_modo",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Corpo_comando",
+          "MAT_PTF_Tecla_verde"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.21595001220703125
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.1080000028014183
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Botao_Ciclo_unico": {
+        "malha": "PTF_Botao_modo",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Corpo_comando",
+          "MAT_PTF_Tecla_verde"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.09095000475645065
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.1080000028014183
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Botao_Desliga": {
+        "malha": "PTF_Botao_Desliga",
+        "triangulos": 92,
+        "materiais": [
+          "MAT_PTF_Computer"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            -0.08305001258850098
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.2068050056695938
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.11400000751018524
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 3.0,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "fontes"
+      },
+      "PTF_Botao_Enderecamento": {
+        "malha": "PTF_Botao_modo",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Corpo_comando",
+          "MAT_PTF_Tecla_verde"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.17395000159740448
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.1080000028014183
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Botao_Espera": {
+        "malha": "PTF_Botao_modo",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Corpo_comando",
+          "MAT_PTF_Tecla_verde"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3679500222206116
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.1080000028014183
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Botao_Exposicao": {
+        "malha": "PTF_Botao_modo",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Corpo_comando",
+          "MAT_PTF_Tecla_verde"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.2569500207901001
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.1080000028014183
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Botao_Instrucao_unica": {
+        "malha": "PTF_Botao_modo",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Corpo_comando",
+          "MAT_PTF_Tecla_verde"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.1319500058889389
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.1080000028014183
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Botao_Interrupcao": {
+        "malha": "PTF_Botao_modo",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Corpo_comando",
+          "MAT_PTF_Tecla_verde"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.4069500267505646
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.1080000028014183
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Botao_Liga": {
+        "malha": "PTF_Botao_Liga",
+        "triangulos": 92,
+        "materiais": [
+          "MAT_PTF_Computer"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            -0.11605000495910645
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.2068050056695938
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.11400000751018524
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 3.0,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "fontes"
+      },
+      "PTF_Botao_Normal": {
+        "malha": "PTF_Botao_modo",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Corpo_comando",
+          "MAT_PTF_Tecla_verde"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.05195000395178795
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.1080000028014183
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Botao_Partida": {
+        "malha": "PTF_Tecla_partida",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Marfim"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.4479500353336334
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23379500210285187
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.10900000482797623
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Botao_Preparacao": {
+        "malha": "PTF_Botao_modo",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Corpo_comando",
+          "MAT_PTF_Tecla_verde"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.4479500353336334
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0650000050663948
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "botao",
+        "estado": "pressionado",
+        "pressionado": 0.0,
+        "acionamento": "momentaneo",
+        "movimento": "translacao",
+        "eixo_local": "+Y",
+        "curso_mm": 1.8,
+        "posicao_0": "solto",
+        "posicao_1": "afundado",
+        "painel": "direito"
+      },
+      "PTF_Knob_Enderecamento": {
+        "malha": "PTF_Seletor_lobulado",
+        "triangulos": 128,
+        "materiais": [
+          "MAT_PTF_Baquelite_verde",
+          "MAT_PTF_Marfim"
+        ],
+        "matriz_local_blender": [
+          [
+            0.8987940549850464,
+            0.0,
+            0.4383711516857147,
+            0.3479500412940979
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            -0.4383711516857147,
+            0.0,
+            0.8987940549850464,
+            0.24800001084804535
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "knob",
+        "estado": "posicao",
+        "posicao": 1.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "Y",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "FIXO",
+        "posicao_1": "SEQUENCIAL",
+        "painel": "direito"
+      },
+      "PTF_Knob_Memoria": {
+        "malha": "PTF_Seletor_lobulado",
+        "triangulos": 128,
+        "materiais": [
+          "MAT_PTF_Baquelite_verde",
+          "MAT_PTF_Marfim"
+        ],
+        "matriz_local_blender": [
+          [
+            0.8987940549850464,
+            0.0,
+            0.4383711516857147,
+            0.4349500238895416
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.23259499669075012
+          ],
+          [
+            -0.4383711516857147,
+            0.0,
+            0.8987940549850464,
+            0.24800001084804535
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "knob",
+        "estado": "posicao",
+        "posicao": 1.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "Y",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "LIBERADA",
+        "posicao_1": "PROTEGIDA",
+        "painel": "direito"
+      },
+      "PTF_LED_Acumulador_00": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.10056431591510773
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Acumulador_01": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.11083512753248215
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Acumulador_02": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.12134484946727753
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Acumulador_03": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.13161571323871613
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Acumulador_04": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.14188657701015472
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Acumulador_05": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.15215742588043213
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Acumulador_06": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.16242828965187073
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Acumulador_07": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.17317688465118408
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Codigo_instrucao_00": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.10056431591510773
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3870019018650055
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Codigo_instrucao_01": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.11083512753248215
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3870019018650055
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Codigo_instrucao_02": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.12134484946727753
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3870019018650055
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Codigo_instrucao_03": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.13161571323871613
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3870019018650055
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Codigo_instrucao_04": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.14188657701015472
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3870019018650055
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Codigo_instrucao_05": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.15215742588043213
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3870019018650055
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Codigo_instrucao_06": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.16254772245883942
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3870019018650055
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Codigo_instrucao_07": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.17317688465118408
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3870019018650055
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_memoria_00": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.10056431591510773
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3400834798812866
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_memoria_01": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.11095456033945084
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3400834798812866
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_memoria_02": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.12134484946727753
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3400834798812866
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_memoria_03": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.13161571323871613
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3400834798812866
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_memoria_04": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.14188657701015472
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3400834798812866
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_memoria_05": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.15215742588043213
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3400834798812866
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_memoria_06": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.16254772245883942
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3400834798812866
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_memoria_07": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.17317688465118408
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3400834798812866
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_00": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.2988157272338867
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_01": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3092060089111328
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_02": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3195962905883789
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_03": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3298671841621399
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_04": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3403768837451935
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_05": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3506477475166321
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_06": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3610380291938782
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_07": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.37142834067344666
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_08": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3816991448402405
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_09": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3919700086116791
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_10": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.4022408723831177
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Dados_painel_11": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.41263118386268616
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.3207431733608246
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_00": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.2988157272338867
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_01": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3092060089111328
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_02": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3195962905883789
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_03": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3298671841621399
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_04": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3403768837451935
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_05": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3506477475166321
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_06": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3610380291938782
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_07": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.37142834067344666
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_08": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3816991448402405
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_09": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3919700086116791
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_10": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.4022408723831177
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_instrucao_11": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.4125117361545563
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.433681458234787
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_00": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.2988157272338867
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_01": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3092060089111328
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_02": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3195962905883789
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_03": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3298671841621399
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_04": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3403768837451935
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_05": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3506477475166321
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_06": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3610380291938782
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_07": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.37142834067344666
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_08": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3816991448402405
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_09": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3919700086116791
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_10": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.4022408723831177
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Endereco_memoria_11": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.41263118386268616
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.4790477752685547
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Externo": {
+        "malha": "PTF_LED_opalino",
+        "triangulos": 30,
+        "materiais": [
+          "MAT_PTF_Lente_opalina"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.278950035572052
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.24029500782489777
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.24900001287460327
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_branco",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Fase_1": {
+        "malha": "PTF_LED_opalino",
+        "triangulos": 30,
+        "materiais": [
+          "MAT_PTF_Lente_opalina"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0499500036239624
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.24029500782489777
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.24900001287460327
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_branco",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Fase_2": {
+        "malha": "PTF_LED_opalino",
+        "triangulos": 30,
+        "materiais": [
+          "MAT_PTF_Lente_opalina"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0839499980211258
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.24029500782489777
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.24900001287460327
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_branco",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Fase_3": {
+        "malha": "PTF_LED_opalino",
+        "triangulos": 30,
+        "materiais": [
+          "MAT_PTF_Lente_opalina"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.11794999986886978
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.24029500782489777
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.24900001287460327
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_branco",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Fase_4": {
+        "malha": "PTF_LED_opalino",
+        "triangulos": 30,
+        "materiais": [
+          "MAT_PTF_Lente_opalina"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.15395000576972961
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.24029500782489777
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.24900001287460327
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_branco",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Fase_5": {
+        "malha": "PTF_LED_opalino",
+        "triangulos": 30,
+        "materiais": [
+          "MAT_PTF_Lente_opalina"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.18695001304149628
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.24029500782489777
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.24900001287460327
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_branco",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Fase_6": {
+        "malha": "PTF_LED_opalino",
+        "triangulos": 30,
+        "materiais": [
+          "MAT_PTF_Lente_opalina"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.08195000141859055
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.24029500782489777
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.21400001645088196
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_branco",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Fase_7": {
+        "malha": "PTF_LED_opalino",
+        "triangulos": 30,
+        "materiais": [
+          "MAT_PTF_Lente_opalina"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.15094999969005585
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.24029500782489777
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.21400001645088196
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_branco",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Parado": {
+        "malha": "PTF_LED_opalino",
+        "triangulos": 30,
+        "materiais": [
+          "MAT_PTF_Lente_opalina"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.23795001208782196
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.24029500782489777
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.24900001287460327
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_branco",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Transbordo": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.2988157272338867
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.40168625116348267
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_LED_Vai_um": {
+        "malha": "PTF_LED_rubi",
+        "triangulos": 10,
+        "materiais": [
+          "MAT_PTF_Lente_rubi"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.4125117361545563
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.22979500889778137
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.40168625116348267
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "led_vermelho",
+        "estado": "aceso",
+        "aceso": 0.0
+      },
+      "PTF_Switch_dados_00": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.06894999742507935
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_01": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.10195000469684601
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_02": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.13494999706745148
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_03": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.16695000231266022
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_04": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.19895000755786896
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_05": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.2309500128030777
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_06": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.26295003294944763
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_07": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.29695001244544983
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_08": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3299500346183777
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_09": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.36295002698898315
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_10": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.3959500193595886
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      },
+      "PTF_Switch_dados_11": {
+        "malha": "PTF_Alavanca",
+        "triangulos": 44,
+        "materiais": [
+          "MAT_PTF_Alavanca_niquel"
+        ],
+        "matriz_local_blender": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.42795002460479736
+          ],
+          [
+            0.0,
+            0.8987940549850464,
+            0.4383711516857147,
+            -0.23209500312805176
+          ],
+          [
+            0.0,
+            -0.4383711516857147,
+            0.8987940549850464,
+            0.18200001120567322
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "painel_ptf": "switch",
+        "estado": "posicao",
+        "posicao": 0.0,
+        "acionamento": "duas_posicoes",
+        "movimento": "rotacao",
+        "eixo_local": "X",
+        "angulo_0_graus": -26.0,
+        "angulo_1_graus": 26.0,
+        "posicao_0": "para cima",
+        "posicao_1": "para baixo",
+        "painel": "direito"
+      }
+    }
+  },
+  "colisores": {
+    "PTF_Stand": {
+      "tipo": "BoxCollider",
+      "triangulos": 12,
+      "convexo": true,
+      "centro_local_blender_m": [
+        2.9802322387695312e-08,
+        0.0,
+        0.43409910798072815
+      ],
+      "dimensoes_locais_m": [
+        1.0644440054893494,
+        0.7407170534133911,
+        0.8681982159614563
+      ],
+      "cobre": "malha fixa"
+    },
+    "PTF_Computer": {
+      "tipo": "BoxCollider",
+      "triangulos": 12,
+      "convexo": true,
+      "centro_local_blender_m": [
+        2.9802322387695312e-08,
+        -0.0002650265243300254,
+        0.47170960903167725
+      ],
+      "dimensoes_locais_m": [
+        1.0153000950813293,
+        0.4895200916820066,
+        0.9434192180633545
+      ],
+      "cobre": "malha fixa e comandos em repouso e acionados"
+    }
+  },
+  "materiais": {
+    "MAT_PTF_Alavanca_niquel": {},
+    "MAT_PTF_Baquelite_verde": {},
+    "MAT_PTF_Computer": {
+      "URP_MetallicSmoothness": "//texturas/PTF_Computer_MetallicSmoothness.png",
+      "URP_Occlusion": "//texturas/PTF_Computer_Occlusion.png",
+      "BaseColor": "texturas/PTF_Computer_BaseColor.png",
+      "Normal": "texturas/PTF_Computer_Normal.png",
+      "ORM": "texturas/PTF_Computer_ORM.png",
+      "MetallicSmoothness": "texturas/PTF_Computer_MetallicSmoothness.png",
+      "Occlusion": "texturas/PTF_Computer_Occlusion.png"
+    },
+    "MAT_PTF_Corpo_comando": {},
+    "MAT_PTF_Lente_opalina": {
+      "emissao_rgb": [
+        1.0,
+        0.95,
+        0.84
+      ],
+      "emissao_ganho_aceso": 5.0,
+      "emissao_propriedade": "aceso"
+    },
+    "MAT_PTF_Lente_rubi": {
+      "emissao_rgb": [
+        1.0,
+        0.025,
+        0.012
+      ],
+      "emissao_ganho_aceso": 5.0,
+      "emissao_propriedade": "aceso"
+    },
+    "MAT_PTF_Marfim": {},
+    "MAT_PTF_Stand": {
+      "URP_MetallicSmoothness": "//texturas/PTF_Stand_MetallicSmoothness.png",
+      "URP_Occlusion": "//texturas/PTF_Stand_Occlusion.png",
+      "BaseColor": "texturas/PTF_Stand_BaseColor.png",
+      "Normal": "texturas/PTF_Stand_Normal.png",
+      "ORM": "texturas/PTF_Stand_ORM.png",
+      "MetallicSmoothness": "texturas/PTF_Stand_MetallicSmoothness.png",
+      "Occlusion": "texturas/PTF_Stand_Occlusion.png"
+    },
+    "MAT_PTF_Tecla_verde": {},
+    "MAT_PTF_Vidro": {}
+  },
+  "pecas": {
+    "PTF_Stand": {
+      "raiz": "PTF_Stand_Root",
+      "interacao": "estatica",
+      "matriz_local_blender": [
+        [
+          0.9999999403953552,
+          0.0,
+          0.0,
+          -5.960464477539063e-08
+        ],
+        [
+          0.0,
+          0.9999999403953552,
+          0.0,
+          -1.341104507446289e-07
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "PTF_Computer": {
+      "raiz": "PTF_Computer_Root",
+      "interacao": "estatica; comandos e indicadores independentes",
+      "matriz_local_blender": [
+        [
+          0.9999986290931702,
+          0.0017097813542932272,
+          1.2459317076718435e-05,
+          0.019304215908050537
+        ],
+        [
+          -0.0017098269890993834,
+          0.9999719858169556,
+          0.007286711595952511,
+          0.12163648009300232
+        ],
+        [
+          -2.8510357963362765e-10,
+          -0.007286722306162119,
+          0.999973475933075,
+          0.843545138835907
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  },
+  "limites": [
+    "FBX não configura automaticamente URP Lit, LODGroup, colisores nem o comportamento dos comandos.",
+    "Os arquivos de nível trazem só as malhas fixas; os comandos vêm do arquivo _Controles, com o mesmo pai, e acompanham os níveis indicados.",
+    "Os drivers do Blender não são exportados: o estado de cada comando segue como propriedade (FBX: user properties; glTF: extras), e o movimento deve ser aplicado pelo aplicativo.",
+    "As lentes saem apagadas; a emissão por instância é emissao_rgb × emissao_ganho_aceso × aceso.",
+    "COL é auxiliar: não exibir suas malhas. Física e prefab ficam na etapa 6."
+  ]
+}
