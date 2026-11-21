@@ -128,7 +128,7 @@ namespace Lassu.Museum
             promptTitle.text = FocusedGate.IsClosed || FocusedGate.IsClosing
                 ? "E  ABRIR PORTÃO"
                 : FocusedGate.IsOpen ? "PASSAGEM LIVRE" : "ABRINDO PASSAGEM...";
-            promptDescription.text = "FECHAMENTO AUTOMÁTICO APÓS A TRAVESSIA";
+            promptDescription.text = "FECHA AUTOMATICAMENTE AO SE AFASTAR";
             prompt.alpha = Mathf.MoveTowards(prompt.alpha, 1f, Time.unscaledDeltaTime * 7f);
         }
 

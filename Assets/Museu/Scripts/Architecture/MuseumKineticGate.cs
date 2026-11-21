@@ -114,6 +114,8 @@ namespace Lassu.Museum
             if (visitor == null) visitor = FindFirstObjectByType<MuseumVisitor>();
             if (visitor != null && visitor.isActiveAndEnabled)
                 TickVisitor(visitor.transform.position, Time.fixedDeltaTime);
+            else
+                TickPresence(false, Time.fixedDeltaTime);
         }
 
         /// <summary>E opens a gate. Repeated presses never close it on an approaching visitor.</summary>
@@ -145,8 +147,6 @@ namespace Lassu.Museum
 
         private void ResumeOpening()
         {
-            // Preserve a completed traversal when someone returns briefly. Walking away
-            // again must still close the gate, even without another crossing.
             wantsOpen = true;
             departureTime = 0f;
             SyncOcclusion();
@@ -157,12 +157,20 @@ namespace Lassu.Museum
         {
             if (deltaTime <= 0f) return;
             var local = transform.InverseTransformPoint(worldPosition);
-            if (IsClosing && IsInSafetyZone(local)) ResumeOpening();
+            if (wantsOpen) TrackCrossing(local);
+            previousLocalPosition = local;
+            hasPreviousPosition = true;
+            // Measure from the whole doorway, including its edges, on either side.
+            TickPresence(InteractionDistance(worldPosition) <= autoCloseDistance || IsInSafetyZone(local), deltaTime);
+        }
+
+        private void TickPresence(bool visitorNearby, float deltaTime)
+        {
+            if (IsClosing && visitorNearby) ResumeOpening();
 
             if (wantsOpen)
             {
-                TrackCrossing(local);
-                if (IsOpen && hasVisitorPassed && Mathf.Abs(local.z) >= autoCloseDistance)
+                if (!visitorNearby)
                 {
                     departureTime += deltaTime;
                     if (departureTime >= autoCloseDelay) wantsOpen = false;
@@ -170,12 +178,9 @@ namespace Lassu.Museum
                 else departureTime = 0f;
             }
 
-            previousLocalPosition = local;
-            hasPreviousPosition = true;
             var next = Mathf.MoveTowards(progress, wantsOpen ? 1f : 0f,
                 deltaTime / Mathf.Max(1f, animationDuration));
-            // Commit the exact endpoints: an epsilon comparison can strand the mechanism
-            // just short of 1 and prevent its departure timer from ever starting.
+            // Commit exact endpoints so passage and occlusion agree with the final pose.
             if (next != progress) SetPreviewProgress(next, openingDirection);
         }
 

@@ -175,7 +175,7 @@ Deste repositório:
 | Dinâmica | Descrição | Status |
 |---|---|---|
 | Navegação em primeira pessoa | andar, olhar em volta e correr, com teclado, mouse ou gamepad | implementada |
-| Portão cinético | as ripas se abrem com E, nos dois sentidos, e se fecham sozinhas depois da travessia | implementada nos sete arcos da galeria |
+| Portão cinético | as ripas se abrem com E, nos dois sentidos, e se fecham quando o visitante se afasta, mesmo sem atravessar | implementada nos sete arcos da galeria |
 | Faixa da sala | ao entrar em uma sala, número, título e texto curatorial são escritos progressivamente no HUD | implementada nas sete salas |
 | Peça estática | permanece na exposição e apresenta sua descrição | implementada no console do Atari e no gabinete do MicroFlex-4 |
 | Peça pegável | o visitante pega, gira, aproxima e devolve a peça | implementada no joystick, nos paddles, no teclado do MicroFlex-4 e no console do Telejogo |
@@ -198,6 +198,8 @@ Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / cont
 | Clique fora dos botões, na pausa | retomar a visita e recapturar o cursor |
 
 A inspeção interrompe a caminhada. As peças manipuláveis ficam cinemáticas e sem colisão enquanto estão nas mãos; ao devolver, recuperam exatamente a pose e os colisores da exposição. Não há arremesso ou queda livre. Paredes, móveis e portões fechados bloqueiam tanto a passagem quanto a seleção de objetos atrás deles. A pausa oferece retorno ao ponto inicial.
+
+Um portão aberto permanece aberto enquanto o visitante está a até 5 metros da passagem. Ao sair dessa região, em qualquer direção, o fechamento começa após 0,65 segundo, mesmo sem travessia. Voltar à região durante o fechamento reabre o portão; aproximar-se de um portão já fechado continua exigindo E.
 
 Um toque em E nunca aciona peça e portão ao mesmo tempo: a peça sob a mira tem prioridade, e devolvê-la não abre um portão próximo. Com o cursor liberado ou durante uma inspeção, os portões ficam suspensos.
 

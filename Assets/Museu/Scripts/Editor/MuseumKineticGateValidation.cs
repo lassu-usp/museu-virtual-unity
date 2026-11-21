@@ -201,10 +201,29 @@ namespace Lassu.Museum.Editor
                     gate.OpenFrom(Position(approachSide * 2f));
                     Advance(gate, Position(approachSide * 2f), 4f);
                     if (!gate.IsOpen) AddIssue(issues, GateLabel(original) + ": não abre por ambos os lados.");
+                    // Remaining anywhere in the presence region prevents closure, even without crossing.
+                    Advance(gate, Position(approachSide * 4.8f), 8f);
+                    if (!gate.IsOpen) AddIssue(issues, GateLabel(original) + ": fecha com visitante na região.");
                     Advance(gate, Position(approachSide * 8f), 5f);
-                    if (!gate.IsOpen || gate.HasVisitorPassed)
-                        AddIssue(issues, GateLabel(original) + ": fecha sem o visitante ter atravessado.");
+                    if (!gate.IsClosed || gate.HasVisitorPassed || !closedPose.Matches(gate.transform))
+                        AddIssue(issues, GateLabel(original) + ": não fecha após desistir da travessia.");
+                    Advance(gate, Position(approachSide * 2f), 4f);
+                    if (!gate.IsClosed) AddIssue(issues, GateLabel(original) + ": abre sem E só por proximidade.");
 
+                    // Leaving during the opening animation must also close the gate.
+                    gate.OpenFrom(Position(approachSide * 2f));
+                    Advance(gate, Position(approachSide * 2f), 0.4f);
+                    Advance(gate, Position(approachSide * 8f), 5f);
+                    if (!gate.IsClosed) AddIssue(issues, GateLabel(original) + ": fica aberta ao abandonar a abertura.");
+
+                    gate.OpenFrom(Position(approachSide * 2f));
+                    Advance(gate, Position(approachSide * 2f), 4f);
+                    var lateral = gate.transform.TransformPoint(new Vector3(gate.HalfWidth + 6f, 0.03f, approachSide));
+                    Advance(gate, lateral, 5f);
+                    if (!gate.IsClosed) AddIssue(issues, GateLabel(original) + ": não fecha ao se afastar lateralmente.");
+
+                    gate.OpenFrom(Position(approachSide * 2f));
+                    Advance(gate, Position(approachSide * 2f), 4f);
                     Advance(gate, Position(approachSide * 1f), 0.2f);
                     Advance(gate, Position(-approachSide * 1f), 4f);
                     if (!gate.IsOpen || !gate.HasVisitorPassed)
@@ -214,7 +233,7 @@ namespace Lassu.Museum.Editor
                     if (!gate.IsClosing || gate.Progress >= 0.999f || gate.IsClosed)
                         AddIssue(issues, GateLabel(original) + ": não inicia fechamento gradual após travessia e afastamento.");
                     var beforeSafety = gate.Progress;
-                    Advance(gate, Position(-approachSide * 1f), 0.3f);
+                    Advance(gate, Position(-approachSide * 4.8f), 0.3f);
                     if (gate.IsClosing || gate.Progress <= beforeSafety || !gate.HasVisitorPassed)
                         AddIssue(issues, GateLabel(original) + ": retorno do visitante não reverte fechamento.");
 
@@ -225,8 +244,7 @@ namespace Lassu.Museum.Editor
                     if (!gate.IsClosed || !closedPose.Matches(gate.transform))
                         AddIssue(issues, GateLabel(original) + ": reabertura de proteção impede fechar ao se afastar novamente pelo mesmo lado.");
 
-                    // Start a new visit from the opposite side and exercise an explicit E reversal
-                    // outside the automatic safety zone while the same passage is still closing.
+                    // Start a new visit from the opposite side and exercise an explicit E reversal.
                     gate.OpenFrom(Position(-approachSide * 2f));
                     Advance(gate, Position(-approachSide * 2f), 4f);
                     Advance(gate, Position(approachSide * 1f), 0.3f);
