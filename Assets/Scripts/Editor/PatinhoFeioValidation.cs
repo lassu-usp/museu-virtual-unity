@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using PatinhoFeio;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -22,11 +23,37 @@ namespace MuseuVirtual.Editor
         {
             var report = new List<string>();
             foreach (string variant in new[] { "desktop", "webgl" }) report.Add(ValidateVariant(variant));
+            report.Add(ValidateCounter());
             MicroflexValidation.ValidateWebReplacement(PatinhoFeioIntegration.DesktopPrefab);
             report.Add("Substituição WebGL de PTF: variante, pose e estado ativo preservados");
             Directory.CreateDirectory("Logs/PTF06");
             File.WriteAllLines("Logs/PTF06/asset-validation.txt", report);
             Debug.Log(string.Join("\n", report));
+        }
+
+        static string ValidateCounter()
+        {
+            var machine = new PanelSession();
+            machine.ToggleSwitch(7); // /010
+            machine.Start(); machine.RunFrame(400);
+            machine.ToggleSwitch(7); machine.ToggleSwitch(9); machine.ToggleSwitch(11); // /005
+            machine.Select(PanelMode.Normal); machine.Start(); machine.RunFrame(400);
+            Require(!machine.Running && machine.Registers.Acc.ToInt() == 6, "PTF: PNL 0, INC, PARE");
+            machine.Start();
+            for (int i = 0; i < 10; i++) machine.RunFrame(400);
+            var timer = System.Diagnostics.Stopwatch.StartNew();
+            long startBytes = GC.GetAllocatedBytesForCurrentThread();
+            const int frames = 512;
+            for (int i = 0; i < frames; i++) machine.RunFrame(400);
+            long allocated = GC.GetAllocatedBytesForCurrentThread() - startBytes;
+            timer.Stop();
+            float duty = machine.Brightness(PanelSession.Acc);
+            Require(machine.Running && duty > 0 && duty < 1, "PTF: o bit baixo do contador deve variar no quadro");
+            Require(allocated == 0, "PTF: alocação durante o contador: " + allocated);
+            machine.Wait(); machine.RunFrame(400);
+            Require(!machine.Running && machine.Diagnostic == null, "PTF: Espera não parou o contador");
+            return $"Normal no Editor, núcleo e integração das lâmpadas: {frames * 400} bordas, {allocated} B, " +
+                $"{timer.Elapsed.TotalMilliseconds / frames:F3} ms por 400 bordas; fração acesa do bit baixo de ACC = {duty:F3}";
         }
 
         static string ValidateVariant(string variant)
@@ -45,8 +72,9 @@ namespace MuseuVirtual.Editor
             {
                 var item = prefab.GetComponent<MuseumCollectionItem>();
                 Require(item != null && item.objectCode == "PTF", "Código PTF ausente");
-                // Static piece, no interaction yet: no exhibit component and no body.
-                Require(prefab.GetComponentsInChildren<MuseumExhibit>(true).Length == 0, "MuseumExhibit inesperado: a peça ainda não tem interação");
+                var panel = prefab.transform.Find("PTF_Computer_Root").GetComponent<PatinhoPanel>();
+                Require(panel != null && prefab.GetComponentsInChildren<MuseumExhibit>(true).Length == 1 &&
+                    !panel.GetComponent<MuseumExhibit>().CanPickUp, "PTF: o computador deve ter painel operável e ficar fixo");
                 Require(prefab.GetComponentsInChildren<Rigidbody>(true).Length == 0, "Rigidbody inesperado numa peça estática");
                 Require(prefab.GetComponentsInChildren<Transform>(true)
                     .All(t => GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(t.gameObject) == 0), "Script ausente");
@@ -114,6 +142,8 @@ namespace MuseuVirtual.Editor
                 {
                     var material = AssetDatabase.LoadAssetAtPath<Material>(folder + name + ".mat");
                     Require(material != null && material.shader.name == "Universal Render Pipeline/Lit", name + ": material inválido");
+                    if (name.StartsWith("MAT_PTF_Lente_", StringComparison.Ordinal))
+                        Require(material.IsKeywordEnabled("_EMISSION"), name + ": emissão das lâmpadas desabilitada");
                     bool textured = manifest["materiais"][name]["BaseColor"] != null;
                     Require(Maps.All(map => (material.GetTexture(map) != null) == textured), name + ": mapas incorretos");
                     bool glass = name == PatinhoFeioIntegration.GlassMaterial;

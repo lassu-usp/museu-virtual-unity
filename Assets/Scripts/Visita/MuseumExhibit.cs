@@ -21,6 +21,7 @@ namespace MuseuVirtual
         bool initialized;
         public bool IsInspecting { get; private set; }
         public bool CanPickUp => interaction != ExhibitInteraction.Static;
+        public PatinhoPanel OperatorPanel { get; private set; }
 
         void Awake() => Initialize();
 
@@ -34,6 +35,7 @@ namespace MuseuVirtual
             colliderStates = new bool[colliders.Length];
             lods = GetComponentsInChildren<LODGroup>(true);
             body = GetComponent<Rigidbody>();
+            OperatorPanel = GetComponent<PatinhoPanel>();
             initialized = true;
             SetDockCollision(true);
         }
@@ -51,6 +53,7 @@ namespace MuseuVirtual
             if (IsInspecting) return;
             IsInspecting = true;
             foreach (var lod in lods) lod.ForceLOD(0);
+            if (OperatorPanel != null) OperatorPanel.Open(viewer.GetComponent<Camera>());
             if (!CanPickUp) return;
             SetDockCollision(true);
             for (int i = 0; i < colliders.Length; i++)
@@ -77,6 +80,7 @@ namespace MuseuVirtual
         public void ReturnToDisplay()
         {
             if (!initialized || !IsInspecting) return;
+            if (OperatorPanel != null) OperatorPanel.Close();
             if (CanPickUp)
             {
                 transform.SetParent(homeParent, false);

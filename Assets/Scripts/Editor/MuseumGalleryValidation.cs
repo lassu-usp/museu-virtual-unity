@@ -164,6 +164,8 @@ namespace MuseuVirtual.Editor
 
                     foreach (var placement in MuseumCollectionPlacement.Placements.Where(p => p.Decade == rooms[i + 1].Decade))
                         foreach (int wait in VisitPiece(placement)) yield return wait;
+                    if (rooms[i + 1].Decade == 1970)
+                        foreach (int wait in VisitPatinho()) yield return wait;
                 }
                 report.Add("Percurso do hall ao fim: 7 portões abertos com E, fechados após o afastamento, e faixa da sala atualizada a cada travessia");
 
@@ -447,6 +449,60 @@ namespace MuseuVirtual.Editor
                 Keys();
                 yield return 2;
                 Check(visitor.FocusedExhibit == piece, code + ": " + piece.name + " não voltou a ser selecionável");
+            }
+
+            IEnumerable<int> VisitPatinho()
+            {
+                var panel = Object.FindFirstObjectByType<PatinhoPanel>();
+                var partida = panel.transform.Find("PTF_Botao_Partida");
+                var aisle = MuseumArtisticArchitecture.RoutePoint(partida.position.z);
+                foreach (int wait in WalkTo(aisle, 0.25f)) yield return wait;
+                foreach (int wait in WalkTo(partida.position - panel.transform.up * 1.3f, 0.1f)) yield return wait;
+                foreach (int wait in AimAt(partida.position)) yield return wait;
+                Check(visitor.FocusedExhibit == panel.GetComponent<MuseumExhibit>(), "PTF fora da mira");
+                var eye = camera.transform.localPosition;
+                var pose = camera.transform.localRotation;
+                var viewport = camera.rect;
+                Keys(Key.E); yield return 3;
+                Keys(); yield return 2;
+                Check(panel.Operating && !visitor.IsWalking, "E não abriu o painel");
+
+                void Press(string name)
+                {
+                    var part = panel.transform.Find("PTF_" + name);
+                    int control = panel.Pick(camera.WorldToScreenPoint(part.position));
+                    Check(control >= 0, "Comando fora do enquadramento: " + name);
+                    panel.Operate(control);
+                }
+                void SetRc(int value)
+                {
+                    for (int i = 0; i < 12; i++)
+                        if (((panel.Machine.Switches ^ value) & (1 << (11 - i))) != 0)
+                            Press($"Switch_dados_{i:00}");
+                    Check(panel.Machine.Switches == value, "Ordem das chaves PTF");
+                }
+
+                Press("Botao_Preparacao"); SetRc(0x020); Press("Botao_Partida"); yield return 4;
+                Press("Botao_Armazenamento");
+                SetRc(0x88); Press("Botao_Partida"); yield return 4;
+                SetRc(0x9D); Press("Botao_Partida"); yield return 4;
+                Press("Botao_Enderecamento"); SetRc(0x020); Press("Botao_Partida"); yield return 4;
+                Press("Botao_Exposicao"); Press("Botao_Partida"); yield return 4;
+                Check(panel.Machine.Registers.Rd.ToInt() == 0x88, "PTF: leitura em /020");
+                Press("Botao_Partida"); yield return 4;
+                Check(panel.Machine.Registers.Rd.ToInt() == 0x9D, "PTF: leitura em /021");
+                Press("Botao_Enderecamento"); SetRc(0x020); Press("Botao_Partida"); yield return 4;
+                SetRc(5); Press("Botao_Normal"); Press("Botao_Partida");
+                for (int frame = 0; frame < 300 && panel.Machine.Running; frame++) yield return 1;
+                Check(!panel.Machine.Running && panel.Machine.Registers.Acc.ToInt() == 5, "PTF: programa digitado");
+                Capture("ptf-programa-digitado");
+                Keys(Key.Escape); yield return 3;
+                Keys(); yield return 2;
+                Check(!panel.Operating && visitor.IsWalking && camera.rect == viewport &&
+                    camera.transform.localPosition == eye && Quaternion.Angle(pose, camera.transform.localRotation) < 0.01f,
+                    "PTF: Esc não restaurou a visita");
+                foreach (int wait in WalkTo(aisle, 0.25f)) yield return wait;
+                report.Add("PTF: entrada com E, gravação e leitura dos bytes /88 /9D, execução com ACC = /05 e saída com Esc");
             }
 
             IEnumerable<int> CheckPauseAndReset()

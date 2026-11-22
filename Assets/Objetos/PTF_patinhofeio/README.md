@@ -7,9 +7,19 @@ Importado de `museu-virtual-3d/objetos/PTF_patinhofeio/05_export`, revisão `075
 | Desktop | `PF_PTF_PatinhoFeio` | 30.316 / 14.380 / 5.164 | 2048² / 1024² |
 | WebGL | `PF_PTF_PatinhoFeio_WebGL` | 12.156 / 5.164 | 1024² / 512² |
 
-Peça estática, por enquanto sem interação. Suporte (`PTF_Stand_Root`) e computador (`PTF_Computer_Root`) são raízes separadas, cada uma com seu `LODGroup` e um `BoxCollider` com as medidas da caixa `_COL` do pacote, sem `Rigidbody` nem `MuseumExhibit`. Conjunto de 1,06 × 1,79 × 0,74 m, em metros, com Y para cima e o pivô no centro da base do suporte; o computador conserva a inclinação de 0,42° do escaneamento.
+Suporte e computador são peças fixas, cada uma com seu LODGroup e colisor. O conjunto mede 1,06 × 1,79 × 0,74 m. O computador recebe a interação com **E**. Durante a operação, a câmera enquadra os controles no nível de detalhe máximo. **E**, **Esc** ou **Voltar à sala** devolvem a câmera ao visitante.
 
-Os 97 comandos e indicadores do painel (lentes, alavancas, seletores e botões) são filhos do computador, com os nomes, pivôs e materiais do pacote, e ficam no estado inicial: lentes apagadas, botões soltos, alavancas para cima e seletores em SEQUENCIAL e PROTEGIDA. No desktop, eles acompanham os níveis 0 e 1; no WebGL, só o nível 0. As propriedades de estado de cada comando seguem no `manifesto.json`, para a etapa de interação.
+## Operação do painel
+
+As 12 alavancas fornecem RC, com P(0) à esquerda e peso /800. A posição para baixo vale 1. A barra indica hexadecimal. Cada grupo de quatro chaves forma um dígito, com os pesos 8, 4, 2 e 1 da esquerda para a direita. O seletor Sequencial incrementa a posição depois de Armazenamento ou Exposição. A proteção cobre /F80–/FFF. Os botões de modo selecionam a operação que Partida inicia. Os 97 elementos vêm do mesmo manifesto nas duas variantes.
+
+- **Executar da ferrite.** Em /010 há um exemplo escrito para o museu. Aperte Preparação, forme /010 e aperte Partida. Forme /005, selecione Normal e aperte Partida. PNL 0, INC e PARE deixam /06 em ACC. Outra Partida continua em /013, num laço que incrementa o acumulador. Espera permite interrompê-lo na fronteira de instrução.
+- **Programar à mão.** Em /020, grave /88 e /9D (PNL 0 e PARE) com Armazenamento, Sequencial e uma Partida por byte. Confira os bytes com Exposição. Enderece /020 outra vez, ajuste RC e execute em Normal. O acumulador mostra os oito bits baixos escolhidos nas chaves.
+- **Retenção.** A montagem começa ligada e preparada. A ferrite conserva as alterações durante a visita, inclusive ao sair do painel ou desligar e religar o computador. Uma transação de memória abortada pode deixar a célula indeterminada. O sinal de interrogação na ficha indica registrador indeterminado. O exemplo volta ao reiniciar a cena.
+
+O núcleo C# em `Assets/Scripts/PatinhoFeio/Core` deriva de `Pato-Feio/unity/pato_feio_emulator/Assets/PatinhoFeio/Core`. A referência de operação é `Pato-Feio/docs/front-panel.md`, com Fregni (1972), Souza (1976) e o manual do montador (1977). A questão Q-022 registra a perda do carregador residente de /F80. O micro-pré-loader rememorado em 2016 é outro estágio. Esta montagem utiliza carga manual e programa residente. A leitora de fita e a DECwriter ficam desconectadas.
+
+O relógio lógico mantém as bordas de 50 ns do núcleo. A exposição avança até 24 mil bordas por segundo e limita cada quadro a 600. O painel parado só avança em resposta aos comandos. Depois de Preparação, as interfaces desconectadas dispensam a projeção de seus 15 estados a cada borda. As lentes mostram a fração dos passos em que o bit esteve ligado no quadro. Os pilotos de fase representam as fases lógicas do núcleo. O piloto Externo fica apagado.
 
 Materiais URP Lit:
 
@@ -27,11 +37,6 @@ No menu **Museu › Patinho Feio**:
 
 1. **Importar pacote e montar prefabs** copia os FBX, as texturas e os manifestos do repositório irmão, sem os `.glb` e o `.blend`, configura importadores e materiais e gera os dois prefabs. `PatinhoFeioIntegration.BuildPrefabs()` reconstrói os prefabs só com as cópias deste repositório.
 2. **Instalar na galeria e cena de validação** instala as peças do acervo na galeria, inclusive esta, no piso, e recria a cena isolada.
-3. **Validar integração** confere hierarquia, triângulos por nível, comandos, materiais, texturas, colisores, base no piso e substituição WebGL. Relatório em `Logs/PTF06/asset-validation.txt`.
+3. **Validar integração** confere hierarquia, triângulos por nível, comandos, materiais, texturas, colisores, base no piso e substituição WebGL. O validador também roda o contador em Normal e mede tempo e alocações do núcleo e das lâmpadas no Editor. Relatório em `Logs/PTF06/asset-validation.txt`.
 
 Em uma instância batch dedicada, `-executeMethod MuseuVirtual.Editor.PatinhoFeioValidation.IntegrateBatch` executa os três passos, a validação dos assets de Atari, MicroFlex-4 e Telejogo e a validação da galeria, e encerra o Editor com código 0 ou 1. Não execute esse método na sessão de edição interativa.
-
-## Próximas etapas
-
-- Interação: botões momentâneos, alavancas e seletores de duas posições e emissão das lentes por instância, com os estados do manifesto. Durante a operação do painel, use o nível mais detalhado.
-- Descrição da peça e calibração das transições com a câmera e a distância de interação reais.

@@ -45,7 +45,7 @@ museu-virtual-unity    etapa 6 em diante: materiais URP, LODGroup, física, pref
 | `MFX` | MicroFlex-4 | `PF_MFX_Microflex4` | em revisão: gabinete fixo, teclado pegável e variantes desktop/WebGL integrados |
 | `MOT` | Motorola | — | não iniciada |
 | `ORE` | Orelhão | — | não iniciada |
-| `PTF` | Patinho Feio | `PF_PTF_PatinhoFeio` | em revisão: suporte e computador estáticos, 97 comandos do painel no estado inicial e variantes desktop/WebGL integrados; sem interação por enquanto |
+| `PTF` | Patinho Feio | `PF_PTF_PatinhoFeio` | em revisão: painel operável no desktop e no WebGL, com entrada pelas chaves, execução e leitura dos registradores |
 | `TJG` | Telejogo | `PF_TJG_Telejogo` | em revisão: console pegável e variantes desktop/WebGL integrados; pacote ainda sem revisão no `museu-virtual-3d` |
 
 Status possíveis: `não iniciada` · `em andamento` · `em revisão` · `concluída`. O andamento da modelagem (etapas 0 a 5) e os responsáveis ficam na tabela de objetos do `museu-virtual-3d`.
@@ -184,7 +184,7 @@ Deste repositório:
 
 A dinâmica de cada peça vem do `manifesto.json` e da ficha do objeto. O código fica em `Assets/Scripts/` e usa as ações de `InputSystem_Actions.inputactions` (veja [Convenções](#convenções)).
 
-Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / continuar a visita**. O visitante começa no hall e segue o fio de bronze pelas salas. Na sala de 1970, o Telejogo está no pedestal à esquerda e o Atari, no pedestal à direita; logo depois do Telejogo, o Patinho Feio fica no piso, ainda sem interação. O MicroFlex-4 está no pedestal à esquerda da sala de 1980. Até a primeira peça, são quatro portões.
+Abra `Assets/Scenes/Museu.unity`, entre no Play Mode e clique em **Entrar / continuar a visita**. O visitante começa no hall e segue o fio de bronze pelas salas. Na sala de 1970, o Telejogo está no pedestal à esquerda e o Atari, no pedestal à direita; logo depois do Telejogo, o Patinho Feio fica no piso. Mire no computador e pressione **E** para operar o painel. A ficha ao lado das chaves ensina a executar o contador residente e a gravar um programa de dois bytes. O MicroFlex-4 está no pedestal à esquerda da sala de 1980. Até a primeira peça, são quatro portões.
 
 | Controle | Ação |
 |---|---|
@@ -212,7 +212,7 @@ O foco aproxima suavemente a visão, reduzindo o campo de visão de 68° para 34
 
 `Assets/Scenes/TJG_Validacao.unity` apresenta o Telejogo com luz neutra. O menu **Museu › Telejogo** monta os prefabs a partir das cópias deste repositório, instala a peça na galeria e valida os assets. O console pode ser retirado, girado, aproximado e devolvido. A [ficha de integração](Assets/Objetos/TJG_telejogo/README.md) registra a origem e a validação.
 
-`Assets/Scenes/PTF_Validacao.unity` apresenta o Patinho Feio com luz neutra. O menu **Museu › Patinho Feio** importa o pacote do repositório irmão, monta os prefabs, instala a peça no piso da galeria e valida os assets. Suporte e computador ficam fixos, com os 97 comandos do painel no estado inicial; a interação fica para depois. A [ficha de integração](Assets/Objetos/PTF_patinhofeio/README.md) registra a origem e a validação.
+`Assets/Scenes/PTF_Validacao.unity` apresenta o Patinho Feio com luz neutra. O menu **Museu › Patinho Feio** importa o pacote do repositório irmão, monta os prefabs, instala a peça no piso da galeria e valida os assets. Suporte e computador ficam fixos. O visitante clica nos controles do modelo e acompanha o resultado nas lentes do painel. A [ficha de integração](Assets/Objetos/PTF_patinhofeio/README.md) registra a origem e a validação.
 
 O menu **Museu › Acervo › Validar galeria (cena)** reúne as validações do espaço (percurso, portões, décadas e oclusão) e confere o acervo instalado. Em uma instância batch dedicada, `-executeMethod MuseuVirtual.Editor.MuseumFocusValidation.RunBatch` também percorre a galeria no Play Mode com entradas simuladas: atravessa os sete portões, inspeciona cada peça e testa foco, pausa e o compartilhamento da tecla E. O relatório e as capturas ficam em `Logs/Galeria/`.
 

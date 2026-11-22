@@ -12,7 +12,7 @@ using Object = UnityEngine.Object;
 
 namespace MuseuVirtual.Editor
 {
-    // Patinho Feio: stand and computer stay fixed, with the 97 panel controls in their initial state.
+    // Patinho Feio: floor-mounted cabinet with a working operator panel.
     // Besides the levels, the package brings the controls in a separate file, a glass and untextured
     // materials, which the shared importer does not cover.
     public static class PatinhoFeioIntegration
@@ -124,6 +124,7 @@ namespace MuseuVirtual.Editor
                     }
                     if (piece == ControlsPiece)
                     {
+                        ConfigurePanel(holder.gameObject);
                         // The controls file shares the computer root, so each control keeps its local pose.
                         var controlRoot = Find(controls, rootName);
                         if (!SamePose(controlRoot, source))
@@ -176,6 +177,14 @@ namespace MuseuVirtual.Editor
                 importer.maxTextureSize = variant == "desktop" ? 2048 : 1024;
                 importer.SaveAndReimport();
             }
+        }
+
+        static void ConfigurePanel(GameObject computer)
+        {
+            var exhibit = computer.AddComponent<MuseumExhibit>();
+            exhibit.displayName = "Patinho Feio";
+            exhibit.interaction = ExhibitInteraction.Static;
+            computer.AddComponent<PatinhoPanel>();
         }
 
         static Dictionary<string, Material> BuildMaterials(JObject manifest, string directory, string folder)
@@ -238,6 +247,16 @@ namespace MuseuVirtual.Editor
             material.SetFloat("_Smoothness", 1 - values.roughness);
             material.SetFloat("_Surface", glass ? 1 : 0);
             material.SetFloat("_Blend", 0);
+            if (name.StartsWith("MAT_PTF_Lente_", StringComparison.Ordinal)) ConfigureLens(material);
+        }
+
+        static void ConfigureLens(Material material)
+        {
+            // Keep the emissive shader variant in player builds. Runtime sets each lens
+            // independently, including exact black for a bit that is off.
+            material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.BakedEmissive;
+            material.SetColor("_EmissionColor", new Color(0.01f, 0.002f, 0.001f));
+            material.EnableKeyword("_EMISSION");
         }
 
         static void ConfigureModel(string path, Dictionary<string, Material> materials)

@@ -3090,6 +3090,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3470122587336043542}
   - component: {fileID: 2128999002400563110}
+  - component: {fileID: 1956149006358807930}
+  - component: {fileID: 675785835162683994}
   m_Layer: 0
   m_Name: PTF_Computer_Root
   m_TagString: Untagged
@@ -3333,6 +3335,34 @@ LODGroup:
     - renderer: {fileID: 3877621144585422738}
   m_Enabled: 1
   m_GlobalIlluminationLOD: 0
+--- !u!114 &1956149006358807930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157850499059207514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb25c68ae6193b458043ca52e28daa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuVirtual.MuseumExhibit
+  displayName: Patinho Feio
+  description: 
+  interaction: 0
+  dockCollider: {fileID: 0}
+--- !u!114 &675785835162683994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157850499059207514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c16c0e7698b29d4eaca972371c6a3fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuVirtual.PatinhoPanel
 --- !u!1 &2267997351468482827
 GameObject:
   m_ObjectHideFlags: 0

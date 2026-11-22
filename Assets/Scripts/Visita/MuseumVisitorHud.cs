@@ -8,6 +8,7 @@ namespace MuseuVirtual
     {
         MuseumVisitor visitor;
         MuseumGateInteractor gates;
+        readonly PatinhoPanelGuide panelGuide = new PatinhoPanelGuide();
         GUIStyle heading, body, caption, button, centered, menuButton, keycap;
         readonly Color ink = new Color(0.035f, 0.065f, 0.105f, 0.96f);
         readonly Color accent = new Color(0.34f, 0.83f, 0.78f);
@@ -121,6 +122,12 @@ namespace MuseuVirtual
             else if (visitor.InspectedExhibit != null)
             {
                 var item = visitor.InspectedExhibit;
+                if (item.OperatorPanel != null)
+                {
+                    panelGuide.Draw(item.OperatorPanel, visitor);
+                    GUI.matrix = Matrix4x4.identity;
+                    return;
+                }
                 Panel(new Rect(1110,220,450,520));
                 GUI.Label(new Rect(1138,246,394,80), item.displayName, heading);
                 GUI.Label(new Rect(1138,343,394,180), item.description, body);
@@ -135,7 +142,10 @@ namespace MuseuVirtual
                 if (visitor.FocusedExhibit != null)
                 {
                     Panel(new Rect(500,680,600,82));
-                    GUI.Label(new Rect(520,691,560,58), visitor.FocusedExhibit.displayName + "\n" + (visitor.FocusedExhibit.CanPickUp ? "Pegar e examinar" : "Conhecer a peça"), centered);
+                    var item = visitor.FocusedExhibit;
+                    string action = item.OperatorPanel != null ? "E  ·  Operar o painel" :
+                        item.CanPickUp ? "Pegar e examinar" : "Conhecer a peça";
+                    GUI.Label(new Rect(520,691,560,58), item.displayName + "\n" + action, centered);
                 }
             }
             if (!gallery && visitor.InspectedExhibit == null) DrawControls();

@@ -170,12 +170,12 @@ namespace MuseuVirtual
             if (exhibit == null || InspectedExhibit != null) return;
             InspectedExhibit = exhibit;
             interactConsumedFrame = Time.frameCount;
-            if (exhibit.CanPickUp)
+            if (exhibit.CanPickUp || exhibit.OperatorPanel != null)
             {
-                // A fill light at inspection distance can wash out pale objects and their labels.
+                // The fill light is close to both held objects and the operator panel.
                 if (viewLight != null) viewLight.intensity = Mathf.Min(normalLightIntensity, inspectionLightIntensity);
-                viewCamera.nearClipPlane = Mathf.Min(normalNearClip, inspectionNearClip);
             }
+            if (exhibit.CanPickUp) viewCamera.nearClipPlane = Mathf.Min(normalNearClip, inspectionNearClip);
             exhibit.BeginInspection(viewCamera.transform);
             inspectionRotation = exhibit.transform.localRotation;
             inspectionDistance = 0.32f;
@@ -278,6 +278,7 @@ namespace MuseuVirtual
 
         public void ToggleFocus()
         {
+            if (InspectedExhibit != null && InspectedExhibit.OperatorPanel != null) return;
             if (IsFocusMode || IsPaused || HasOtherActionInput()) { CancelFocus(); return; }
             IsFocusMode = true;
         }
