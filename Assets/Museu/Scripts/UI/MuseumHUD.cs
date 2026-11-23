@@ -22,6 +22,7 @@ namespace Lassu.Museum
 
         private Coroutine bannerRoutine;
         private Coroutine controlsRoutine;
+        private MuseumVisitor visitor;
         private MuseumRoom requestedRoom;
         private MuseumHUDTextReveal titleReveal;
         private MuseumHUDTextReveal subtitleReveal;
@@ -155,9 +156,16 @@ namespace Lassu.Museum
             if (Instance == this) Instance = null;
         }
 
-        private static MuseumRoom FindVisitorRoom()
+        private void LateUpdate()
         {
-            var visitor = FindFirstObjectByType<MuseumVisitor>();
+            if (controlsHint == null || visitor == null) return;
+            bool visible = visitor.InspectedExhibit == null && !visitor.IsFocusMode;
+            if (controlsHint.gameObject.activeSelf != visible) controlsHint.gameObject.SetActive(visible);
+        }
+
+        private MuseumRoom FindVisitorRoom()
+        {
+            if (visitor == null) visitor = FindAnyObjectByType<MuseumVisitor>();
             if (visitor == null) return null;
 
             foreach (var room in FindObjectsByType<MuseumRoom>(FindObjectsSortMode.None))
@@ -292,6 +300,9 @@ namespace Lassu.Museum
             previousText.gameObject.SetActive(false);
             controlsHint.interactable = false;
             controlsHint.blocksRaycasts = false;
+            var strip = (RectTransform)controlsHint.transform;
+            strip.anchorMin = strip.anchorMax = strip.pivot = new Vector2(0.5f, 0);
+            strip.anchoredPosition = new Vector2(0, 28);
 
             var background = controlsHint.GetComponent<Image>();
             if (background != null)
@@ -300,66 +311,47 @@ namespace Lassu.Museum
                 background.raycastTarget = false;
             }
             var layout = controlsHint.gameObject.AddComponent<HorizontalLayoutGroup>();
-            layout.padding = new RectOffset(18, 18, 12, 12);
-            layout.spacing = 22;
+            layout.padding = new RectOffset(22, 22, 10, 10);
+            layout.spacing = 24;
             layout.childAlignment = TextAnchor.MiddleLeft;
             layout.childControlWidth = layout.childControlHeight = true;
             layout.childForceExpandWidth = layout.childForceExpandHeight = false;
             var fitter = controlsHint.gameObject.AddComponent<ContentSizeFitter>();
             fitter.horizontalFit = fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-            AddControlHint(font, new[] { "W", "A", "S", "D" }, "mover");
-            AddControlHint(font, new[] { "Mouse" }, "olhar");
-            AddControlHint(font, new[] { "Shift" }, "correr");
-            AddControlHint(font, new[] { "E" }, "interagir");
-            AddControlHint(font, new[] { "Z" }, "foco");
-            AddControlHint(font, new[] { "Esc" }, "pausar");
+            foreach (var hint in MuseumPrompts.Walking) AddControlHint(font, hint);
         }
 
-        private void AddControlHint(Font font, string[] keys, string label)
+        private void AddControlHint(Font font, MuseumPrompts.Hint hint)
         {
-            var group = new GameObject(label, typeof(RectTransform), typeof(HorizontalLayoutGroup));
+            var group = new GameObject(hint.Label, typeof(RectTransform), typeof(HorizontalLayoutGroup));
             group.transform.SetParent(controlsHint.transform, false);
             var layout = group.GetComponent<HorizontalLayoutGroup>();
-            layout.spacing = 5;
+            layout.spacing = 3;
             layout.childAlignment = TextAnchor.MiddleLeft;
             layout.childControlWidth = layout.childControlHeight = true;
             layout.childForceExpandWidth = layout.childForceExpandHeight = false;
-            foreach (var key in keys)
+            foreach (var key in hint.Keys)
             {
-                var cap = new GameObject("Key_" + key, typeof(RectTransform), typeof(Image), typeof(LayoutElement));
-                cap.transform.SetParent(group.transform, false);
-                var face = cap.GetComponent<Image>();
-                face.color = new Color(0.11f, 0.17f, 0.2f);
-                face.raycastTarget = false;
-                var outline = cap.AddComponent<Outline>();
-                outline.effectColor = new Color(0.44f, 0.57f, 0.59f, 0.85f);
-                outline.effectDistance = new Vector2(1, -2);
-                var size = cap.GetComponent<LayoutElement>();
-                size.preferredWidth = key.Length == 1 ? 27 : key == "Mouse" ? 60 : key == "Shift" ? 46 : 36;
-                size.preferredHeight = 28;
-                var text = HintText(cap.transform, font, key, FontStyle.Bold);
-                var rect = text.rectTransform;
-                rect.anchorMin = Vector2.zero;
-                rect.anchorMax = Vector2.one;
-                rect.offsetMin = rect.offsetMax = Vector2.zero;
+                var icon = MuseumPrompts.AddIcon(group.transform, key, 32);
+                var size = icon.gameObject.AddComponent<LayoutElement>();
+                size.preferredWidth = icon.rectTransform.sizeDelta.x;
+                size.preferredHeight = icon.rectTransform.sizeDelta.y;
             }
-            var description = HintText(group.transform, font, label, FontStyle.Normal);
-            description.color = new Color(0.8f, 0.85f, 0.86f);
+            var description = HintText(group.transform, font, hint.Label);
             var descriptionSize = description.gameObject.AddComponent<LayoutElement>();
             descriptionSize.preferredWidth = description.preferredWidth + 8;
             descriptionSize.preferredHeight = 28;
         }
 
-        private static Text HintText(Transform parent, Font font, string content, FontStyle style)
+        private static Text HintText(Transform parent, Font font, string content)
         {
             var textObject = new GameObject("Label", typeof(RectTransform), typeof(Text));
             textObject.transform.SetParent(parent, false);
             var text = textObject.GetComponent<Text>();
             text.font = font;
             text.text = content;
-            text.fontSize = 14;
-            text.fontStyle = style;
+            text.fontSize = 17;
             text.alignment = TextAnchor.MiddleCenter;
             text.color = new Color(0.9f, 0.96f, 0.95f);
             text.raycastTarget = false;

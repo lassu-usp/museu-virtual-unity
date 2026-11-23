@@ -156,7 +156,7 @@ namespace MuseuVirtual.Editor
                         foreach (int wait in CheckClosedGateBlocks(gates[0])) yield return wait;
                         foreach (int wait in CheckKeySharing(gates[0])) yield return wait;
                     }
-                    foreach (int wait in OpenGate(gates[i], "E  ABRIR PORTÃO")) yield return wait;
+                    foreach (int wait in OpenGate(gates[i])) yield return wait;
                     if (i == 0) Capture("02-portao-aberto");
                     foreach (int wait in WalkRoute(gateZ + 3f)) yield return wait;
                     Check(gates[i].HasVisitorPassed, "Travessia não registrada no portão " + i);
@@ -176,7 +176,7 @@ namespace MuseuVirtual.Editor
                 float lastGateZ = gates.Last().transform.position.z;
                 foreach (int wait in WalkTo(MuseumArtisticArchitecture.RoutePoint(lastGateZ + 2.2f), 0.25f)) yield return wait;
                 for (int frame = 0; frame < 400 && !gates.Last().IsClosed; frame++) yield return 1;
-                foreach (int wait in OpenGate(gates.Last(), "E  ABRIR PORTÃO")) yield return wait;
+                foreach (int wait in OpenGate(gates.Last())) yield return wait;
                 foreach (int wait in WalkTo(MuseumArtisticArchitecture.RoutePoint(lastGateZ - 3f), 0.25f)) yield return wait;
                 Check(gates.Last().HasVisitorPassed, "Travessia de volta não registrada");
                 foreach (int wait in CheckRoomBanner(rooms[rooms.Length - 2])) yield return wait;
@@ -325,7 +325,7 @@ namespace MuseuVirtual.Editor
                 report.Add("Tecla E: a peça sob a mira tem prioridade sobre o portão, e devolver a peça não aciona o portão");
             }
 
-            IEnumerable<int> OpenGate(MuseumKineticGate gate, string expectedPrompt)
+            IEnumerable<int> OpenGate(MuseumKineticGate gate)
             {
                 foreach (int wait in AimAt(gate.transform.TransformPoint(new Vector3(0, 1.5f, 0)))) yield return wait;
                 yield return 10;
@@ -333,7 +333,9 @@ namespace MuseuVirtual.Editor
                 var prompt = hud.transform.Find("GateInteractionPrompt");
                 Check(prompt != null && prompt.GetComponent<CanvasGroup>().alpha > 0, "Indicação do portão ausente");
                 string shown = prompt.Find("GateAction").GetComponent<Text>().text;
-                Check(shown == expectedPrompt, "Indicação do portão: " + shown);
+                var key = prompt.Find("E").GetComponent<Image>();
+                Check(shown == "Abrir portão" && key.enabled && key.sprite != null && key.sprite.name == "E",
+                    "Indicação de tecla para abrir o portão: " + shown);
                 Keys(Key.E);
                 yield return 2;
                 Check(gate.KeepsOcclusionOpen, "E não liberou a oclusão imediatamente");
@@ -341,7 +343,8 @@ namespace MuseuVirtual.Editor
                 for (int frame = 0; frame < 220 && !gate.IsOpen; frame++) yield return 1;
                 Check(gate.IsOpen, "O portão não terminou de abrir: " + gate.transform.parent.name);
                 yield return 2;
-                Check(prompt.Find("GateAction").GetComponent<Text>().text == "PASSAGEM LIVRE", "Indicação de passagem livre ausente");
+                Check(prompt.Find("GateAction").GetComponent<Text>().text == "Passagem livre" && !key.enabled,
+                    "Indicação de passagem livre incorreta");
             }
 
             IEnumerable<int> CheckRoomBanner(MuseumRoom room)

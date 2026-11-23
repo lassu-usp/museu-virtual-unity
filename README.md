@@ -54,7 +54,7 @@ Status possíveis: `não iniciada` · `em andamento` · `em revisão` · `conclu
 
 O espaço é a **Galeria das Órbitas**: um hall de entrada e sete salas cronológicas, de 1940 a 2000, ligadas por portões cinéticos, em um percurso de cerca de 157 m. Ele fica em `Assets/Museu/` e já está na cena principal, `Assets/Scenes/Museu.unity`:
 
-- `Art/`: malhas geradas no editor, texturas de acabamento, reflexos pré-calculados e numerais dos portões;
+- `Art/`: malhas geradas no editor, texturas de acabamento, reflexos pré-calculados, numerais dos portões e ícones de teclado e mouse do pacote [Mr. Breakfast’s Free Prompts (CC0)](https://mrbreakfastsdelight.itch.io/mr-breakfasts-free-prompts);
 - `Data/MuseumTourCatalog.asset`: ordem das décadas, textos curatoriais e pontos de exposição;
 - `Materials/`: materiais URP Lit do espaço, por função e por década;
 - `Prefabs/`: hall, módulo de sala, expositores (pedestal, vitrine e painel) e o visitante;

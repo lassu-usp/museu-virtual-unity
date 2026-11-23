@@ -19,7 +19,7 @@ namespace MuseuVirtual
         static readonly Color Paper = new Color(0.10f, 0.13f, 0.13f);
         static readonly Color Ink = new Color(1f, 0.97f, 0.88f);
         static readonly Color Brass = new Color(0.91f, 0.72f, 0.40f);
-        GUIStyle title, body, small, register, button;
+        GUIStyle title, body, small, register, button, prompt;
         bool manual;
         Vector2 scroll;
         const string History = "Exemplos criados para o museu. A ferrite podia reter um programa ao desligar, com risco de corrupção. O carregador histórico de /F80 está perdido.";
@@ -76,6 +76,8 @@ namespace MuseuVirtual
                 title = Type(30, Ink, true); body = Type(17, Ink); small = Type(15, Ink);
                 register = Type(20, Brass, true);
                 button = new GUIStyle(GUI.skin.button) { fontSize = 16 };
+                prompt = Type(16, Ink);
+                prompt.alignment = TextAnchor.MiddleLeft;
             }
             GUI.matrix = Matrix4x4.identity;
             var ev = Event.current;
@@ -121,11 +123,16 @@ namespace MuseuVirtual
                 float y = height - 65;
                 Fill(new Rect(15, y, edge - 30, 45), Paper);
                 string hint = fault ? "Execução interrompida. Aperte Preparação e confira o endereço e os bytes gravados."
-                    : !machine.Powered && hover < 0 ? "Clique no botão Liga para retomar." : hover >= 0 ? panel.Label(hover) : "";
-                GUI.Label(new Rect(28, y + 6, edge - 52, 40), hint, body);
+                    : hover >= 0 ? panel.Label(hover) : "Pressione Liga para retomar.";
+                var hintRow = new Rect(28, y, edge - 52, 45);
+                if (fault) GUI.Label(hintRow, hint, prompt);
+                else MuseumPrompts.DrawAction(hintRow, MuseumPrompts.Click, hint, prompt);
             }
-            else GUI.Label(new Rect(x, height - 81, w, 25), "Clique nas chaves, nos seletores e nos botões.", small);
-            if (GUI.Button(new Rect(x, height - 53, w, 37), "Voltar à sala   ·   E / Esc", button)) visitor.EndInspection();
+            else MuseumPrompts.DrawAction(new Rect(x, height - 86, w, 28), MuseumPrompts.Click,
+                "Acionar chaves, seletores e botões", prompt, height: 24);
+            var back = new Rect(x, height - 53, w, 37);
+            if (GUI.Button(back, GUIContent.none, button)) visitor.EndInspection();
+            MuseumPrompts.DrawAction(back, MuseumPrompts.E, "Voltar à sala", prompt, true, MuseumPrompts.Esc, 26);
         }
     }
 }

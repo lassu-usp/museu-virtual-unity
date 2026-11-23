@@ -17,6 +17,7 @@ namespace Lassu.Museum
         private CanvasGroup prompt;
         private Text promptTitle;
         private Text promptDescription;
+        private Image interactKey;
 
         public MuseumKineticGate FocusedGate { get; private set; }
 
@@ -125,10 +126,12 @@ namespace Lassu.Museum
             if (prompt == null) CreatePrompt();
             if (prompt == null) return;
 
-            promptTitle.text = FocusedGate.IsClosed || FocusedGate.IsClosing
-                ? "E  ABRIR PORTÃO"
-                : FocusedGate.IsOpen ? "PASSAGEM LIVRE" : "ABRINDO PASSAGEM...";
-            promptDescription.text = "FECHA AUTOMATICAMENTE AO SE AFASTAR";
+            bool canOpen = FocusedGate.IsClosed || FocusedGate.IsClosing;
+            interactKey.enabled = canOpen;
+            float inset = canOpen ? 76f : 24f;
+            promptTitle.rectTransform.anchoredPosition = new Vector2(inset, 12f);
+            promptDescription.rectTransform.anchoredPosition = new Vector2(inset, -15f);
+            promptTitle.text = canOpen ? "Abrir portão" : FocusedGate.IsOpen ? "Passagem livre" : "Abrindo passagem…";
             prompt.alpha = Mathf.MoveTowards(prompt.alpha, 1f, Time.unscaledDeltaTime * 7f);
         }
 
@@ -142,37 +145,41 @@ namespace Lassu.Museum
             var rect = panel.GetComponent<RectTransform>();
             rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0f);
             rect.pivot = new Vector2(0.5f, 0f);
-            rect.anchoredPosition = new Vector2(0f, 120f);
-            rect.sizeDelta = new Vector2(520f, 82f);
+            rect.anchoredPosition = new Vector2(0f, 104f);
+            rect.sizeDelta = new Vector2(346f, 78f);
             var background = panel.GetComponent<Image>();
-            background.color = new Color(0.035f, 0.05f, 0.06f, 0.88f);
+            background.color = new Color(0.035f, 0.065f, 0.085f, 0.94f);
             background.raycastTarget = false;
             prompt = panel.GetComponent<CanvasGroup>();
             prompt.alpha = 0f;
             prompt.blocksRaycasts = false;
             prompt.interactable = false;
 
+            interactKey = MuseumPrompts.AddIcon(panel.transform, MuseumPrompts.E, 44);
+            var keyRect = interactKey.rectTransform;
+            keyRect.anchorMin = keyRect.anchorMax = keyRect.pivot = new Vector2(0, 0.5f);
+            keyRect.anchoredPosition = new Vector2(20, 0);
             promptTitle = CreatePromptText(panel.transform, "GateAction", 21, FontStyle.Bold,
-                Color.white, new Vector2(0f, 13f), new Vector2(490f, 30f));
-            promptDescription = CreatePromptText(panel.transform, "GateDescription", 13, FontStyle.Normal,
-                new Color(0.73f, 0.84f, 0.82f), new Vector2(0f, -18f), new Vector2(490f, 22f));
+                Color.white, 30);
+            promptDescription = CreatePromptText(panel.transform, "GateDescription", 15, FontStyle.Normal,
+                new Color(0.8f, 0.87f, 0.86f), 24);
+            promptDescription.text = "Fecha ao se afastar.";
         }
 
         private static Text CreatePromptText(Transform parent, string objectName, int size, FontStyle style,
-            Color color, Vector2 position, Vector2 dimensions)
+            Color color, float height)
         {
             var textObject = new GameObject(objectName, typeof(RectTransform), typeof(Text));
             textObject.transform.SetParent(parent, false);
             var rect = textObject.GetComponent<RectTransform>();
-            rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0.5f, 0.5f);
-            rect.anchoredPosition = position;
-            rect.sizeDelta = dimensions;
+            rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0f, 0.5f);
+            rect.sizeDelta = new Vector2(250f, height);
             var text = textObject.GetComponent<Text>();
             text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             text.fontSize = size;
             text.fontStyle = style;
             text.color = color;
-            text.alignment = TextAnchor.MiddleCenter;
+            text.alignment = TextAnchor.MiddleLeft;
             text.supportRichText = false;
             text.raycastTarget = false;
             return text;
