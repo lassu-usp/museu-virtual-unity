@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MuseuVirtual
 {
-    [DisallowMultipleComponent, RequireComponent(typeof(MuseumExhibit))]
+    [DisallowMultipleComponent, RequireComponent(typeof(MuseumExhibit), typeof(AudioSource))]
     public sealed class PatinhoPanel : MonoBehaviour
     {
         // Order follows the physical controls. P(0) is the most significant switch.
@@ -16,6 +16,7 @@ namespace MuseuVirtual
             "Endereçamento · fixo / sequencial", "Memória · liberada / protegida" };
         static readonly PanelMode[] Modes = { PanelMode.Normal, PanelMode.Cs, PanelMode.Is,
             PanelMode.Ce, PanelMode.Cp, PanelMode.Mp };
+        const int StartButton = 8, PowerOnButton = 10, PowerOffButton = 11;
         const int Increment = 12, Protection = 13, FirstSwitch = 14;
         // Keep the render cost bounded on a slow frame (including the WebGL main thread).
         const int ClocksPerSecond = 24000, MaxClocksPerFrame = 600;
@@ -29,6 +30,8 @@ namespace MuseuVirtual
         readonly Renderer[] lenses = new Renderer[PanelSession.External + 1];
         readonly Color[] colors = new Color[PanelSession.External + 1];
         readonly float[] intensities = new float[PanelSession.External + 1];
+        public AudioClip switchSound, knobSound, startButtonSound, commonButtonSound, powerButtonSound;
+        AudioSource speaker;
         MaterialPropertyBlock properties;
         PanelSession machine;
         Camera cameraAtPanel;
@@ -49,6 +52,7 @@ namespace MuseuVirtual
 
         void Awake()
         {
+            speaker = GetComponent<AudioSource>();
             machine = new PanelSession();
             properties = new MaterialPropertyBlock();
             for (int i = 0; i < Buttons.Length; i++) BindControl(i, "PTF_Botao_" + Buttons[i], Labels[i]);
@@ -132,8 +136,10 @@ namespace MuseuVirtual
         {
             if (!Operating || index < 0 || index >= controls.Length) return;
             dirty = true;
+            AudioClip sound;
             if (index >= FirstSwitch)
             {
+                sound = switchSound;
                 int bit = index - FirstSwitch;
                 machine.ToggleSwitch(bit);
                 bool down = (machine.Switches & (1 << (11 - bit))) != 0;
@@ -141,28 +147,36 @@ namespace MuseuVirtual
             }
             else if (index == Increment || index == Protection)
             {
+                sound = knobSound;
                 if (index == Increment) machine.ToggleIncrement(); else machine.ToggleProtection();
                 bool initial = index == Increment ? machine.Sequential : machine.Protected;
                 controls[index].localRotation = restRotation[index] * Quaternion.AngleAxis(initial ? 0 : 52, Vector3.up);
             }
             else
             {
+                sound = index switch
+                {
+                    StartButton => startButtonSound,
+                    PowerOnButton or PowerOffButton => powerButtonSound,
+                    _ => commonButtonSound
+                };
                 Release();
                 pressed = index;
                 releaseTime = Time.unscaledTime + 0.14f;
-                float travel = index >= 10 ? 0.003f : 0.0018f;
+                float travel = index >= PowerOnButton ? 0.003f : 0.0018f;
                 controls[index].localPosition = restPosition[index] + Vector3.up * travel;
                 if (index < Modes.Length) machine.Select(Modes[index]);
                 else switch (index)
                 {
                     case 6: machine.Wait(); break;
                     case 7: machine.Interrupt(); break;
-                    case 8: machine.Start(); break;
+                    case StartButton: machine.Start(); break;
                     case 9: machine.Prepare(); break;
-                    case 10: machine.PowerOn(); break;
-                    case 11: machine.PowerOff(); break;
+                    case PowerOnButton: machine.PowerOn(); break;
+                    case PowerOffButton: machine.PowerOff(); break;
                 }
             }
+            speaker.PlayOneShot(sound);
             Paint();
         }
 

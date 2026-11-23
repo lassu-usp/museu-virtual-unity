@@ -184,7 +184,19 @@ namespace MuseuVirtual.Editor
             var exhibit = computer.AddComponent<MuseumExhibit>();
             exhibit.displayName = "Patinho Feio";
             exhibit.interaction = ExhibitInteraction.Static;
-            computer.AddComponent<PatinhoPanel>();
+            var panel = computer.AddComponent<PatinhoPanel>();
+            panel.GetComponent<AudioSource>().playOnAwake = false;
+            panel.switchSound = LoadPanelSound("ptf_switch");
+            panel.knobSound = LoadPanelSound("ptf_knob");
+            panel.startButtonSound = LoadPanelSound("ptf_button_partida");
+            panel.commonButtonSound = LoadPanelSound("ptf_button_common");
+            panel.powerButtonSound = LoadPanelSound("ptf_button_liga_desliga");
+        }
+
+        static AudioClip LoadPanelSound(string name)
+        {
+            string path = Root + "/Audio/" + name + ".mp3";
+            return AssetDatabase.LoadAssetAtPath<AudioClip>(path) ?? throw new FileNotFoundException(path);
         }
 
         static Dictionary<string, Material> BuildMaterials(JObject manifest, string directory, string folder)
